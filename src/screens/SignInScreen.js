@@ -23,6 +23,7 @@ const SignIn = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [focus2, setFocus2] = useState(false);
 
   const [validateInputs] = useValidation();
 
@@ -65,17 +66,26 @@ const SignIn = ({ navigation }) => {
         />
       </View>
       <TextInput
+        returnKeyType="next"
         style={styles.textInputStyle}
         placeholder=" Enter email or username"
         value={email}
-        onChangeText={(newTerm) => setEmail(newTerm)}
+        onChangeText={(newTerm) => {
+          setEmail(newTerm);
+        }}
+        onSubmitEditing={() => setFocus2(true)}
       />
       <TextInput
+        focus={focus2}
+        returnKeyType="done"
         style={styles.textInputStyle}
         placeholder=" Enter password"
         secureTextEntry
         value={password}
         onChangeText={(newTerm) => setPassword(newTerm)}
+        onSubmitEditing={() =>
+          validateInputs(email, password, setEmail, setPassword, setError) ? SignInAxios() : null
+        }
       />
 
       <TouchableHighlight style={styles.loginButtonWrapper}>
