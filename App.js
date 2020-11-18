@@ -11,7 +11,12 @@ import Home from './src/screens/HomeScreen';
 const navigator = createStackNavigator(
   {
     Home,
-    SignIn,
+    SignIn: {
+      screen: SignIn,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
     SignUp,
     ResetPw,
     DietaryRestrictions,

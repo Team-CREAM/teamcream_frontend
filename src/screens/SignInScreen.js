@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEF4D1',
   },
   imageContainer: {
+    marginTop: 50,
     marginVertical: 15,
     flexDirection: 'row',
     alignItems: 'center',
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     width: width * 0.76,
     height: height * 0.052,
     justifyContent: 'center',
-    marginBottom: 15,
+    marginBottom: 10,
   },
   error: {
     flexDirection: 'row',
@@ -167,9 +168,9 @@ const styles = StyleSheet.create({
     height: height * 0.052,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 15,
+    marginBottom: 10,
   },
-  errorText: { color: 'white' },
+  errorText: { color: 'white', textAlign: 'center' },
   lineOrLine: {
     flexDirection: 'row',
     alignItems: 'center',
