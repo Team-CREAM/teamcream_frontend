@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     height: height * 0.052,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   errorText: { color: 'white', textAlign: 'center' },
   lineOrLine: {
