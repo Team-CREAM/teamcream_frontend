@@ -92,8 +92,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageContainer: {
-    marginTop: 10,
-    marginVertical: 15,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -134,7 +132,7 @@ const styles = StyleSheet.create({
     width: width * 0.76,
     height: height * 0.052,
     justifyContent: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   error: {
     flexDirection: 'row',
