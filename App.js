@@ -9,6 +9,7 @@ import DietaryRestrictions from './src/screens/DietaryRestrictions';
 import EmailSent from './src/screens/EmailSent';
 import ProfilePic from './src/screens/ProfilePic';
 import Home from './src/screens/HomeScreen';
+import Explore from './src/screens/ExploreScreen';
 
 const navigator = createStackNavigator(
   {
@@ -20,6 +21,12 @@ const navigator = createStackNavigator(
     },
     SignIn: {
       screen: SignIn,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    Explore: {
+      screen: Explore,
       navigationOptions: {
         headerShown: false,
       },
