@@ -10,14 +10,12 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import OAuth from '../components/OAuth';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 
 const { width, height } = Dimensions.get('window');
 
 const ResetPw = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -47,7 +45,6 @@ const ResetPw = ({ navigation }) => {
   const errorHandle = (err) => {
     setError(err);
     setEmail('');
-    setPassword('');
     setTimeout(() => {
       setError('');
     }, 5000);
