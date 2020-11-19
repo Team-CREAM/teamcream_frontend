@@ -14,9 +14,7 @@ import OAuth from '../components/OAuth';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 import useValidation from '../hooks/useValidation';
 
-const dimensions = Dimensions.get('window');
-const { width } = dimensions;
-const { height } = dimensions;
+const { width, height } = Dimensions.get('window');
 
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -131,7 +129,7 @@ const SignIn = ({ navigation }) => {
           </Text>
         </View>
         {/* Forgot Password */}
-        <Text style={styles.textWeight} onPress={() => navigation.navigate('ResetPw')}>
+        <Text style={styles.textWeight} onPress={() => navigation.navigate('ResetPw2')}>
           Forgot Password?
         </Text>
       </View>
@@ -167,6 +165,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: width * 0.12,
     fontSize: 14,
+    fontFamily: 'monospace',
   },
   loginButtonWrapper: {
     marginHorizontal: width * 0.12,

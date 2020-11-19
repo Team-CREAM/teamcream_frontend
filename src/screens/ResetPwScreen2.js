@@ -12,30 +12,26 @@ import {
 } from 'react-native';
 import OAuth from '../components/OAuth';
 import axiosWithoutToken from '../api/axiosWithoutToken';
-import useValidation from '../hooks/useValidation';
 
 const { width, height } = Dimensions.get('window');
 
-const SignUp = ({ navigation }) => {
+const ResetPw = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [focus2, setFocus2] = useState(false);
 
-  const [validateInputs] = useValidation();
-
-  const SignUpAxios = async () => {
+  const ResetPwAxios = async () => {
     setLoading(true);
     await axiosWithoutToken
-      .post('/signup', {
+      .put('/forgotpassword', {
         email,
-        password,
       })
       .then(function (response) {
         setLoading(false);
-        if (response.data.token) {
-          navigation.navigate('ProfilePic', { token: response.data.token });
+        console.log('response');
+        if (response.data.success) {
+          navigation.navigate('EmailSent');
         }
 
         if (response.data.error) {
@@ -46,16 +42,6 @@ const SignUp = ({ navigation }) => {
         console.log('error');
         console.log(error);
       });
-  };
-
-  const validateSubmit = () => {
-    const [isValidated, error] = validateInputs('Signup', email, password);
-    if (isValidated) {
-      SignUpAxios();
-    }
-    if (error) {
-      errorHandle(error);
-    }
   };
 
   const errorHandle = (err) => {
@@ -69,39 +55,19 @@ const SignUp = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image
-          resizeMode="contain"
-          style={styles.logoStyle}
-          source={require('../../images/cwc_logo_simple.png')}
-        />
-      </View>
-
-      <Text style={styles.SignUpText}>Email Sign-Up</Text>
+      <Text style={styles.SignUpText}>Send Reset Password Link</Text>
 
       <TextInput
-        returnKeyType="next"
-        style={styles.textInputStyle}
-        placeholder=" Enter email or username"
-        value={email}
-        onChangeText={(newTerm) => {
-          setEmail(newTerm);
-        }}
-        onSubmitEditing={() => setFocus2(true)}
-      />
-      <TextInput
-        focus={focus2}
         returnKeyType="done"
         style={styles.textInputStyle}
-        placeholder=" Enter password"
-        secureTextEntry
-        value={password}
-        onChangeText={(newTerm) => setPassword(newTerm)}
-        onSubmitEditing={() => validateSubmit()}
+        placeholder=" Enter Email"
+        value={email}
+        onChangeText={(newTerm) => setEmail(newTerm)}
+        onSubmitEditing={() => ResetPwAxios()}
       />
 
       <TouchableHighlight style={styles.loginButtonWrapper}>
-        <Button onPress={() => validateSubmit()} title="Create Account" color="#D9B580" />
+        <Button onPress={() => ResetPwAxios()} title="Send Link" color="#D9B580" />
       </TouchableHighlight>
 
       {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
@@ -113,15 +79,8 @@ const SignUp = ({ navigation }) => {
 
       {/* LINE OR LINE */}
       <View style={styles.lineOrLine}>
-        <View style={styles.leftLine} />
-        <View>
-          <Text style={styles.or}>OR</Text>
-        </View>
-        <View style={styles.rightLine} />
+        <View style={styles.line} />
       </View>
-
-      {/* Facebook and google OAuth */}
-      <OAuth />
     </View>
   );
 };
@@ -130,6 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
+    justifyContent: 'center',
   },
   imageContainer: {
     marginTop: 10,
@@ -191,11 +151,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  leftLine: {
+  line: {
     flex: 1,
     height: height * 0.003,
     backgroundColor: 'black',
-    marginLeft: '12%',
+    marginHorizontal: '12%',
   },
   or: {
     width: width * 0.1,
@@ -218,4 +178,4 @@ const styles = StyleSheet.create({
   textWeight: { fontWeight: 'bold' },
 });
 
-export default SignUp;
+export default ResetPw;
