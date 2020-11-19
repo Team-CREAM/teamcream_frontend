@@ -2,6 +2,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import SignIn from './src/screens/SignInScreen';
 import SignUp from './src/screens/SignUpScreen';
+import SignUp2 from './src/screens/SignUpScreen2';
 import ResetPw from './src/screens/ResetPwScreen';
 import DietaryRestrictions from './src/screens/DietaryRestrictions';
 import EmailSent from './src/screens/EmailSent';
@@ -10,7 +11,12 @@ import Home from './src/screens/HomeScreen';
 
 const navigator = createStackNavigator(
   {
-    Home,
+    Home: {
+      screen: Home,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
     SignIn: {
       screen: SignIn,
       navigationOptions: {
@@ -18,6 +24,7 @@ const navigator = createStackNavigator(
       },
     },
     SignUp,
+    SignUp2,
     ResetPw,
     DietaryRestrictions,
     EmailSent,

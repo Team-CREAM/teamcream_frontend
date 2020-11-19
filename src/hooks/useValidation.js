@@ -1,35 +1,39 @@
+import { useState } from 'react';
+
 export default () => {
-  const validateInputs = (email, password, setEmail, setPassword, setError) => {
-    if (!validateEmail(email) && !validatePassword(password)) {
-      setError('Email and Password do not meet requirements..');
-      setEmail('');
-      setPassword('');
-      setTimeout(() => {
-        setError('');
-      }, 5000);
-      return false;
-    }
-    if (!validateEmail(email)) {
-      setError('Email does not meet requirements..');
-      setEmail('');
-      setPassword('');
-      setTimeout(() => {
-        setError('');
-      }, 5000);
-      return false;
-    }
+  const [error, setError] = useState('');
+  const [isValidated, setIsValidated] = useState(false);
 
-    if (!validatePassword(password)) {
-      setError('Password does not meet requirements..');
-      setEmail('');
-      setPassword('');
-      setTimeout(() => {
-        setError('');
-      }, 5000);
-      return false;
+  const validateInputs = (type, email, password) => {
+    if (type === 'Login') {
+      if (!validateEmail(email) && !validatePassword(password)) {
+        setError('Email and Password do not meet requirements..');
+        setIsValidated(false);
+      } else if (!validateEmail(email)) {
+        setError('Email does not meet requirements..');
+        setIsValidated(false);
+      } else if (!validatePassword(password)) {
+        setError('Password does not meet requirements..');
+        setIsValidated(false);
+      } else {
+        setIsValidated(true);
+      }
     }
-
-    return true;
+    if (type === 'Signup') {
+      if (!validateEmail(email) && !validatePassword(password)) {
+        setError('Email and Password do not meet requirements..');
+        setIsValidated(false);
+      } else if (!validateEmail(email)) {
+        setError('Email does not meet requirements..');
+        setIsValidated(false);
+      } else if (!validatePassword(password)) {
+        setError('Password must be 4 characters or longer');
+        setIsValidated(false);
+      } else {
+        setIsValidated(true);
+      }
+    }
+    return [isValidated, error];
   };
 
   const validateEmail = (email) => {

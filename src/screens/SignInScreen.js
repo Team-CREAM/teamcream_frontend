@@ -40,20 +40,33 @@ const SignIn = ({ navigation }) => {
           navigation.navigate('Home', { token: response.data.token });
         }
 
-        // Set banner for 5 seconds and erase text inputs
         if (response.data.error) {
-          setError(response.data.error);
-          setEmail('');
-          setPassword('');
-          setTimeout(() => {
-            setError('');
-          }, 5000);
+          errorHandle(response.data.error);
         }
       })
       .catch(function (error) {
         console.log('error');
         console.log(error);
       });
+  };
+
+  const validateSubmit = () => {
+    const [isValidated, error] = validateInputs('Login', email, password);
+    if (isValidated) {
+      SignInAxios();
+    }
+    if (error) {
+      errorHandle(error);
+    }
+  };
+
+  const errorHandle = (err) => {
+    setError(err);
+    setEmail('');
+    setPassword('');
+    setTimeout(() => {
+      setError('');
+    }, 5000);
   };
 
   return (
@@ -83,19 +96,11 @@ const SignIn = ({ navigation }) => {
         secureTextEntry
         value={password}
         onChangeText={(newTerm) => setPassword(newTerm)}
-        onSubmitEditing={() =>
-          validateInputs(email, password, setEmail, setPassword, setError) ? SignInAxios() : null
-        }
+        onSubmitEditing={() => validateSubmit()}
       />
 
       <TouchableHighlight style={styles.loginButtonWrapper}>
-        <Button
-          onPress={() =>
-            validateInputs(email, password, setEmail, setPassword, setError) ? SignInAxios() : null
-          }
-          title="Login"
-          color="#D9B580"
-        />
+        <Button onPress={() => validateSubmit()} title="Login" color="#D9B580" />
       </TouchableHighlight>
 
       {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
@@ -121,7 +126,7 @@ const SignIn = ({ navigation }) => {
       <View style={styles.accountWrapper}>
         <View style={styles.noAccount}>
           <Text>No Account? </Text>
-          <Text style={styles.textWeight} onPress={() => navigation.navigate('SignUp')}>
+          <Text style={styles.textWeight} onPress={() => navigation.navigate('SignUp2')}>
             Sign up
           </Text>
         </View>
