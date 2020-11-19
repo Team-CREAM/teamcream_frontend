@@ -11,9 +11,7 @@ import {
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import axios from 'axios';
 
-const dimensions = Dimensions.get('window');
-const { width } = dimensions;
-const { height } = dimensions;
+const { width, height } = Dimensions.get('window');
 
 const ResetPw = ({ navigation }) => {
   const [email, setEmail] = useState('');
