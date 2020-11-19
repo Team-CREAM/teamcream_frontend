@@ -81,6 +81,17 @@ const ResetPw = ({ navigation }) => {
       <View style={styles.lineOrLine}>
         <View style={styles.line} />
       </View>
+
+      <View style={styles.loginWrapper}>
+        <Text style={styles.goBackToLogin}>Already have an account? </Text>
+
+        <Text
+          style={{ ...styles.goBackToLogin, fontWeight: 'bold' }}
+          onPress={() => navigation.navigate('SignIn')}>
+          {' '}
+          Log In.
+        </Text>
+      </View>
     </View>
   );
 };
@@ -174,6 +185,22 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.01,
   },
   textWeight: { fontWeight: 'bold' },
+  loginWrapper: {
+    flexDirection: 'row',
+    marginHorizontal: width * 0.12,
+    paddingTop: 15,
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  goBackToLogin: {
+    paddingBottom: 10,
+    fontFamily: 'monospace',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 20,
+  },
 });
 
 export default ResetPw;
