@@ -4,6 +4,7 @@ import SearchBar from '../components/SearchBar';
 import useRecipes from '../hooks/useRecipes';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu2';
+import TopMenu from '../components/TopMenu';
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,14 +19,15 @@ const HomeScreen = () => {
     });
   };
   return (
-    // <SearchBar
-    //   term={term}
-    //   onTermChange={(newTerm) => setTerm(newTerm)}
-    //   onTermSubmit={() => searchApi(term)}
-    // />
     <View style={styles.container}>
+      <TopMenu
+        // title="Home"
+        searchbar
+        term={term}
+        onTermChange={(newTerm) => setTerm(newTerm)}
+        onTermSubmit={() => searchApi(term)}
+      />
       <View style={styles.marginTop}>
-        {errorMessage ? <Text>{errorMessage}</Text> : null}
         <ScrollView>
           <RecipeList title="Welcome Back!" results={filterResultsByPrice('$')} />
           <RecipeList title="Continue where you left off!" results={filterResultsByPrice('$$')} />
@@ -33,7 +35,9 @@ const HomeScreen = () => {
           <RecipeList title="Popular!" results={filterResultsByPrice('$$$')} />
         </ScrollView>
       </View>
-      <BottomMenu />
+      <View style={styles.bottomMenu}>
+        <BottomMenu />
+      </View>
     </View>
   );
 };
@@ -42,10 +46,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
-    paddingBottom: height * 0.07,
+    paddingBottom: height * 0.17,
   },
   marginTop: {
-    marginTop: 50,
+    marginTop: 10,
+  },
+  bottomMenu: {
+    position: 'absolute',
+    bottom: 0,
   },
 });
 

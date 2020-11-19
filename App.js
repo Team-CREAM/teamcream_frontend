@@ -33,7 +33,7 @@ const navigator = createStackNavigator(
     ProfilePic,
   },
   {
-    initialRouteName: 'SignIn',
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
       title: 'Cooking with Crumbs',
     },
