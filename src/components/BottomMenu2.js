@@ -18,12 +18,12 @@ const BottomMenu = ({ navigation }) => {
         <Text style={styles.menuItemText}>Home</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Explore')}>
         <MaterialCommunityIcons name="fridge-outline" size={24} color="black" />
         <Text style={styles.menuItemText}>Inventory</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Explore')}>
         <Feather style={styles.iconStyle} name="search" size={24} color="black" />
         <Text style={styles.menuItemText}>Search</Text>
       </TouchableOpacity>
