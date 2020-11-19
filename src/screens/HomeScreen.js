@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import useRecipes from '../hooks/useRecipes';
 import RecipeList from '../components/RecipeList';
-// import BottomMenu from '../components/BottomMenu';
+import BottomMenu from '../components/BottomMenu2';
+
+const { width, height } = Dimensions.get('window');
 
 const HomeScreen = () => {
   const [term, setTerm] = useState('');
@@ -30,15 +32,17 @@ const HomeScreen = () => {
           <RecipeList title="What you can make right now!" results={filterResultsByPrice('$$$')} />
           <RecipeList title="Popular!" results={filterResultsByPrice('$$$')} />
         </ScrollView>
-        {/* <BottomMenu /> */}
       </View>
+      <BottomMenu />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#FEF4D1',
+    paddingBottom: height * 0.07,
   },
   marginTop: {
     marginTop: 50,

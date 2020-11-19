@@ -5,7 +5,6 @@ import React from 'react';
 import { StyleSheet, Text, Image, View, Alert, Dimensions, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import * as Google from 'expo-google-app-auth';
-import { Entypo } from '@expo/vector-icons';
 
 const dimensions = Dimensions.get('window');
 const { width } = dimensions;
