@@ -9,6 +9,7 @@ import DietaryRestrictions from './src/screens/DietaryRestrictions';
 import EmailSent from './src/screens/EmailSent';
 import ProfilePic from './src/screens/ProfilePic';
 import Home from './src/screens/HomeScreen';
+import SavedRecipeScreen from './src/screens/SavedRecipeScreen';
 
 const navigator = createStackNavigator(
   {
@@ -31,9 +32,10 @@ const navigator = createStackNavigator(
     DietaryRestrictions,
     EmailSent,
     ProfilePic,
+    SavedRecipeScreen,
   },
   {
-    initialRouteName: 'SignIn',
+    initialRouteName: 'SavedRecipeScreen',
     defaultNavigationOptions: {
       title: 'Cooking with Crumbs',
     },
