@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import useRecipes from '../hooks/useRecipes';
+import useRecipes2 from '../hooks/useRecipes2';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu2';
 import TopMenu from '../components/TopMenu';
@@ -10,13 +11,17 @@ const { width, height } = Dimensions.get('window');
 
 const HomeScreen = () => {
   const [term, setTerm] = useState('');
-  const [searchApi, results, errorMessage] = useRecipes();
+  const [DisplayApi, results, errorMessage] = useRecipes2();
 
-  const filterResultsByPrice = (price) => {
+  const filterResults = (price) => {
     // price === $ $$ $$$
-    return results.filter((result) => {
-      return result.price === price;
-    });
+    // console.log(results);
+    if (results) {
+      return results.filter((result) => {
+        return result.sort === price;
+      });
+    }
+    return results;
   };
   return (
     <View style={styles.container}>
@@ -25,14 +30,14 @@ const HomeScreen = () => {
         searchbar
         term={term}
         onTermChange={(newTerm) => setTerm(newTerm)}
-        onTermSubmit={() => searchApi(term)}
+        onTermSubmit={() => DisplayApi(term)}
       />
       <View style={styles.marginTop}>
         <ScrollView>
-          <RecipeList title="Welcome Back!" results={filterResultsByPrice('$')} />
-          <RecipeList title="Continue where you left off!" results={filterResultsByPrice('$$')} />
-          <RecipeList title="What you can make right now!" results={filterResultsByPrice('$$$')} />
-          <RecipeList title="Popular!" results={filterResultsByPrice('$$$')} />
+          <RecipeList title="Welcome Back!" results={filterResults('random')} />
+          <RecipeList title="Continue where you left off!" results={filterResults('healthiness')} />
+          <RecipeList title="What you can make right now!" results={filterResults('random')} />
+          <RecipeList title="Popular!" results={filterResults('popularity')} />
         </ScrollView>
       </View>
       <View style={styles.bottomMenu}>
