@@ -1,27 +1,33 @@
 import { useEffect, useState } from 'react';
-
-const axios = require('axios');
+import axios from 'axios';
 
 export default () => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const searchApi = async () => {
+  const searchApi = async (cancel) => {
     console.log('calling');
     try {
       const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch', {
         headers: { 'Content-Type': 'application/json' },
-        params: { apiKey: '0a3c80f574c04ff4bccd3dcddff35391', sort: 'popularity', number: 20 },
+        params: { apiKey: '2b0715ea3ed94024a9bc6afc798e46ba', sort: 'popularity', number: 20 },
       });
+      if (cancel) {
+        return;
+      }
       setResults(response.data.results);
-      console.log(response.data.result);
+      console.log(results);
     } catch (err) {
       setErrorMessage('ERROR');
     }
   };
   useEffect(() => {
-    searchApi();
+    let cancel = false;
+    searchApi(cancel);
+    return () => {
+      cancel = true;
+    };
   }, []);
 
-  return [searchApi, results, errorMessage];
+  return [results, errorMessage];
 };
