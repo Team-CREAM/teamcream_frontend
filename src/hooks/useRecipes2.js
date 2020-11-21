@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import axiosWithToken2 from '../api/axiosWithToken_Spoon';
 
+const axios = require('axios');
+
 export default () => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
@@ -27,11 +29,13 @@ export default () => {
           sort: searchTerm,
         },
       });
-      setResults(response.data.recipes);
-      console.log(response.data.recipes);
+      // const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch', {
+      //   headers: { 'Content-Type': 'application/json' },
+      //   params: { apiKey: '18a0b5f666f44a3694c8a43303d699ff', number: 2, sort: 'healthiness' },
+      // });
+      setResults(response.data.results);
     } catch (err) {
       setErrorMessage('Something went wrong');
-      console.log('ERROR');
     }
   };
 
