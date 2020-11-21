@@ -10,6 +10,7 @@ import EmailSent from './src/screens/EmailSent';
 import ProfilePic from './src/screens/ProfilePic';
 import Home from './src/screens/HomeScreen';
 import SavedRecipeScreen from './src/screens/SavedRecipeScreen';
+import RecipeScreen from './src/screens/RecipeScreen';
 
 const navigator = createStackNavigator(
   {
@@ -33,9 +34,16 @@ const navigator = createStackNavigator(
     EmailSent,
     ProfilePic,
     SavedRecipeScreen,
+    RecipeScreen: {
+      screen: RecipeScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
   },
   {
-    initialRouteName: 'SavedRecipeScreen',
+    // initialRouteName: 'SavedRecipeScreen',
+    initialRouteName: 'RecipeScreen',
     defaultNavigationOptions: {
       title: 'Cooking with Crumbs',
     },
