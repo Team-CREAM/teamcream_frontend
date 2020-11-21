@@ -6,6 +6,6 @@ export default axios.create({
     'Content-Type': 'application/json',
   },
   // params: {
-  //   apiKey: '18a0b5f666f44a3694c8a43303d699ff',
+  //   apiKey: '2b0715ea3ed94024a9bc6afc798e46ba',
   // },
 });
