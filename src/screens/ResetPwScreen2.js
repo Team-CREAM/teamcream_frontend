@@ -54,6 +54,9 @@ const ResetPw = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.SignUpText}>Send Reset Password Link</Text>
+      <View style={styles.lineOrLine}>
+        <View style={styles.line} />
+      </View>
 
       <TextInput
         returnKeyType="done"
@@ -112,13 +115,13 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   SignUpText: {
-    paddingBottom: 10,
     fontFamily: 'monospace',
     fontStyle: 'normal',
     fontWeight: '500',
     fontSize: 20,
-    lineHeight: 20,
-    borderBottomWidth: 2,
+    textAlign: 'center',
+    // lineHeight: 20,
+    // borderBottomWidth: 2,
     marginBottom: 20,
     marginHorizontal: width * 0.12,
   },
@@ -132,6 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     marginBottom: 15,
     flexDirection: 'row',
+    marginTop: height * 0.02,
     marginHorizontal: width * 0.12,
     fontSize: 14,
     fontFamily: 'monospace',

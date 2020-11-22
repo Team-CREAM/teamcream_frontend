@@ -84,6 +84,10 @@ const SignUp = ({ navigation }) => {
 
       <Text style={styles.SignUpText}>Email Sign-Up</Text>
 
+      <View style={styles.lineLine}>
+        <View style={styles.line} />
+      </View>
+
       <TextInput
         returnKeyType="next"
         style={styles.textInputStyle}
@@ -154,6 +158,17 @@ const SignUp = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  lineLine: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: height * 0.02,
+  },
+  line: {
+    flex: 1,
+    height: height * 0.003,
+    backgroundColor: 'black',
+    marginHorizontal: '12%',
+  },
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
@@ -170,14 +185,11 @@ const styles = StyleSheet.create({
     height: 0.275 * height,
   },
   SignUpText: {
-    paddingBottom: 10,
     fontFamily: 'monospace',
     fontStyle: 'normal',
     fontWeight: '500',
     fontSize: width * 0.05,
-    lineHeight: 20,
-    borderBottomWidth: 2,
-    marginBottom: 20,
+    textAlign: 'center',
     marginHorizontal: width * 0.12,
   },
   textInputStyle: {
@@ -216,6 +228,7 @@ const styles = StyleSheet.create({
   lineOrLine: {
     flexDirection: 'row',
     alignItems: 'center',
+    // marginVertical: height * 0.02,
   },
   leftLine: {
     flex: 1,
