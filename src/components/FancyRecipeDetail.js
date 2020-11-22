@@ -32,12 +32,46 @@ function FancyRecipeDetail({ result }) {
 
     };
 
-    const { name, image_url, rating, review_count } = result;
+    const { vegetarian,
+        vegan,
+        glutenFree,
+        dairyFree,
+        veryHealthy,
+        cheap,
+        veryPopular,
+        sustainable,
+        weightWatcherSmartPoints,
+        gaps,
+        lowFodMap,
+        aggregateLikes,
+        spoonacularScore,
+        healthScore,
+        creditsText,
+        license,
+        sourceName,
+        pricePerServing,
+        extendedIngredients,
+        id,
+        title,
+        readyInMinutes,
+        servings,
+        sourceUrl,
+        image,
+        imageType,
+        summary,
+        cuisines,
+        dishTypes,
+        diets,
+        occasions,
+        instructions,
+        analyzedInstructions,
+        originalId,
+        spoonacularSourceUrl, } = result;
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={{ uri: image_url }} />
+            <Image style={styles.image} source={{ uri: image }} />
             <View style={styles.parent}>
-                <Text style={styles.name}>{name}</Text>
+                <Text style={styles.name}>{title}</Text>
                 <TouchableOpacity
                     activeOpacity={1}
                     onPress={handleOnPressLike}
@@ -52,9 +86,9 @@ function FancyRecipeDetail({ result }) {
                 </TouchableOpacity>
             </View>
             <View style={styles.parent}>
-                <Text>
+                {/* <Text>
                     {rating} Stars, {review_count} Reviews{' '}
-                </Text>
+                </Text> */}
                 <MaterialCommunityIcons name="fridge-outline" size={24} color="black" />
             </View>
 

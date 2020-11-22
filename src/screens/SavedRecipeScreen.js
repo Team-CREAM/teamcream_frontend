@@ -15,7 +15,7 @@ const SavedRecipeScreen = () => {
     return (
         <View style={styles.container}>
             <TopMenu
-                title="Saved Recipes"
+                // title="Saved Recipes"
                 searchbar
                 term={term}
                 onTermChange={(newTerm) => setTerm(newTerm)}
