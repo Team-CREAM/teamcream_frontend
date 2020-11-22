@@ -4,7 +4,7 @@ export default () => {
   const [error, setError] = useState('');
   const [isValidated, setIsValidated] = useState(false);
 
-  const validateInputs = (type, email, password) => {
+  const validateInputs = (type, email, password, conPassword) => {
     if (type === 'Login') {
       if (!validateEmail(email) && !validatePassword(password)) {
         setError('Email and Password do not meet requirements..');
@@ -28,6 +28,9 @@ export default () => {
         setIsValidated(false);
       } else if (!validatePassword(password)) {
         setError('Password must be 4 characters or longer');
+        setIsValidated(false);
+      } else if (password !== conPassword) {
+        setError('Passwords do not match');
         setIsValidated(false);
       } else {
         setIsValidated(true);

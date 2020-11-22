@@ -9,6 +9,7 @@ import {
   Button,
   Dimensions,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import OAuth from '../components/OAuth';
 import axiosWithoutToken from '../api/axiosWithoutToken';
@@ -49,7 +50,7 @@ const SignIn = ({ navigation }) => {
   };
 
   const validateSubmit = () => {
-    const [isValidated, error] = validateInputs('Login', email, password);
+    const [isValidated, error] = validateInputs('Login', email, password, '');
     if (isValidated) {
       SignInAxios();
     }
@@ -66,6 +67,7 @@ const SignIn = ({ navigation }) => {
       setError('');
     }, 5000);
   };
+  const buttonColor = Platform.OS === 'ios' ? '#ffffff' : '#D9B580';
 
   return (
     <View style={styles.container}>
@@ -96,9 +98,8 @@ const SignIn = ({ navigation }) => {
         onChangeText={(newTerm) => setPassword(newTerm)}
         onSubmitEditing={() => validateSubmit()}
       />
-
       <TouchableHighlight style={styles.loginButtonWrapper}>
-        <Button onPress={() => validateSubmit()} title="Login" color="#D9B580" />
+        <Button onPress={() => validateSubmit()} title="Login" color={buttonColor} />
       </TouchableHighlight>
 
       {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
@@ -173,6 +174,7 @@ const styles = StyleSheet.create({
     height: height * 0.052,
     justifyContent: 'center',
     marginBottom: 10,
+    backgroundColor: '#D9B580',
   },
   error: {
     flexDirection: 'row',
