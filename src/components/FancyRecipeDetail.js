@@ -33,6 +33,8 @@ function FancyRecipeDetail({ result, savedRecipeList }) {
             if (index > -1) {
                 savedRecipeList.splice(index, 1);
             }
+        } else {
+            savedRecipeList.push(result);
         }
         toggleLike(!liked);
         console.log(liked);
