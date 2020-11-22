@@ -9,7 +9,7 @@ const { width, height } = Dimensions.get('window');
 
 
 
-function FancyRecipeDetail({ result }) {
+function FancyRecipeDetail({ result, savedRecipeList }) {
     const [liked, toggleLike] = useState(false);
 
     const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
@@ -27,6 +27,13 @@ function FancyRecipeDetail({ result }) {
         {/* liked = !liked;
         smallAnimatedIcon.color = '#ff0000';
         console.log(liked); */}
+        // remove this element from savedRecipeList if it was originally liked and you're unliking it now
+        if (liked === true) {
+            const index = savedRecipeList.indexOf(result);
+            if (index > -1) {
+                savedRecipeList.splice(index, 1);
+            }
+        }
         toggleLike(!liked);
         console.log(liked);
 

@@ -29,7 +29,7 @@ const SavedRecipeScreen = () => {
                         return (
                             // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
                             <TouchableOpacity onPress={() => console.log(item.id)}>
-                                <FancyRecipeDetail result={item} />
+                                <FancyRecipeDetail result={item} savedRecipeList={results} />
                             </TouchableOpacity>
                         );
                     }}
