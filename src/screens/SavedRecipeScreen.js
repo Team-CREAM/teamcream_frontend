@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, FlatList, TouchableOpacity, Dimensions } from 'react-native';
 import SearchBar from '../components/SearchBar';
-import useRecipes from '../hooks/useRecipes';
+import useRecipes from '../hooks/useRecipes2';
 import RecipeDetail from '../components/RecipeDetail_R';
 import BottomMenu from '../components/BottomMenu2';
 import TopMenu from '../components/TopMenu';

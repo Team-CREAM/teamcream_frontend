@@ -35,13 +35,19 @@ const navigator = createStackNavigator(
     DietaryRestrictions,
     EmailSent,
     ProfilePic,
-    SavedRecipeScreen,
+    SavedRecipeScreen: {
+      screen: SavedRecipeScreen,
+      navigationOptions: {
+        title: 'Saved Recipes',
+        headerShown: true,
+      },
+    },
     RecipeScreen,
   },
   {
-    // initialRouteName: 'SavedRecipeScreen',
+    initialRouteName: 'SavedRecipeScreen',
     // initialRouteName: 'RecipeScreen',
-    initialRouteName: 'Home',
+    // initialRouteName: 'Home',
     defaultNavigationOptions: {
       // title: 'Cooking with Crumbs',
       headerShown: false,
