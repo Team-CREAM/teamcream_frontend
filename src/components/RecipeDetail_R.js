@@ -5,11 +5,11 @@ import heartIcon from 'react-native-vector-icons/AntDesign';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
-const RecipeDetail = ({ result }) => {
+
+const RecipeDetail = ({ result, savedRecipeList }) => {
   const [liked, toggleLike] = useState(false);
-
+  const [props, setProps] = useState([]);
   const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
-
   let smallAnimatedIcon = AnimatedHeart;
 
   const handleSmallAnimatedIconRef = (ref) => {
@@ -18,11 +18,13 @@ const RecipeDetail = ({ result }) => {
 
   const handleOnPressLike = () => {
     smallAnimatedIcon.bounceIn();
-    // eslint-disable-next-line no-lone-blocks
-    {
-      /* liked = !liked;
-        smallAnimatedIcon.color = '#ff0000';
-        console.log(liked); */
+    if (liked === true) {
+      const index = savedRecipeList.indexOf(result);
+      if (index > -1) {
+        savedRecipeList.splice(index, 1);
+      }
+    } else {
+      savedRecipeList.push(result);
     }
     toggleLike(!liked);
     console.log(liked);
@@ -65,7 +67,7 @@ const RecipeDetail = ({ result }) => {
     originalId,
     spoonacularSourceUrl,
   } = result;
-
+  // console.log('Thisis result:', result);
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{ uri: image }} />
