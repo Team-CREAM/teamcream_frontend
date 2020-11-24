@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { Entypo, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const { width, height } = Dimensions.get('window');
 
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   menuItemText: {
-    fontSize: 12,
+    fontSize: RFPercentage(1.55),
   },
 });
 
