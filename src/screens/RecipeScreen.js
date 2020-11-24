@@ -93,6 +93,7 @@ const RecipeScreen = () => {
               ))}
             </ScrollView>
           </View>
+
           {/* Area for the instructions */}
           <View style={styles.instructions}>
             <HTML
@@ -100,15 +101,6 @@ const RecipeScreen = () => {
               imagesMaxWidth={Dimensions.get('window').width}
             />
           </View>
-        </View>
-        <View style={{ alignItems: 'center' }}>
-          <View style={styles.lineContainer}>
-            <View style={styles.lineStyle} />
-          </View>
-        </View>
-        {/* Area for comments */}
-        <View style={styles.comments}>
-          <Text>comments here</Text>
         </View>
       </ScrollView>
       {/* Bottom Nav bar */}
@@ -123,9 +115,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    // paddingBottom: height * 0.17,
   },
   scrollView: {
     marginHorizontal: '5%',
@@ -163,9 +156,6 @@ const styles = StyleSheet.create({
   },
   instructions: {
     width: '50%',
-  },
-  comments: {
-    alignItems: 'center',
   },
   bottomMenu: {
     position: 'absolute',
