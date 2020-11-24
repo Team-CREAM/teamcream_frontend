@@ -29,7 +29,7 @@ const SavedRecipeScreen = () => {
                         return (
                             // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
                             <TouchableOpacity onPress={() => console.log(item.id)}>
-                                <RecipeDetail result={item} savedRecipeList={results} />
+                                <RecipeDetail result={item} savedRecipeList={results} boolean={false} />
                             </TouchableOpacity>
                         );
                     }}
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     },
     marginTop: {
         marginTop: 10,
+        alignItems: 'center'
     },
     bottomMenu: {
         position: 'absolute',

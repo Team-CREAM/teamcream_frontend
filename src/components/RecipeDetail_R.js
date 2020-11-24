@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
-const RecipeDetail = ({ result, savedRecipeList }) => {
+const RecipeDetail = ({ result, savedRecipeList, boolean }) => {
   const [liked, toggleLike] = useState(false);
   const [props, setProps] = useState([]);
   const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
@@ -67,12 +67,12 @@ const RecipeDetail = ({ result, savedRecipeList }) => {
     originalId,
     spoonacularSourceUrl,
   } = result;
-  // console.log('Thisis result:', result);
+
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: image }} />
-      <View style={styles.recipeDescription}>
-        <Text style={styles.name}>{title}</Text>
+    <View style={boolean ? styles.container : difStyles.container}>
+      <Image style={boolean ? styles.image : difStyles.image} source={{ uri: image }} />
+      <View style={boolean ? styles.recipeDescription : difStyles.recipeDescription}>
+        <Text style={boolean ? styles.name : difStyles.name}>{title}</Text>
         <TouchableOpacity activeOpacity={1} onPress={handleOnPressLike}>
           <AnimatedHeart
             ref={handleSmallAnimatedIconRef}
@@ -93,6 +93,38 @@ const colors = {
   textPrimary: '#515151',
   black: '#000',
 };
+
+const difStyles = StyleSheet.create({
+  container: {
+    margin: 15,
+    borderBottomWidth: 1,
+    borderColor: 'black',
+    borderRadius: 4,
+    flexGrow: 1,
+    width: width * 0.8,
+  },
+  image: {
+    width: width * 0.8,
+    height: height * 0.2,
+    resizeMode: 'stretch',
+    borderRadius: 4,
+    marginBottom: 5,
+  },
+  recipeDescription: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    maxWidth: width * 0.8,
+    minHeight: height * 0.03,
+  },
+  name: {
+    fontWeight: 'bold',
+    textAlign: 'left',
+    flexWrap: 'wrap',
+    flex: 1,
+  },
+});
+
 const styles = StyleSheet.create({
   image: {
     width: width * 0.58,

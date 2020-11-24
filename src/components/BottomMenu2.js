@@ -8,7 +8,7 @@ const { width, height } = Dimensions.get('window');
 const BottomMenu = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('RecipeScreen')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('SavedRecipeScreen')}>
         <Entypo name="open-book" size={24} color="black" />
         <Text style={styles.menuItemText}>Saved Recipes</Text>
       </TouchableOpacity>
