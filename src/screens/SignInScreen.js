@@ -10,6 +10,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
+import useSetToken from '../hooks/useSetToken';
 import OAuth from '../components/OAuth';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 import useValidation from '../hooks/useValidation';
@@ -24,6 +25,7 @@ const SignIn = ({ navigation }) => {
   const [focus2, setFocus2] = useState(false);
 
   const [validateInputs] = useValidation();
+  const [storeToken] = useSetToken();
 
   const SignInAxios = async () => {
     setLoading(true);
@@ -35,7 +37,8 @@ const SignIn = ({ navigation }) => {
       .then(function (response) {
         setLoading(false);
         if (response.data.token) {
-          navigation.navigate('Home', { token: response.data.token });
+          storeToken(response.data.token);
+          navigation.navigate('Home');
         }
 
         if (response.data.error) {

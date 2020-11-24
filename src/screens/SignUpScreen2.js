@@ -13,6 +13,7 @@ import {
 import OAuth from '../components/OAuth';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 import useValidation from '../hooks/useValidation';
+import useSetToken from '../hooks/useSetToken';
 
 const { width, height } = Dimensions.get('window');
 
@@ -24,6 +25,7 @@ const SignUp = ({ navigation }) => {
   const [focus2, setFocus2] = useState(false);
 
   const [validateInputs] = useValidation();
+  const [storeToken] = useSetToken();
 
   const SignUpAxios = async () => {
     setLoading(true);
@@ -35,7 +37,8 @@ const SignUp = ({ navigation }) => {
       .then(function (response) {
         setLoading(false);
         if (response.data.token) {
-          navigation.navigate('ProfilePic', { token: response.data.token });
+          storeToken(response.data.token);
+          navigation.navigate('ProfilePic');
         }
 
         if (response.data.error) {
