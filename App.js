@@ -41,7 +41,7 @@ const navigator = createStackNavigator(
   {
     // initialRouteName: 'SavedRecipeScreen',
     // initialRouteName: 'RecipeScreen',
-    initialRouteName: 'Home',
+    initialRouteName: 'RecipeScreen',
     defaultNavigationOptions: {
       // title: 'Cooking with Crumbs',
       headerShown: false,
