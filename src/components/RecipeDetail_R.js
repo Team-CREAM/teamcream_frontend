@@ -6,8 +6,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
-const RecipeDetail = ({ result, savedRecipeList, boolean }) => {
-  const [liked, toggleLike] = useState(false);
+const RecipeDetail = ({ result, savedRecipeList, boolean, refresh, hi }) => {
+  const [liked, toggleLike] = useState(!boolean);
   const [props, setProps] = useState([]);
   const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
   let smallAnimatedIcon = AnimatedHeart;
@@ -22,6 +22,7 @@ const RecipeDetail = ({ result, savedRecipeList, boolean }) => {
       const index = savedRecipeList.indexOf(result);
       if (index > -1) {
         savedRecipeList.splice(index, 1);
+        refresh(!hi);
       }
     } else {
       savedRecipeList.push(result);

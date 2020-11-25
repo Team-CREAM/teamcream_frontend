@@ -10,6 +10,7 @@ import TopMenu from '../components/TopMenu';
 const { width, height } = Dimensions.get('window');
 
 const SavedRecipeScreen = () => {
+    const [refresh, setRefresh] = useState(false);
     const [term, setTerm] = useState('');
     const [searchApi, results, errorMessage] = useRecipes();
     return (
@@ -24,12 +25,13 @@ const SavedRecipeScreen = () => {
             <View style={styles.marginTop}>
                 <FlatList
                     data={results}
+                    extraData={refresh}
                     keyExtractor={(result) => result.id}
                     renderItem={({ item }) => {
                         return (
                             // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
                             <TouchableOpacity onPress={() => console.log(item.id)}>
-                                <RecipeDetail result={item} savedRecipeList={results} boolean={false} />
+                                <RecipeDetail result={item} savedRecipeList={results} boolean={false} refresh={setRefresh} hi={refresh}/>
                             </TouchableOpacity>
                         );
                     }}
