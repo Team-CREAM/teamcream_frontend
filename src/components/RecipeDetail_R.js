@@ -110,6 +110,8 @@ const difStyles = StyleSheet.create({
     resizeMode: 'stretch',
     borderRadius: 4,
     marginBottom: 5,
+    borderColor: 'black',
+    borderWidth: 2,
   },
   recipeDescription: {
     justifyContent: 'space-between',
@@ -128,17 +130,19 @@ const difStyles = StyleSheet.create({
 
 const styles = StyleSheet.create({
   image: {
-    width: width * 0.58,
-    height: height * 0.2,
+    width: width * 0.62,
+    height: height * 0.15,
     resizeMode: 'stretch',
     borderRadius: 4,
     marginBottom: 5,
+    borderColor: 'black',
+    borderWidth: 1,
   },
   recipeDescription: {
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: width * 0.55,
+    maxWidth: width * 0.62,
   },
   name: {
     fontWeight: 'bold',
@@ -151,7 +155,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderRadius: 4,
     flexGrow: 1,
-    width: width * 0.6,
+    width: width * 0.62,
   },
 });
 
