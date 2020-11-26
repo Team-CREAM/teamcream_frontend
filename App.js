@@ -16,8 +16,8 @@ import RecipeScreen from './src/screens/RecipeScreen';
 const navigator = createStackNavigator(
   {
     Home: {
-      // screen: Home,
-      screen: HomeR,
+      screen: Home,
+      // screen: HomeR,
       navigationOptions: {
         headerShown: false,
       },
@@ -45,8 +45,7 @@ const navigator = createStackNavigator(
     RecipeScreen,
   },
   {
-    initialRouteName: 'SavedRecipeScreen',
-    // initialRouteName: 'RecipeScreen',
+    initialRouteName: 'SignIn',
     // initialRouteName: 'Home',
     defaultNavigationOptions: {
       // title: 'Cooking with Crumbs',
