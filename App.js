@@ -10,11 +10,15 @@ import EmailSent from './src/screens/EmailSent';
 import ProfilePic from './src/screens/ProfilePic';
 import Home from './src/screens/HomeScreen';
 import Explore from './src/screens/ExploreScreen';
+import HomeR from './src/screens/HomeScreen_R';
+import SavedRecipeScreen from './src/screens/SavedRecipeScreen';
+import RecipeScreen from './src/screens/RecipeScreen';
 
 const navigator = createStackNavigator(
   {
     Home: {
-      screen: Home,
+      // screen: Home,
+      screen: HomeR,
       navigationOptions: {
         headerShown: false,
       },
@@ -38,11 +42,21 @@ const navigator = createStackNavigator(
     DietaryRestrictions,
     EmailSent,
     ProfilePic,
+    SavedRecipeScreen: {
+      screen: SavedRecipeScreen,
+      navigationOptions: {
+        title: 'Saved Recipes',
+        headerShown: true,
+      },
+    },
+    RecipeScreen,
   },
   {
-    initialRouteName: 'SignIn',
+    // initialRouteName: 'SavedRecipeScreen',
+    initialRouteName: 'RecipeScreen',
     defaultNavigationOptions: {
-      title: 'Cooking with Crumbs',
+      // title: 'Cooking with Crumbs',
+      headerShown: false,
     },
   },
 );

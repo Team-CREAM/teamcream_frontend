@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { Entypo, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const { width, height } = Dimensions.get('window');
 
 const BottomMenu = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('RecipeScreen')}>
         <Entypo name="open-book" size={24} color="black" />
         <Text style={styles.menuItemText}>Saved Recipes</Text>
       </TouchableOpacity>
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   menuItemText: {
-    fontSize: 12,
+    fontSize: RFPercentage(1.55),
   },
 });
 
