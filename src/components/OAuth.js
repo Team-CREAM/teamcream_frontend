@@ -17,6 +17,7 @@ const OAuth = ({ navigation }) => {
   const [storeToken] = useSetToken();
 
   const signInGoogle = async () => {
+    // Init Google
     try {
       const { type, accessToken, user } = await Google.logInAsync({
         iosClientId: '1082251707964-qu924lu7cj0hcbtu6t7ppq23nb3c9b43.apps.googleusercontent.com',
@@ -29,6 +30,7 @@ const OAuth = ({ navigation }) => {
         scopes: ['profile', 'email'],
       });
 
+      // Call /google and store token
       if (type === 'success') {
         console.log('success');
         await axiosWithoutToken

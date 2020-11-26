@@ -1,9 +1,25 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState } from 'react';
 
-export default axios.create({
-  baseURL: 'https://api.yelp.com/v3/businesses',
-  headers: {
-    Authorization:
-      'Bearer BPRC8bRNteU6q9ruTWNth2aTfwS_byKJr51VnTD-rg9dw3Ly9oMY5tIooOPGhX1tiPhiEI7rZz3vTtp-ydCLSZg6iVApaQCEYPiLI3xwQQU8wZ3rvCv-AIkCMCGPX3Yx',
-  },
-});
+const axiosWithToken = async () => {
+  const [token, setToken] = useState('');
+  try {
+    const value = await AsyncStorage.getItem('@token');
+    setToken(value);
+    console.log(token);
+  } catch (e) {
+    // error reading value
+    console.log('error getting value');
+  }
+
+  return axios.create({
+    baseURL: 'http://10.0.2.2:3000',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export default axiosWithToken;
