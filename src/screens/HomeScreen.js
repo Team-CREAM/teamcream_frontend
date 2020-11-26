@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import SearchBar from '../components/SearchBar';
 import useRecipes from '../hooks/useRecipes';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu2';
 import TopMenu from '../components/TopMenu';
-import useGetToken from '../hooks/useGetToken';
 
 const { width, height } = Dimensions.get('window');
 
@@ -50,7 +48,7 @@ const HomeScreen = () => {
         onTermChange={(newTerm) => setTerm(newTerm)}
         onTermSubmit={() => searchApi(term)}
       />
-      {token ? <Text>{token}</Text> : null}
+      {/* {token ? <Text>{token}</Text> : null} */}
       <View style={styles.marginTop}>
         <ScrollView>
           <RecipeList title="Welcome Back!" results={filterResultsByPrice('$')} />

@@ -5,12 +5,17 @@ import React from 'react';
 import { StyleSheet, Text, Image, View, Alert, Dimensions, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import * as Google from 'expo-google-app-auth';
+import * as Facebook from 'expo-facebook';
+import axiosWithoutToken from '../api/axiosWithoutToken';
+import useSetToken from '../hooks/useSetToken';
 
 const dimensions = Dimensions.get('window');
 const { width } = dimensions;
 const { height } = dimensions;
 
 const OAuth = ({ navigation }) => {
+  const [storeToken] = useSetToken();
+
   const signInGoogle = async () => {
     try {
       const { type, accessToken, user } = await Google.logInAsync({
@@ -26,17 +31,57 @@ const OAuth = ({ navigation }) => {
 
       if (type === 'success') {
         console.log('success');
-        /* `accessToken` is now valid and can be used to get data from the Google API with HTTP requests */
-        console.log(accessToken);
-        console.log(user);
-
-        // TODO!
-        // Call backend, send email to them... they either create a new user or return existing user json web token
-
-        navigation.navigate('Home');
+        await axiosWithoutToken
+          .post('/google', {
+            email: user.email,
+          })
+          .then(function (response) {
+            if (response.data.token) {
+              console.log('Axios google worked', response.data.token);
+              storeToken(response.data.token);
+              navigation.navigate('Home');
+            }
+          })
+          .catch(function (error) {
+            console.log('error');
+            console.log(error);
+          });
       }
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const facebook = async () => {
+    await Facebook.initializeAsync({
+      autoLogAppEvents: true,
+      appId: 203083637970193,
+    });
+    try {
+      const {
+        type,
+        token,
+        expires,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync('203083637970193', {
+        permissions: ['public_profile'],
+      });
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        fetch(
+          `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`,
+        )
+          .then((response) => console.log(response.json()))
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((e) => console.log(e));
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
     }
   };
 
@@ -44,7 +89,7 @@ const OAuth = ({ navigation }) => {
     <View style={{ flex: 1, alignItems: 'center' }}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Image style={styles.facebookLogo} source={require('../../images/facebook_logo.png')} />
-        <TouchableOpacity onPress={() => Alert.alert('Facebook Button Pressed')}>
+        <TouchableOpacity onPress={() => facebook()}>
           <Text style={{ color: 'blue' }}>Connect with Facebook</Text>
         </TouchableOpacity>
       </View>
