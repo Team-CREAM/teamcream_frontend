@@ -14,36 +14,28 @@ const HomeScreen = () => {
   const [results, setResults] = useState('');
 
   useEffect(() => {
-    // const data = async () => receiveRecipe().then(setResults(data));
-    console.log('In effect');
-
     const receiveRecipes = async () => {
-      console.log('In RetrieveRecipes');
       // const response = await axiosInstance.get('/home');
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.get('/home');
-      console.log('In away axiosWithToken');
       // setLoading(false);
-      // response.data;
-      setResults(response.data['popular recipes']);
+      setResults(response.data);
     };
     receiveRecipes();
   }, []);
 
   const filterResults = (type) => {
     if (results) {
-      return results.filter((result) => {
-        switch (type) {
-          case 'veryPopular':
-            return result.veryPopular === true;
-          case 'veryHealthy':
-            return result.veryHealthy === true;
-          case 'vegan':
-            return result.vegan === true;
-          default:
-            return result;
-        }
-      });
+      switch (type) {
+        case 'Popular':
+          return results.popular_recipes;
+        case 'Recent':
+          return results.recent_recipes;
+        case 'Can Make':
+          return results.possible_recipes;
+        default:
+          return results.random_recipes;
+      }
     }
   };
 
@@ -58,10 +50,10 @@ const HomeScreen = () => {
       />
       <View style={styles.marginTop}>
         <ScrollView>
-          <RecipeList title="Welcome Back!" results={filterResults('vegan')} />
-          <RecipeList title="Continue where you left off!" results={filterResults('veryHealthy')} />
-          <RecipeList title="What you can make right now!" results={filterResults('vegan')} />
-          <RecipeList title="Popular!" results={filterResults('veryPopular')} />
+          <RecipeList title="Welcome Back!" results={filterResults('')} />
+          <RecipeList title="Continue where you left off!" results={filterResults('Recent')} />
+          <RecipeList title="What you can make right now!" results={filterResults('Can Make')} />
+          <RecipeList title="Popular!" results={filterResults('Popular')} />
         </ScrollView>
       </View>
       <View style={styles.bottomMenu}>

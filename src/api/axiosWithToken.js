@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { Alert } from 'react-native';
 
 const axiosWithToken = async () => {
-  console.log('In axiosWithToken hook');
   const axiosInstance = axios.create({
     baseURL: 'http://10.0.2.2:3000',
     headers: {
