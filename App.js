@@ -16,8 +16,8 @@ import RecipeScreen from './src/screens/RecipeScreen';
 const navigator = createStackNavigator(
   {
     Home: {
-      screen: Home,
-      // screen: HomeR,
+      // screen: Home,
+      screen: HomeR,
       navigationOptions: {
         headerShown: false,
       },

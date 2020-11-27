@@ -1,34 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import { bezier } from 'react-native/Libraries/Animated/src/Easing';
 import SearchBar from '../components/SearchBar';
 import useRecipes2 from '../hooks/useRecipes2';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu2';
 import TopMenu from '../components/TopMenu';
+import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
 const HomeScreen = () => {
   const [term, setTerm] = useState('');
-  const [searchApi, results, errorMessage] = useRecipes2();
+  const [results, setResults] = useState('');
+
+  useEffect(() => {
+    // const data = async () => receiveRecipe().then(setResults(data));
+    console.log('In effect');
+
+    const receiveRecipes = async () => {
+      console.log('In RetrieveRecipes');
+      // const response = await axiosInstance.get('/home');
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.get('/home');
+      console.log('In away axiosWithToken');
+      // setLoading(false);
+      // response.data;
+      setResults(response.data['popular recipes']);
+    };
+    receiveRecipes();
+  }, []);
 
   const filterResults = (type) => {
-    return results.filter((result) => {
-      switch (type) {
-        case 'veryPopular':
-          return result.veryPopular === true;
-          break;
-        case 'veryHealthy':
-          return result.veryHealthy === true;
-          break;
-        case 'vegan':
-          return result.vegan === true;
-          break;
-        default:
-          return result;
-      }
-    });
+    if (results) {
+      return results.filter((result) => {
+        switch (type) {
+          case 'veryPopular':
+            return result.veryPopular === true;
+          case 'veryHealthy':
+            return result.veryHealthy === true;
+          case 'vegan':
+            return result.vegan === true;
+          default:
+            return result;
+        }
+      });
+    }
   };
 
   return (
@@ -38,7 +54,7 @@ const HomeScreen = () => {
         searchbar
         term={term}
         onTermChange={(newTerm) => setTerm(newTerm)}
-        onTermSubmit={() => searchApi(term)}
+        // onTermSubmit={() => searchApi(term)}
       />
       <View style={styles.marginTop}>
         <ScrollView>

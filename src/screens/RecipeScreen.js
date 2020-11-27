@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import BottomMenu from '../components/BottomMenu2';
-import retrieveRecipes from '../hooks/retrieveRecipes';
 
 const { width, height } = Dimensions.get('window');
 
