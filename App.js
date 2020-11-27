@@ -9,6 +9,7 @@ import DietaryRestrictions from './src/screens/DietaryRestrictions';
 import EmailSent from './src/screens/EmailSent';
 import ProfilePic from './src/screens/ProfilePic';
 import Home from './src/screens/HomeScreen';
+import Explore from './src/screens/ExploreScreen';
 import HomeR from './src/screens/HomeScreen_R';
 import SavedRecipeScreen from './src/screens/SavedRecipeScreen';
 import RecipeScreen from './src/screens/RecipeScreen';
@@ -24,6 +25,12 @@ const navigator = createStackNavigator(
     },
     SignIn: {
       screen: SignIn,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    Explore: {
+      screen: Explore,
       navigationOptions: {
         headerShown: false,
       },
@@ -47,6 +54,8 @@ const navigator = createStackNavigator(
   {
     initialRouteName: 'SignIn',
     // initialRouteName: 'Home',
+    // initialRouteName: 'SavedRecipeScreen',
+    // initialRouteName: 'RecipeScreen',
     defaultNavigationOptions: {
       // title: 'Cooking with Crumbs',
       headerShown: false,

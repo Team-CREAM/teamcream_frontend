@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 
-export default () => {
+export default async () => {
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('@token');
