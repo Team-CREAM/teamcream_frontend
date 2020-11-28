@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Dimensions, FlatList, Image, Text } from 'react-native';
+import { View, StyleSheet, Dimensions, FlatList, Image, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from 'axios';
@@ -15,6 +15,7 @@ const ExploreScreen = () => {
   const [searchApi, results, errorMessage] = useRecipes();
   const [token, setToken] = useState('');
   const [result, setResult] = useState(['hello', 'goodbye']);
+  const [loading, setLoading] = useState(false);
 
   const filterList = (results) => {
     return results;
@@ -22,10 +23,12 @@ const ExploreScreen = () => {
 
   useEffect(() => {
     const receiveRecipes = async () => {
+      setLoading(true);
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.get('/home').then(({ data }) => {
         setResult(data.popular_recipes);
       });
+      setLoading(false);
     };
     receiveRecipes();
   }, []);
@@ -41,6 +44,8 @@ const ExploreScreen = () => {
         onFilterSubmit={() => alert('it works')}
       />
       <View>
+        {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
+
         <FlatList
           columnWrapperStyle={{ flexWrap: 'wrap', flex: 1, marginTop: 2, marginHorizontal: 2 }}
           data={result}
