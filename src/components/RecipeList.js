@@ -4,7 +4,7 @@ import { withNavigation } from 'react-navigation';
 import RecipeDetail from './RecipeDetail';
 
 const RecipeList = ({ title, results, navigation }) => {
-  if (!results.length) {
+  if (!results) {
     return null;
   }
 
@@ -20,7 +20,7 @@ const RecipeList = ({ title, results, navigation }) => {
           return (
             // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
             <TouchableOpacity onPress={() => console.log(item.id)}>
-              <RecipeDetail result={item} />
+              <RecipeDetail result={item} boolean={true}/>
             </TouchableOpacity>
           );
         }}
