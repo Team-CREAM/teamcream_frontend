@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import SearchBar from '../components/SearchBar';
-import useRecipes2 from '../hooks/useRecipes2';
+import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu2';
 import TopMenu from '../components/TopMenu';
@@ -15,10 +13,8 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const receiveRecipes = async () => {
-      // const response = await axiosInstance.get('/home');
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.get('/home');
-      // setLoading(false);
       setResults(response.data);
     };
     receiveRecipes();
