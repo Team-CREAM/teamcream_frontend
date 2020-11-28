@@ -57,7 +57,7 @@ const navigator = createStackNavigator(
     RecipeScreen,
   },
   {
-    initialRouteName: 'ProfilePic',
+    initialRouteName: 'Login',
     // initialRouteName: 'Home',
     // initialRouteName: 'SavedRecipeScreen',
     // initialRouteName: 'RecipeScreen',
