@@ -54,7 +54,12 @@ const navigator = createStackNavigator(
         headerShown: false,
       },
     },
-    RecipeScreen,
+    RecipeScreen: {
+      screen: RecipeScreen,
+      navigationOptions: {
+        headerShown: false,
+      }
+    }
   },
   {
     initialRouteName: 'Login',

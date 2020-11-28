@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import TopMenu from '../components/TopMenu';
-import BottomMenu from '../components/BottomMenu2';
+import BottomMenu from '../components/BottomMenu';
 import useRecipes from '../hooks/useRecipes';
 import axiosWithToken from '../api/axiosWithToken';
 
@@ -76,6 +76,7 @@ const ExploreScreen = () => {
   const [cheap, setCheap] = useState(false);
   const [veryPopular, setVeryPopular] = useState(false);
   const [sustainable, setSustainable] = useState(false);
+  const [inventory, setInventory] = useState(false);
   const [cuisine, setCuisine] = useState('');
   const [dishType, setDishType] = useState('');
   const [number, setNumber] = useState(99);
@@ -118,7 +119,21 @@ const ExploreScreen = () => {
             }}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                {/* Stuff here */}
+                <Text style={styles.header}>Filter by: </Text>
+
+                <View style={{ ...styles.row, marginBottom: 10 }}>
+                  <View style={styles.boolText}>
+                    <Text>Inventory:</Text>
+                  </View>
+                  <Checkbox
+                    title="Inventory"
+                    status={inventory ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                      setInventory(!inventory);
+                    }}
+                  />
+                </View>
+                <Text style={styles.header}>Additional options: </Text>
                 <View style={styles.row}>
                   <View style={styles.boolText}>
                     <Text>Healthy:</Text>
@@ -256,6 +271,9 @@ const styles = StyleSheet.create({
   row: {
     marginHorizontal: 20,
     flexDirection: 'row',
+  },
+  header: {
+    fontWeight: 'bold',
   },
 });
 

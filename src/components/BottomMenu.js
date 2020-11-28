@@ -30,13 +30,13 @@ const BottomMenu = ({ navigation }) => {
         </Text>
       </TouchableOpacity>
       {/* TODO: Change This to Inventory */}
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Explore')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => alert('Inventory Pressed')}>
         <MaterialCommunityIcons
           name="fridge-outline"
           size={24}
-          color={routeName === 'Explore' ? 'white' : 'black'}
+          color={routeName === 'Inventory' ? 'white' : 'black'}
         />
-        <Text style={routeName === 'Explore' ? styles.menuItemTextScreen : styles.menuItemText}>
+        <Text style={routeName === 'Inventory' ? styles.menuItemTextScreen : styles.menuItemText}>
           Inventory
         </Text>
       </TouchableOpacity>
@@ -49,7 +49,7 @@ const BottomMenu = ({ navigation }) => {
           color={routeName === 'Explore' ? 'white' : 'black'}
         />
         <Text style={routeName === 'Explore' ? styles.menuItemTextScreen : styles.menuItemText}>
-          Search
+          Explore
         </Text>
       </TouchableOpacity>
     </View>

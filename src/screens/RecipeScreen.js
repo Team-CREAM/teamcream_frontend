@@ -12,7 +12,7 @@ import {
 import { NavigationEvents } from 'react-navigation';
 import HTML from 'react-native-render-html';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
-import BottomMenu from '../components/BottomMenu2';
+import BottomMenu from '../components/BottomMenu';
 
 // import retrieveRecipes from '../hooks/retrieveRecipes';
 
