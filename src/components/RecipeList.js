@@ -21,7 +21,7 @@ const RecipeList = ({ title, results, navigation }) => {
           return (
             // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
             <TouchableOpacity onPress={() => console.log(item.id)}>
-              <RecipeDetail result={item} />
+              <RecipeDetail result={item} boolean={true}/>
             </TouchableOpacity>
           );
         }}

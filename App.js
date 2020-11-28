@@ -46,7 +46,7 @@ const navigator = createStackNavigator(
       screen: SavedRecipeScreen,
       navigationOptions: {
         title: 'Saved Recipes',
-        headerShown: true,
+        headerShown: false,
       },
     },
     RecipeScreen,
