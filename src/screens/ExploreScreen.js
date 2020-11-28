@@ -21,42 +21,13 @@ const ExploreScreen = () => {
   };
 
   useEffect(() => {
-    const testing = async () => {
-      try {
-        try {
-          const value = await AsyncStorage.getItem('@token');
-          setToken(value);
-        } catch (e) {
-          // error reading value
-          console.log('error getting value');
-        }
-
-        // console.log('gaergaer');
-        // const response = await axiosWithToken.get('/home').then(({ data }) => {
-        //   console.log('here');
-        //   setResult(data['popular recipes']);
-        // });
-
-        // console.log(response);
-
-        const response = axios
-          .create({
-            baseURL: 'http://10.0.2.2:3000',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .get('/home')
-          .then(({ data }) => {
-            setResult(data['popular recipes']);
-          });
-      } catch (err) {
-        console.log(err);
-      }
+    const receiveRecipes = async () => {
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.get('/home').then(({ data }) => {
+        setResult(data.popular_recipes);
+      });
     };
-
-    testing();
+    receiveRecipes();
   }, []);
 
   return (
