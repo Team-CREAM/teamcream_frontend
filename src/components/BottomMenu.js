@@ -2,9 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Octicons, Entypo, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
-import { NavigationContext, withNavigation } from 'react-navigation';
+import { withNavigation } from 'react-navigation';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../screens/HomeScreen';
 import HomeScreen from '../screens/HomeScreen';
 
 function SavedRecipes() {

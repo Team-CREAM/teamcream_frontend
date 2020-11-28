@@ -51,7 +51,9 @@ const ExploreScreen = () => {
           .then(({ data }) => {
             setResult(data['popular recipes']);
           });
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     testing();

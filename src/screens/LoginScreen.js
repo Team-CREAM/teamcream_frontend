@@ -127,12 +127,12 @@ const SignIn = ({ navigation }) => {
       <View style={styles.accountWrapper}>
         <View style={styles.noAccount}>
           <Text>No Account? </Text>
-          <Text style={styles.textWeight} onPress={() => navigation.navigate('SignUp2')}>
+          <Text style={styles.textWeight} onPress={() => navigation.navigate('SignUp')}>
             Sign up
           </Text>
         </View>
         {/* Forgot Password */}
-        <Text style={styles.textWeight} onPress={() => navigation.navigate('ResetPw2')}>
+        <Text style={styles.textWeight} onPress={() => navigation.navigate('ForgotPassword')}>
           Forgot Password?
         </Text>
       </View>

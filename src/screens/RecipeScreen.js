@@ -14,7 +14,7 @@ import HTML from 'react-native-render-html';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import BottomMenu from '../components/BottomMenu2';
 
-import retrieveRecipes from '../hooks/retrieveRecipes';
+// import retrieveRecipes from '../hooks/retrieveRecipes';
 
 const { width, height } = Dimensions.get('window');
 

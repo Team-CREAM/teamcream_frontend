@@ -5,9 +5,6 @@ export default async () => {
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('@token');
-      if (value !== null) {
-        // value previously stored
-      }
       return value;
     } catch (e) {
       // error reading value

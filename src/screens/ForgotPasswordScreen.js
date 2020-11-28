@@ -83,7 +83,7 @@ const ResetPw = ({ navigation }) => {
 
         <Text
           style={{ ...styles.goBackToLogin, fontWeight: 'bold' }}
-          onPress={() => navigation.navigate('SignIn')}>
+          onPress={() => navigation.navigate('Login')}>
           {' '}
           Log In.
         </Text>
