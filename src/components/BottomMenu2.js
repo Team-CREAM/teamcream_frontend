@@ -17,7 +17,7 @@ const BottomMenu = ({ navigation }) => {
           size={24}
           color={routeName === 'RecipeScreen' ? 'white' : 'black'}
         />
-        <Text>
+        <Text
           style={routeName === 'RecipeScreen' ? styles.menuItemTextScreen : styles.menuItemText}>
           Saved Recipes
         </Text>
