@@ -5,7 +5,7 @@ import RecipeDetail from './RecipeDetail_R';
 // import RecipeDetail from './RecipeDetail';
 
 const RecipeList = ({ title, results, navigation }) => {
-  if (!results.length) {
+  if (!results) {
     return null;
   }
 
