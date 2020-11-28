@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu2';
 import TopMenu from '../components/TopMenu';
@@ -10,12 +10,16 @@ const { width, height } = Dimensions.get('window');
 const HomeScreen = () => {
   const [term, setTerm] = useState('');
   const [results, setResults] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const receiveRecipes = async () => {
+      setLoading(true);
+
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.get('/home');
       setResults(response.data);
+      setLoading(false);
     };
     receiveRecipes();
   }, []);
@@ -45,6 +49,8 @@ const HomeScreen = () => {
         // onTermSubmit={() => searchApi(term)}
       />
       <View style={styles.marginTop}>
+        {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
+
         <ScrollView>
           <RecipeList title="Welcome Back!" results={filterResults('')} />
           <RecipeList title="Continue where you left off!" results={filterResults('Recent')} />

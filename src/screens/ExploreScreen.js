@@ -38,6 +38,7 @@ const ExploreScreen = () => {
         term={term}
         onTermChange={(newTerm) => setTerm(newTerm)}
         onTermSubmit={() => searchApi(term)}
+        onFilterSubmit={() => alert('it works')}
       />
       <View>
         <FlatList

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import useSetToken from '../hooks/useSetToken';
 import OAuth from '../components/OAuth';
 import axiosWithoutToken from '../api/axiosWithoutToken';
@@ -23,7 +24,6 @@ const SignIn = ({ navigation }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [focus2, setFocus2] = useState(false);
-
   const [validateInputs] = useValidation();
   const [storeToken] = useSetToken();
 
@@ -69,6 +69,15 @@ const SignIn = ({ navigation }) => {
       setError('');
     }, 5000);
   };
+
+  useEffect(() => {
+    const alreadySignedIn = async () => {
+      const token = await AsyncStorage.getItem('@token');
+      token ? navigation.navigate('Home') : null;
+    };
+
+    alreadySignedIn();
+  }, []);
 
   return (
     <View style={styles.container}>
