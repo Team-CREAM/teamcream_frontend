@@ -11,7 +11,7 @@ export default () => {
         const response = await axiosWithToken2.get('/complexSearch', {
           params: {
             // apiKey: '2b0715ea3ed94024a9bc6afc798e46ba',
-            apiKey: '139e8ef04ce346818b65511a4764ffb1',
+            apiKey: '0a3c80f574c04ff4bccd3dcddff35391',
             number: 50,
             sort: 'popularity, healthiness, random',
             addRecipeInformation: true,
