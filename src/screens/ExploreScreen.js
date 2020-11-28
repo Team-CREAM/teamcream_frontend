@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Dimensions, FlatList, Image, ActivityIndicator } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import axios from 'axios';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  Image,
+  ActivityIndicator,
+  Alert,
+  Modal,
+  Text,
+  TouchableHighlight,
+} from 'react-native';
+import { Checkbox } from 'react-native-paper';
 import TopMenu from '../components/TopMenu';
 import BottomMenu from '../components/BottomMenu2';
 import useRecipes from '../hooks/useRecipes';
@@ -13,11 +22,66 @@ const { width, height } = Dimensions.get('window');
 const ExploreScreen = () => {
   const [term, setTerm] = useState('');
   const [searchApi, results, errorMessage] = useRecipes();
-  const [token, setToken] = useState('');
   const [result, setResult] = useState(['hello', 'goodbye']);
   const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const filterList = (results) => {
+  const cuisines = [
+    'African',
+    'American',
+    'British',
+    'Cajun',
+    'Caribbean',
+    'Chinese',
+    'Eastern European',
+    'European',
+    'French',
+    'German',
+    'Greek',
+    'Indian',
+    'Irish',
+    'Italian',
+    'Japanese',
+    'Jewish',
+    'Korean',
+    'Latin American',
+    'Mediterranean',
+    'Mexican',
+    'Middle Eastern',
+    'Nordic',
+    'Southern',
+    'Spanish',
+    'Thai',
+    'Vietnamese',
+  ];
+
+  const dishTypes = [
+    'main course',
+    'side dish',
+    'dessert',
+    'appetizer',
+    'salad',
+    'bread',
+    'breakfast',
+    'soup',
+    'beverage',
+    'sauce',
+    'marinade',
+    'fingerfood',
+    'snack',
+    'drink',
+  ];
+  // Filtering
+  const [veryHealthy, setVeryHealthy] = useState(false);
+  const [cheap, setCheap] = useState(false);
+  const [veryPopular, setVeryPopular] = useState(false);
+  const [sustainable, setSustainable] = useState(false);
+  const [cuisine, setCuisine] = useState('');
+  const [dishType, setDishType] = useState('');
+  const [number, setNumber] = useState(99);
+
+  const filterOptions = (results) => {
+    setModalVisible(true);
     return results;
   };
 
@@ -41,9 +105,80 @@ const ExploreScreen = () => {
         term={term}
         onTermChange={(newTerm) => setTerm(newTerm)}
         onTermSubmit={() => searchApi(term)}
-        onFilterSubmit={() => alert('it works')}
+        onFilterSubmit={() => filterOptions()}
       />
       <View>
+        <View style={{ ...styles.centeredView, marginTop: 0 }}>
+          <Modal
+            animationType="slide"
+            transparent
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+            }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                {/* Stuff here */}
+                <View style={styles.row}>
+                  <View style={styles.boolText}>
+                    <Text>Healthy:</Text>
+                  </View>
+                  <Checkbox
+                    title="veryHealthy"
+                    status={veryHealthy ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                      setVeryHealthy(!veryHealthy);
+                    }}
+                  />
+                </View>
+                <View style={styles.row}>
+                  <View style={styles.boolText}>
+                    <Text>Cheap:</Text>
+                  </View>
+                  <Checkbox
+                    title="Cheap"
+                    status={cheap ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                      setCheap(!cheap);
+                    }}
+                  />
+                </View>
+                <View style={styles.row}>
+                  <View style={styles.boolText}>
+                    <Text>Popular:</Text>
+                  </View>
+                  <Checkbox
+                    title="veryPopular"
+                    status={veryPopular ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                      setVeryPopular(!veryPopular);
+                    }}
+                  />
+                </View>
+                <View style={styles.row}>
+                  <View style={styles.boolText}>
+                    <Text>Sustainable:</Text>
+                  </View>
+                  <Checkbox
+                    title="sustainable"
+                    status={sustainable ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                      setSustainable(!sustainable);
+                    }}
+                  />
+                </View>
+
+                <TouchableHighlight
+                  style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                  }}>
+                  <Text style={styles.textStyle}>Save</Text>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </Modal>
+        </View>
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
 
         <FlatList
@@ -82,6 +217,45 @@ const styles = StyleSheet.create({
   bottomMenu: {
     position: 'absolute',
     bottom: 0,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  openButton: {
+    backgroundColor: '#F194FF',
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginTop: 20,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  boolText: {
+    justifyContent: 'center',
+    width: '50%',
+  },
+  row: {
+    marginHorizontal: 20,
+    flexDirection: 'row',
   },
 });
 

@@ -72,8 +72,10 @@ const SignIn = ({ navigation }) => {
 
   useEffect(() => {
     const alreadySignedIn = async () => {
+      setLoading(true);
       const token = await AsyncStorage.getItem('@token');
       token ? navigation.navigate('Home') : null;
+      setLoading(false);
     };
 
     alreadySignedIn();
