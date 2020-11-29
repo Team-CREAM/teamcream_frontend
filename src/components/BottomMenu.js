@@ -1,84 +1,81 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Octicons, Entypo, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { NavigationContext, withNavigation } from 'react-navigation';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../screens/HomeScreen';
-import HomeScreen from '../screens/HomeScreen';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { Entypo, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import { withNavigation } from 'react-navigation';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
-function SavedRecipes() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
-function Inventory() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
-function Search() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
-const Tab = createBottomTabNavigator();
+const { width, height } = Dimensions.get('window');
 
 const BottomMenu = ({ navigation }) => {
+  const { routeName } = navigation.state;
+  // console.log(routeName);
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Home"
-        tabBarOptions={{
-          activeTintColor: 'pink',
-        }}>
-        <Tab.Screen
-          name="Saved Recipes"
-          component={SavedRecipes}
-          options={{
-            tabBarLabel: 'Saved Recipes',
-            tabBarIcon: ({ color, size }) => <Octicons name="book" size={24} color="black" />,
-          }}
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('RecipeScreen')}>
+        <Entypo
+          name="open-book"
+          size={24}
+          color={routeName === 'RecipeScreen' ? 'white' : 'black'}
         />
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color, size }) => <Entypo name="circle" size={24} color="black" />,
-          }}
+        <Text
+          style={routeName === 'RecipeScreen' ? styles.menuItemTextScreen : styles.menuItemText}>
+          Saved Recipes
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Home')}>
+        <Entypo name="circle" size={24} color={routeName === 'Home' ? 'white' : 'black'} />
+        <Text style={routeName === 'Home' ? styles.menuItemTextScreen : styles.menuItemText}>
+          Home
+        </Text>
+      </TouchableOpacity>
+      {/* TODO: Change This to Inventory */}
+      <TouchableOpacity style={styles.menuItem} onPress={() => alert('Inventory Pressed')}>
+        <MaterialCommunityIcons
+          name="fridge-outline"
+          size={24}
+          color={routeName === 'Inventory' ? 'white' : 'black'}
         />
-        <Tab.Screen
-          name="Inventory"
-          component={Inventory}
-          options={{
-            tabBarLabel: 'Inventory',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="fridge-outline" size={24} color="black" />
-            ),
-          }}
+        <Text style={routeName === 'Inventory' ? styles.menuItemTextScreen : styles.menuItemText}>
+          Inventory
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Explore')}>
+        <Feather
+          style={styles.iconStyle}
+          name="search"
+          size={24}
+          color={routeName === 'Explore' ? 'white' : 'black'}
         />
-        <Tab.Screen
-          name="Search"
-          component={Search}
-          options={{
-            tabBarIcon: ({ color, size }) => <FontAwesome name="search" size={24} color="black" />,
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+        <Text style={routeName === 'Explore' ? styles.menuItemTextScreen : styles.menuItemText}>
+          Explore
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    height: height * 0.07,
+    backgroundColor: '#D9B580',
+    paddingHorizontal: '10%',
+  },
+  menuItem: {
+    width: width * 0.2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  menuItemText: {
+    fontSize: RFPercentage(1.55),
+    color: 'black',
+  },
+  menuItemTextScreen: {
+    fontSize: RFPercentage(1.55),
+    color: 'white',
+  },
+});
 
 export default withNavigation(BottomMenu);

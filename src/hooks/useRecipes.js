@@ -21,7 +21,7 @@ export default () => {
   };
 
   useEffect(() => {
-    searchApi('sushi');
+    searchApi('korean');
   }, []);
 
   return [searchApi, results, errorMessage];

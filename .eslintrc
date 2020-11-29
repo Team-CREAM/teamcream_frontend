@@ -9,6 +9,9 @@
       "eslint-plugin-react"
     ],
     "rules": {
+      "consistent-return": 0,
+      "no-undef": 0,
+      "no-alert": 0,
       "no-useless-escape": 0,
       "func-names": 0,
       "no-shadow": 0,

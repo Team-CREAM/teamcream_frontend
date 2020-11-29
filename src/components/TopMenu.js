@@ -3,13 +3,28 @@ import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-nati
 import { MaterialIcons } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
 import SearchBar from './SearchBar';
+import useSetToken from '../hooks/useSetToken';
 
 const { width, height } = Dimensions.get('window');
 
-const TopMenu = ({ navigation, title, searchbar, term, onTermChange, onTermSubmit }) => {
+const TopMenu = ({
+  navigation,
+  title,
+  searchbar,
+  term,
+  onTermChange,
+  onTermSubmit,
+  onFilterSubmit,
+}) => {
+  const [storeToken] = useSetToken();
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity
+        style={styles.icon}
+        onPress={() => {
+          storeToken('');
+          navigation.navigate('Login');
+        }}>
         <MaterialIcons name="face" size={24} color="black" />
       </TouchableOpacity>
       {title ? (
@@ -21,6 +36,11 @@ const TopMenu = ({ navigation, title, searchbar, term, onTermChange, onTermSubmi
         <View style={styles.searchBarWrapper}>
           <SearchBar term={term} onTermChange={onTermChange} onTermSubmit={onTermSubmit} />
         </View>
+      ) : null}
+      {onFilterSubmit ? (
+        <TouchableOpacity style={styles.icon} onPress={() => onFilterSubmit()}>
+          <MaterialIcons name="filter-list" size={24} color="black" />
+        </TouchableOpacity>
       ) : null}
     </View>
   );

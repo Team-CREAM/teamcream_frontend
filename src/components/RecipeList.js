@@ -4,7 +4,8 @@ import { withNavigation } from 'react-navigation';
 import RecipeDetail from './RecipeDetail';
 
 const RecipeList = ({ title, results, navigation }) => {
-  if (!results.length) {
+  if (!results) {
+    console.log(title);
     return null;
   }
 

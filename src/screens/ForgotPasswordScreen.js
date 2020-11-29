@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
-  Image,
   View,
   TextInput,
   TouchableHighlight,
@@ -10,34 +9,26 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import OAuth from '../components/OAuth';
 import axiosWithoutToken from '../api/axiosWithoutToken';
-import useValidation from '../hooks/useValidation';
 
 const { width, height } = Dimensions.get('window');
 
-const SignUp = ({ navigation }) => {
+const ResetPw = ({ navigation }) => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [conPassword, setConPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [focus2, setFocus2] = useState(false);
-  const [focus3, setFocus3] = useState(false);
 
-  const [validateInputs] = useValidation();
-
-  const SignUpAxios = async () => {
+  const ResetPwAxios = async () => {
     setLoading(true);
     await axiosWithoutToken
-      .post('/signup', {
+      .put('/forgotpassword', {
         email,
-        password,
       })
       .then(function (response) {
         setLoading(false);
-        if (response.data.token) {
-          navigation.navigate('ProfilePic', { token: response.data.token });
+        console.log('response');
+        if (response.data.success) {
+          navigation.navigate('EmailSent');
         }
 
         if (response.data.error) {
@@ -50,21 +41,9 @@ const SignUp = ({ navigation }) => {
       });
   };
 
-  const validateSubmit = () => {
-    const [isValidated, error] = validateInputs('Signup', email, password, conPassword);
-    if (isValidated) {
-      SignUpAxios();
-    }
-    if (error) {
-      errorHandle(error);
-    }
-  };
-
   const errorHandle = (err) => {
     setError(err);
     setEmail('');
-    setPassword('');
-    setConPassword('');
     setTimeout(() => {
       setError('');
     }, 5000);
@@ -74,57 +53,22 @@ const SignUp = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image
-          resizeMode="contain"
-          style={styles.logoStyle}
-          source={require('../../images/crumbs_logo2.png')}
-        />
-      </View>
-
-      <Text style={styles.SignUpText}>Email Sign-Up</Text>
-
-      <View style={styles.lineLine}>
+      <Text style={styles.SignUpText}>Send Reset Password Link</Text>
+      <View style={styles.lineOrLine}>
         <View style={styles.line} />
       </View>
 
       <TextInput
-        returnKeyType="next"
-        style={styles.textInputStyle}
-        placeholder=" Enter email or username"
-        value={email}
-        onChangeText={(newTerm) => {
-          setEmail(newTerm);
-        }}
-        onSubmitEditing={() => console.log('hi')}
-      />
-      <TextInput
-        returnKeyType="next"
-        style={styles.textInputStyle}
-        placeholder=" Enter password"
-        secureTextEntry
-        value={password}
-        onChangeText={(newTerm) => {
-          setPassword(newTerm);
-        }}
-        onSubmitEditing={() => {
-          setFocus3(true);
-        }}
-      />
-
-      <TextInput
-        focus={focus3}
         returnKeyType="done"
         style={styles.textInputStyle}
-        placeholder=" Confirm password"
-        secureTextEntry
-        value={conPassword}
-        onChangeText={(newTerm) => setConPassword(newTerm)}
-        onSubmitEditing={() => validateSubmit()}
+        placeholder=" Enter Email"
+        value={email}
+        onChangeText={(newTerm) => setEmail(newTerm)}
+        onSubmitEditing={() => ResetPwAxios()}
       />
 
       <TouchableHighlight style={styles.loginButtonWrapper}>
-        <Button onPress={() => validateSubmit()} title="Create Account" color={buttonColor} />
+        <Button onPress={() => ResetPwAxios()} title="Send Link" color={buttonColor} />
       </TouchableHighlight>
 
       {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
@@ -136,21 +80,17 @@ const SignUp = ({ navigation }) => {
 
       {/* LINE OR LINE */}
       <View style={styles.lineOrLine}>
-        <View style={styles.leftLine} />
-        <View>
-          <Text style={styles.or}>OR</Text>
-        </View>
-        <View style={styles.rightLine} />
+        <View style={styles.line} />
       </View>
 
-      {/* Facebook and google OAuth */}
+      <View style={styles.loginWrapper}>
+        <Text style={styles.goBackToLogin}>Already have an account? </Text>
 
-      <OAuth />
-
-      <View style={styles.noAccount}>
-        <Text>Already have an account? </Text>
-        <Text style={styles.textWeight} onPress={() => navigation.navigate('SignIn')}>
-          Login
+        <Text
+          style={{ ...styles.goBackToLogin, fontWeight: 'bold' }}
+          onPress={() => navigation.navigate('Login')}>
+          {' '}
+          Log In.
         </Text>
       </View>
     </View>
@@ -158,38 +98,31 @@ const SignUp = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  lineLine: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: height * 0.02,
-  },
-  line: {
-    flex: 1,
-    height: height * 0.003,
-    backgroundColor: 'black',
-    marginHorizontal: '12%',
-  },
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
-  },
-  imageContainer: {
-    marginTop: height * 0.1,
-    bottom: '5%',
-    flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
   },
+  imageContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginLeft: width * 0.12,
+  },
   logoStyle: {
-    width: 0.775 * width,
-    height: 0.275 * height,
+    width: width * 0.25,
+    height: height * 0.25,
+    resizeMode: 'contain',
   },
   SignUpText: {
     fontFamily: 'monospace',
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: width * 0.05,
+    fontSize: 20,
     textAlign: 'center',
+    // lineHeight: 20,
+    // borderBottomWidth: 2,
+    marginBottom: 20,
     marginHorizontal: width * 0.12,
   },
   textInputStyle: {
@@ -202,6 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     marginBottom: 15,
     flexDirection: 'row',
+    marginTop: height * 0.02,
     marginHorizontal: width * 0.12,
     fontSize: 14,
     fontFamily: 'monospace',
@@ -211,7 +145,7 @@ const styles = StyleSheet.create({
     width: width * 0.76,
     height: height * 0.052,
     justifyContent: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
     backgroundColor: '#D9B580',
   },
   error: {
@@ -222,19 +156,18 @@ const styles = StyleSheet.create({
     height: height * 0.052,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
   },
   errorText: { color: 'white', textAlign: 'center' },
   lineOrLine: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginVertical: height * 0.02,
   },
-  leftLine: {
+  line: {
     flex: 1,
     height: height * 0.003,
     backgroundColor: 'black',
-    marginLeft: '12%',
+    marginHorizontal: '12%',
   },
   or: {
     width: width * 0.1,
@@ -252,11 +185,25 @@ const styles = StyleSheet.create({
   },
   noAccount: {
     flexDirection: 'row',
-    marginBottom: height * 0.15,
-    justifyContent: 'center',
-    top: '15%',
+    marginBottom: height * 0.01,
   },
   textWeight: { fontWeight: 'bold' },
+  loginWrapper: {
+    flexDirection: 'row',
+    marginHorizontal: width * 0.12,
+    paddingTop: 15,
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  goBackToLogin: {
+    paddingBottom: 10,
+    fontFamily: 'monospace',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 20,
+  },
 });
 
-export default SignUp;
+export default ResetPw;

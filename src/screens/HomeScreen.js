@@ -1,23 +1,43 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import SearchBar from '../components/SearchBar';
-import useRecipes from '../hooks/useRecipes';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import RecipeList from '../components/RecipeList';
-import BottomMenu from '../components/BottomMenu2';
+import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
+import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
 const HomeScreen = () => {
   const [term, setTerm] = useState('');
-  const [searchApi, results, errorMessage] = useRecipes();
+  const [results, setResults] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const filterResultsByPrice = (price) => {
-    // price === $ $$ $$$
-    return results.filter((result) => {
-      return result.price === price;
-    });
+  useEffect(() => {
+    const receiveRecipes = async () => {
+      setLoading(true);
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.get('/home');
+      setResults(response.data);
+      setLoading(false);
+    };
+    receiveRecipes();
+  }, []);
+
+  const filterResults = (type) => {
+    if (results) {
+      switch (type) {
+        case 'Popular':
+          return results.popular_recipes;
+        case 'Recent':
+          return results.recent_recipes;
+        case 'Can Make':
+          return results.possible_recipes;
+        default:
+          return results.random_recipes;
+      }
+    }
   };
+
   return (
     <View style={styles.container}>
       <TopMenu
@@ -25,14 +45,16 @@ const HomeScreen = () => {
         searchbar
         term={term}
         onTermChange={(newTerm) => setTerm(newTerm)}
-        onTermSubmit={() => searchApi(term)}
+        // onTermSubmit={() => searchApi(term)}
       />
       <View style={styles.marginTop}>
+        {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
+
         <ScrollView>
-          <RecipeList title="Welcome Back!" results={filterResultsByPrice('$')} />
-          <RecipeList title="Continue where you left off!" results={filterResultsByPrice('$$')} />
-          <RecipeList title="What you can make right now!" results={filterResultsByPrice('$$$')} />
-          <RecipeList title="Popular!" results={filterResultsByPrice('$$$')} />
+          <RecipeList title="Welcome Back!" results={filterResults('')} />
+          <RecipeList title="Continue where you left off!" results={filterResults('Recent')} />
+          <RecipeList title="What you can make right now!" results={filterResults('Can Make')} />
+          <RecipeList title="Popular!" results={filterResults('Popular')} />
         </ScrollView>
       </View>
       <View style={styles.bottomMenu}>
