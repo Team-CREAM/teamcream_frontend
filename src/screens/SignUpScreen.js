@@ -23,6 +23,8 @@ const SignUp = ({ navigation }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [focus2, setFocus2] = useState(false);
+  const [conPassword, setConPassword] = useState('');
+  const [focus3, setFocus3] = useState(false);
 
   const [validateInputs] = useValidation();
   const [storeToken] = useSetToken();
@@ -52,7 +54,7 @@ const SignUp = ({ navigation }) => {
   };
 
   const validateSubmit = () => {
-    const [isValidated, error] = validateInputs('Signup', email, password);
+    const [isValidated, error] = validateInputs('Signup', email, password, conPassword);
     if (isValidated) {
       SignUpAxios();
     }
@@ -65,10 +67,12 @@ const SignUp = ({ navigation }) => {
     setError(err);
     setEmail('');
     setPassword('');
+    setConPassword('');
     setTimeout(() => {
       setError('');
     }, 5000);
   };
+  const buttonColor = Platform.OS === 'ios' ? '#ffffff' : '#D9B580';
 
   return (
     <View style={styles.container}>
@@ -76,12 +80,10 @@ const SignUp = ({ navigation }) => {
         <Image
           resizeMode="contain"
           style={styles.logoStyle}
-          source={require('../../images/cwc_logo_simple.png')}
+          source={require('../../images/crumbs_logo2.png')}
         />
       </View>
-
       <Text style={styles.SignUpText}>Email Sign-Up</Text>
-
       <TextInput
         returnKeyType="next"
         style={styles.textInputStyle}
@@ -94,26 +96,34 @@ const SignUp = ({ navigation }) => {
       />
       <TextInput
         focus={focus2}
-        returnKeyType="done"
+        returnKeyType="next"
         style={styles.textInputStyle}
         placeholder=" Enter password"
         secureTextEntry
         value={password}
         onChangeText={(newTerm) => setPassword(newTerm)}
+        onSubmitEditing={() => setFocus3(true)}
+      />
+      <TextInput
+        focus={focus3}
+        returnKeyType="done"
+        style={styles.textInputStyle}
+        placeholder=" Confirm password"
+        secureTextEntry
+        value={conPassword}
+        onChangeText={(newTerm) => setConPassword(newTerm)}
         onSubmitEditing={() => validateSubmit()}
       />
 
       <TouchableHighlight style={styles.loginButtonWrapper}>
-        <Button onPress={() => validateSubmit()} title="Create Account" color="#D9B580" />
+        <Button onPress={() => validateSubmit()} title="Create Account" color={buttonColor} />
       </TouchableHighlight>
-
       {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
       {error ? (
         <View style={styles.error}>
           <Text style={styles.errorText}>{error}</Text>
         </View>
       ) : null}
-
       {/* LINE OR LINE */}
       <View style={styles.lineOrLine}>
         <View style={styles.leftLine} />
@@ -122,9 +132,15 @@ const SignUp = ({ navigation }) => {
         </View>
         <View style={styles.rightLine} />
       </View>
-
       {/* Facebook and google OAuth */}
       <OAuth />
+
+      <View style={styles.noAccount}>
+        <Text>Already have an account? </Text>
+        <Text style={styles.textWeight} onPress={() => navigation.navigate('Login')}>
+          Login
+        </Text>
+      </View>
     </View>
   );
 };
@@ -135,24 +151,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEF4D1',
   },
   imageContainer: {
-    marginTop: 10,
-    marginVertical: 15,
+    marginTop: height * 0.1,
+    bottom: '5%',
+    justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginLeft: width * 0.12,
   },
   logoStyle: {
-    width: width * 0.25,
-    height: height * 0.25,
-    resizeMode: 'contain',
+    width: 0.775 * width,
+    height: 0.275 * height,
   },
   SignUpText: {
     paddingBottom: 10,
     fontFamily: 'monospace',
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: 20,
+    fontSize: width * 0.05,
     lineHeight: 20,
     borderBottomWidth: 2,
     marginBottom: 20,
@@ -178,6 +192,7 @@ const styles = StyleSheet.create({
     height: height * 0.052,
     justifyContent: 'center',
     marginBottom: 10,
+    backgroundColor: '#D9B580',
   },
   error: {
     flexDirection: 'row',
@@ -216,7 +231,9 @@ const styles = StyleSheet.create({
   },
   noAccount: {
     flexDirection: 'row',
-    marginBottom: height * 0.01,
+    marginBottom: height * 0.15,
+    justifyContent: 'center',
+    top: '15%',
   },
   textWeight: { fontWeight: 'bold' },
 });

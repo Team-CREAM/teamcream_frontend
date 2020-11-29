@@ -49,6 +49,7 @@ const ResetPw = ({ navigation }) => {
     }, 5000);
   };
 
+  const buttonColor = Platform.OS === 'ios' ? '#ffffff' : '#D9B580';
   return (
     <View style={styles.container}>
       <Text style={styles.SignUpText}>Send Reset Password Link</Text>
@@ -63,7 +64,7 @@ const ResetPw = ({ navigation }) => {
       />
 
       <TouchableHighlight style={styles.loginButtonWrapper}>
-        <Button onPress={() => ResetPwAxios()} title="Send Link" color="#D9B580" />
+        <Button onPress={() => ResetPwAxios()} title="Send Link" color={buttonColor} />
       </TouchableHighlight>
 
       {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
@@ -140,6 +141,7 @@ const styles = StyleSheet.create({
     height: height * 0.052,
     justifyContent: 'center',
     marginBottom: 15,
+    backgroundColor: '#D9B580',
   },
   error: {
     flexDirection: 'row',
