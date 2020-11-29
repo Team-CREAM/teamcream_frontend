@@ -8,11 +8,14 @@ import {
   ScrollView,
   Platform,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import HTML from 'react-native-render-html';
-import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5, AntDesign } from '@expo/vector-icons';
+import { FlatList } from 'react-native-gesture-handler';
 import BottomMenu from '../components/BottomMenu';
+import axiosWithToken from '../api/axiosWithToken';
 
 // import retrieveRecipes from '../hooks/retrieveRecipes';
 
@@ -20,100 +23,149 @@ const { width, height } = Dimensions.get('window');
 
 const RecipeScreen = ({ navigation }) => {
   //   const [results, errorMessage] = retrieveRecipes();
-  // const { id } = navigation.state.params;
-  const [results, errorMessage] = [];
-  const default_recipe = {
-    title: 'Oreo Turkeys',
-    image: 'https://spoonacular.com/recipeImages/715449-312x231.jpg',
-    instructions:
-      '<b>1.</b> In a microwave-safe bowl, add white chocolate, coconut oil, and a few drops food coloring. Heat in microwave in 30 - second intervals until melted. Transfer melted chocolate to a small zip- loc bag or pastry bag and snip a small hole on the end. <br/> <br/> <b>2.</b> Dot the back of candy eyes with melted chocolate and place two on each Oreo. Dot the back of butterscotch chips and place one each Oreo to create a beak. <br/> <br/> <b>3.</b> Pipe a red line beside the beak to create a gobbler. Create feathers by stuffing four candy corns into the filling of the Oreo, point side down. ',
-    extendedIngredients: [
-      '1/2 c. white chocolate chips',
-      '1 tbsp. coconut oil',
-      'Red food coloring',
-      '40 candy eyes',
-      '20 Oreos',
-      '20 butterscotch chips',
-      '1 c.candy corns',
-    ],
-    aggregateLikes: 255,
-    servings: 20,
-    readyinMinutes: 20,
-  };
-  const returned_results = results === undefined ? default_recipe : results[5];
-  const ingredientsArray = returned_results.extendedIngredients;
+  const { id } = navigation.state.params;
+  const [recipe, setRecipe] = useState('');
+  const [saved, setSaved] = useState(false);
 
   // TODO call axios request
   useEffect(() => {
-    // const getRecipe = async () => {
-    //   setLoading(true);
-    //   const axiosInstance = await axiosWithToken();
-    //   const response = await axiosInstance.get(`./recipes/${id}`);
-    //   setLoading(false);
-    // };
+    const getRecipe = async () => {
+      // setLoading(true);
+      console.log('hello');
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.post('./recipeClicked', {
+        recipe: id,
+      });
+      console.log(response.data.saved);
+      // console.log(response.data.Recipe);
+      setRecipe(response.data.Recipe);
+      setSaved(response.data.saved);
+      // setLoading(false);
+    };
+
+    getRecipe();
   }, []);
+
+  const youClickedMe = async () => {
+    if (!saved) {
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.post('./savedRecipes', {
+        recipe,
+        add: true,
+      });
+      console.log(response.data.message);
+    } else {
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.post('./savedRecipes', {
+        recipe,
+        add: false,
+      });
+      console.log(response.data.message);
+    }
+    setSaved(!saved);
+  };
+
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        {/* Area for title */}
-        <View style={styles.topBar}>
-          {/* Title Goes Here */}
-          <Text style={styles.title}> {returned_results.title} </Text>
-          {/* Prep Time, Servings, and Likes Go Here */}
-          <View style={styles.titleDescription}>
-            <Text>Prep Time: </Text>
-            <Text>{returned_results.readyinMinutes}</Text>
-            <Text> Minutes </Text>
-            <FontAwesome name="circle" size={10} color="black" />
-            <Text> Servings: </Text>
-            <Text>{returned_results.servings} </Text>
-            <FontAwesome name="circle" size={10} color="black" />
-            <Text> Likes: </Text>
-            <Text>{returned_results.aggregateLikes}</Text>
+      {recipe ? (
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          {/* Area for title */}
+          <View style={styles.topBar}>
+            {/* Title Goes Here */}
+            <Text style={styles.title}> {recipe.title} </Text>
+            {saved ? (
+              <TouchableOpacity onPress={() => youClickedMe()}>
+                <AntDesign name="heart" size={24} color="red" />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => youClickedMe()}>
+                <AntDesign name="hearto" size={24} color="black" />
+              </TouchableOpacity>
+            )}
+            {/* Prep Time, Servings, and Likes Go Here */}
+            <View style={styles.titleDescription}>
+              <Text>Prep Time: </Text>
+              <Text>{recipe.readyinMinutes}</Text>
+              <Text> Minutes </Text>
+              <FontAwesome name="circle" size={10} color="black" />
+              <Text> Servings: </Text>
+              <Text>{recipe.servings} </Text>
+              <FontAwesome name="circle" size={10} color="black" />
+              <Text> Likes: </Text>
+              <Text>{recipe.aggregateLikes}</Text>
+            </View>
+            {/* Dividing Line Goes Here */}
+            <View style={styles.lineContainer}>
+              <View style={styles.lineStyle} />
+            </View>
           </View>
-          {/* Dividing Line Goes Here */}
-          <View style={styles.lineContainer}>
-            <View style={styles.lineStyle} />
-          </View>
-        </View>
 
-        {/* The recipe image */}
-        <View style={{ alignItems: 'center' }}>
-          <Image style={styles.image} source={{ uri: returned_results.image }} />
-        </View>
-        <View style={{ alignItems: 'center' }}>
-          <View style={styles.lineContainer}>
-            <View style={styles.lineStyle} />
+          {/* The recipe image */}
+          <View style={{ alignItems: 'center' }}>
+            <Image style={styles.image} source={{ uri: recipe.image }} />
           </View>
-        </View>
-        {/* Area for the ingredients */}
-        <View style={styles.parentInstructions}>
-          <View style={styles.ingredients}>
-            <ScrollView
+          <View style={{ alignItems: 'center' }}>
+            <View style={styles.lineContainer}>
+              <View style={styles.lineStyle} />
+            </View>
+          </View>
+          {/* Area for the ingredients */}
+          <View style={styles.parentInstructions}>
+            <View style={styles.ingredients}>
+              {/* <ScrollView
               bounces={false}
               // style={{ marginVertical: height * 0.01, marginHorizontal: width * 0.07 }}
               contentContainerStyle={{ flex: 1, flexDirection: 'column', flexWrap: 'wrap' }}>
-              {ingredientsArray.map((item, key) => (
-                <View key={key} style={{ flexDirection: 'row' }}>
-                  <Text>{'\u25AA'}</Text>
-                  <Text>
-                    {item}
-                    {'\n'}
-                  </Text>
-                </View>
-              ))}
-            </ScrollView>
-          </View>
+              {recipe.extendedIngredients
+                ? recipe.extendedIngredients.map(({ item, key }) => (
+                    <View key={item.id} style={{ flexDirection: 'row' }}>
+                      <Text>{'\u25AA'}</Text>
+                      <Text>
+                        {item}
+                        {'\n'}
+                      </Text>
+                    </View>
+                  ))
+                : null}
+            </ScrollView> */}
+              <Text style={styles.header}>Ingredients</Text>
+              <FlatList
+                data={recipe.extendedIngredients}
+                renderItem={({ item }) => (
+                  <View key={item.id} style={{ flexDirection: 'row' }}>
+                    <Text>{'\u25AA '}</Text>
+                    <Text>
+                      {item.name}
+                      {'\n'}
+                    </Text>
+                  </View>
+                )}
+              />
+            </View>
 
-          {/* Area for the instructions */}
-          <View style={styles.instructions}>
-            <HTML
-              html={returned_results.instructions}
-              imagesMaxWidth={Dimensions.get('window').width}
-            />
+            {/* Area for the instructions */}
+
+            <View style={styles.instructions}>
+              <Text style={styles.header}>Instructions</Text>
+
+              <FlatList
+                data={recipe.analyzedInstructions[0].steps}
+                renderItem={({ item }) => (
+                  <View key={item.number} style={{ flexDirection: 'row' }}>
+                    <Text>{`${item.number}. `}</Text>
+                    <Text>
+                      {item.step}
+                      {'\n'}
+                    </Text>
+                  </View>
+                )}
+              />
+            </View>
+
+            {/* <HTML html={recipe.instructions} imagesMaxWidth={Dimensions.get('window').width} /> */}
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      ) : null}
       {/* Bottom Nav bar */}
       <View style={styles.bottomMenu}>
         <BottomMenu />
@@ -138,12 +190,14 @@ const styles = StyleSheet.create({
     paddingBottom: '20%',
   },
   topBar: {
-    marginTop: height * 0.05,
+    // marginTop: height * 0.01,
     alignItems: 'center',
   },
   title: {
     fontSize: 25,
     justifyContent: 'center',
+    textAlign: 'center',
+    marginBottom: 10,
   },
   image: {
     width: width * 0.8,
@@ -162,7 +216,8 @@ const styles = StyleSheet.create({
     width: width * 0.9,
   },
   ingredients: {
-    width: '50%',
+    width: '40%',
+    marginRight: '10%',
     alignItems: 'flex-start',
   },
   instructions: {
@@ -189,6 +244,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: height * 0.02,
   },
+  header: { fontWeight: 'bold', fontSize: 16, marginBottom: 5 },
 });
 
 export default RecipeScreen;

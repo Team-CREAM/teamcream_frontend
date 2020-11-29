@@ -57,7 +57,8 @@ const navigator = createStackNavigator(
     RecipeScreen: {
       screen: RecipeScreen,
       navigationOptions: {
-        headerShown: false,
+        headerShown: true,
+        title: '',
       },
     },
   },

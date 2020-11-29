@@ -54,48 +54,8 @@ const OAuth = ({ navigation }) => {
     }
   };
 
-  const facebook = async () => {
-    await Facebook.initializeAsync({
-      autoLogAppEvents: true,
-      appId: 203083637970193,
-    });
-    try {
-      const {
-        type,
-        token,
-        expires,
-        permissions,
-        declinedPermissions,
-      } = await Facebook.logInWithReadPermissionsAsync('203083637970193', {
-        permissions: ['public_profile'],
-      });
-      if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
-        fetch(
-          `https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`,
-        )
-          .then((response) => console.log(response.json()))
-          .then((data) => {
-            console.log(data);
-          })
-          .catch((e) => console.log(e));
-      } else {
-        // type === 'cancel'
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
-    }
-  };
-
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image style={styles.facebookLogo} source={require('../../images/facebook_logo.png')} />
-        <TouchableOpacity onPress={() => facebook()}>
-          <Text style={{ color: 'blue' }}>Connect with Facebook</Text>
-        </TouchableOpacity>
-      </View>
-
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Image style={styles.googleLogo} source={require('../../images/google_logo.png')} />
         <TouchableOpacity onPress={() => signInGoogle()}>
