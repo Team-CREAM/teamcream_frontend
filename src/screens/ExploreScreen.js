@@ -10,20 +10,21 @@ import {
   Modal,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import TopMenu from '../components/TopMenu';
 import BottomMenu from '../components/BottomMenu';
 import useRecipes from '../hooks/useRecipes';
 import axiosWithToken from '../api/axiosWithToken';
+import useExplore from '../hooks/useExplore';
 
 const { width, height } = Dimensions.get('window');
 
-const ExploreScreen = () => {
+const ExploreScreen = ({ navigation }) => {
   const [term, setTerm] = useState('');
   const [searchApi, results, errorMessage] = useRecipes();
   const [result, setResult] = useState(['hello', 'goodbye']);
-  const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const cuisines = [
@@ -81,22 +82,12 @@ const ExploreScreen = () => {
   const [dishType, setDishType] = useState('');
   const [number, setNumber] = useState(99);
 
+  const [exploreSearch, searchResults, errMsg, loading] = useExplore();
+
   const filterOptions = (results) => {
     setModalVisible(true);
     return results;
   };
-
-  useEffect(() => {
-    const receiveRecipes = async () => {
-      setLoading(true);
-      const axiosInstance = await axiosWithToken();
-      const response = await axiosInstance.get('/home').then(({ data }) => {
-        setResult(data.popular_recipes);
-      });
-      setLoading(false);
-    };
-    receiveRecipes();
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -195,24 +186,25 @@ const ExploreScreen = () => {
           </Modal>
         </View>
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
-
         <FlatList
-          columnWrapperStyle={{ flexWrap: 'wrap', flex: 1, marginTop: 2, marginHorizontal: 2 }}
-          data={result}
+          columnWrapperStyle={{ flexWrap: 'wrap', flex: 1, marginTop: 2, marginLeft: 4 }}
+          data={searchResults}
           numColumns={3}
           keyExtractor={(result) => result.id}
           renderItem={({ item, index }) => (
-            <View
-              style={[
-                { width: width / 3 - 2 },
-                { height: width / 3 - 2 },
-                index % 3 !== 0 ? { paddingLeft: 2 } : { paddingLeft: 0 },
-              ]}>
-              <Image
-                style={{ flex: 1, width: undefined, height: undefined }}
-                source={{ uri: item.image }}
-              />
-            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item._id })}>
+              <View
+                style={[
+                  { width: width / 3 - 2 },
+                  { height: width / 3 - 2 },
+                  index % 3 !== 0 ? { paddingLeft: 2 } : { paddingLeft: 0 },
+                ]}>
+                <Image
+                  style={{ flex: 1, width: undefined, height: undefined }}
+                  source={{ uri: item.image }}
+                />
+              </View>
+            </TouchableOpacity>
           )}
         />
       </View>

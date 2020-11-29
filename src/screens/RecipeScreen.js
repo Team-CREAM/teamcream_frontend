@@ -18,8 +18,9 @@ import BottomMenu from '../components/BottomMenu';
 
 const { width, height } = Dimensions.get('window');
 
-const RecipeScreen = () => {
+const RecipeScreen = ({ navigation }) => {
   //   const [results, errorMessage] = retrieveRecipes();
+  // const { id } = navigation.state.params;
   const [results, errorMessage] = [];
   const default_recipe = {
     title: 'Oreo Turkeys',
@@ -41,6 +42,16 @@ const RecipeScreen = () => {
   };
   const returned_results = results === undefined ? default_recipe : results[5];
   const ingredientsArray = returned_results.extendedIngredients;
+
+  // TODO call axios request
+  useEffect(() => {
+    // const getRecipe = async () => {
+    //   setLoading(true);
+    //   const axiosInstance = await axiosWithToken();
+    //   const response = await axiosInstance.get(`./recipes/${id}`);
+    //   setLoading(false);
+    // };
+  }, []);
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
