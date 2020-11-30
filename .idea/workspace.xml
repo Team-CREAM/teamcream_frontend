@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d333b181-4549-4626-9f47-a6f50fb54160" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hooks/useGetToken.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hooks/useSetToken.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/ExploreScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/submit.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/axiosWithToken.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/axiosWithToken.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/RecipeList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RecipeList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/retrieveRecipes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/RecipeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RecipeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/SignInScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/SignInScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/SignUpScreen2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/SignUpScreen2.js" afterDir="false" />
-    </list>
+    <list default="true" id="d333b181-4549-4626-9f47-a6f50fb54160" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

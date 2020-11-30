@@ -52,8 +52,12 @@ const HomeScreen = () => {
 
         <ScrollView>
           <RecipeList title="Welcome Back!" results={filterResults('')} />
-          <RecipeList title="Continue where you left off!" results={filterResults('Recent')} />
-          <RecipeList title="What you can make right now!" results={filterResults('Can Make')} />
+          {results.size > 0 ? (
+            <RecipeList title="Continue where you left off!" results={filterResults('Recent')} />
+          ) : null}
+          {results.size > 0 ? (
+            <RecipeList title="What you can make right now!" results={filterResults('Can Make')} />
+          ) : null}
           <RecipeList title="Popular!" results={filterResults('Popular')} />
         </ScrollView>
       </View>
