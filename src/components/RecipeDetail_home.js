@@ -8,8 +8,6 @@ import axiosWithToken from '../api/axiosWithToken';
 const { width, height } = Dimensions.get('window');
 
 const RecipeDetail = ({ result }) => {
-  const [liked, toggleLike] = useState(false);
-  const [recipe, setRecipe] = useState('');
   const [saved, setSaved] = useState(false);
   const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
   let smallAnimatedIcon = AnimatedHeart;
@@ -20,30 +18,21 @@ const RecipeDetail = ({ result }) => {
 
   const handleOnPressLike = () => {
     youClickedMe();
-    if (liked === true) {
-      const index = savedRecipeList.indexOf(result);
-      if (index > -1) {
-        savedRecipeList.splice(index, 1);
-      }
-    } else {
-      savedRecipeList.push(result);
-    }
-    toggleLike(!liked);
-    console.log(liked);
+    setSaved(!saved);
   };
 
   const youClickedMe = async () => {
     if (!saved) {
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
-        recipe,
+        recipe: result._id,
         add: true,
       });
       console.log(response.data.message);
     } else {
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
-        recipe,
+        recipe: result._id,
         add: false,
       });
       console.log(response.data.message);
@@ -51,17 +40,18 @@ const RecipeDetail = ({ result }) => {
     setSaved(!saved);
   };
 
+
   const { title, image } = result;
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: image }} />
+      <Image style={styles.image} source={{ uri: result.image }} />
       <View style={styles.recipeDescription}>
-        <Text style={styles.name}>{title}</Text>
+        <Text style={styles.name}>{result.title}</Text>
         <TouchableOpacity activeOpacity={1} onPress={handleOnPressLike}>
           <AnimatedHeart
             ref={handleSmallAnimatedIconRef}
-            name={liked ? 'heart' : 'hearto'}
-            color={liked ? colors.heartColor : colors.black}
+            name={saved ? 'heart' : 'hearto'}
+            color={saved ? colors.heartColor : colors.black}
             size={25}
             style={styles.icon}
           />

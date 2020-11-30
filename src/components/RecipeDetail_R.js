@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Image, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import heartIcon from 'react-native-vector-icons/AntDesign';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
+import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
-const RecipeDetail = ({ result, savedRecipeList, boolean, refresh, hi }) => {
+const RecipeDetail = ({ result, savedRecipes, recipes, boolean, refresh, hi }) => {
   const [liked, toggleLike] = useState(!boolean);
-  const [props, setProps] = useState([]);
+  const [recipe, setRecipe] = useState('');
   const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
   let smallAnimatedIcon = AnimatedHeart;
 
@@ -16,72 +17,92 @@ const RecipeDetail = ({ result, savedRecipeList, boolean, refresh, hi }) => {
     smallAnimatedIcon = ref;
   };
 
-  const handleOnPressLike = () => {
-    smallAnimatedIcon.bounceIn();
-    if (liked === true) {
-      const index = savedRecipeList.indexOf(result);
-      if (index > -1) {
-        savedRecipeList.splice(index, 1);
-        refresh(!hi);
-      }
-    } else {
-      savedRecipeList.push(result);
-    }
-    toggleLike(!liked);
-    console.log(liked);
+  useEffect(() => {
+    const getRecipes = async () => {
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.post('./recipeClicked', {
+        recipe: result.recipe,
+      });
+      setRecipe(response.data.Recipe);
+    };
+    getRecipes();
+  }, []);
+
+  // const handleOnPressLike = () => {
+  //   smallAnimatedIcon.bounceIn();
+  //   if (liked === true) {
+  //     const index = savedRecipeList.indexOf(result);
+  //     if (index > -1) {
+  //       savedRecipeList.splice(index, 1);
+  //       refresh(!hi);
+  //     }
+  //   } else {
+  //     savedRecipeList.push(result);
+  //   }
+  //   toggleLike(!liked);
+  //   console.log(liked);
+  // };
+
+  const youClickedMe = async () => {
+    console.log(recipe._id);
+    const axiosInstance = await axiosWithToken();
+    const response = await axiosInstance.post('./savedRecipes', {
+      recipe: recipe._id,
+      add: false,
+    });
+    console.log(response.data.message);
+    console.log(response.data.result);
+    // recipes(response.data.result);
+    recipes([...savedRecipes.filter((sRecipes) => sRecipes._id != recipe._id)]);
+    refresh(!hi);
   };
 
-  const {
-    vegetarian,
-    vegan,
-    glutenFree,
-    dairyFree,
-    veryHealthy,
-    cheap,
-    veryPopular,
-    sustainable,
-    weightWatcherSmartPoints,
-    gaps,
-    lowFodMap,
-    aggregateLikes,
-    spoonacularScore,
-    healthScore,
-    creditsText,
-    license,
-    sourceName,
-    pricePerServing,
-    extendedIngredients,
-    id,
-    title,
-    readyInMinutes,
-    servings,
-    sourceUrl,
-    image,
-    imageType,
-    summary,
-    cuisines,
-    dishTypes,
-    diets,
-    occasions,
-    instructions,
-    analyzedInstructions,
-    originalId,
-    spoonacularSourceUrl,
-  } = result;
-
+  // const {
+  //   vegetarian,
+  //   vegan,
+  //   glutenFree,
+  //   dairyFree,
+  //   veryHealthy,
+  //   cheap,
+  //   veryPopular,
+  //   sustainable,
+  //   weightWatcherSmartPoints,
+  //   gaps,
+  //   lowFodMap,
+  //   aggregateLikes,
+  //   spoonacularScore,
+  //   healthScore,
+  //   creditsText,
+  //   license,
+  //   sourceName,
+  //   pricePerServing,
+  //   extendedIngredients,
+  //   id,
+  //   title,
+  //   readyInMinutes,
+  //   servings,
+  //   sourceUrl,
+  //   image,
+  //   imageType,
+  //   summary,
+  //   cuisines,
+  //   dishTypes,
+  //   diets,
+  //   occasions,
+  //   instructions,
+  //   analyzedInstructions,
+  //   originalId,
+  //   spoonacularSourceUrl,
+  // } = result;
   return (
     <View style={boolean ? styles.container : difStyles.container}>
-      <Image style={boolean ? styles.image : difStyles.image} source={{ uri: image }} />
+      {recipe.image ? (
+        <Image style={boolean ? styles.image : difStyles.image} source={{ uri: recipe.image }} />
+      ) : null}
       <View style={boolean ? styles.recipeDescription : difStyles.recipeDescription}>
-        <Text style={boolean ? styles.name : difStyles.name}>{title}</Text>
-        <TouchableOpacity activeOpacity={1} onPress={handleOnPressLike}>
-          <AnimatedHeart
-            ref={handleSmallAnimatedIconRef}
-            name={liked ? 'heart' : 'hearto'}
-            color={liked ? colors.heartColor : colors.black}
-            size={18}
-            style={styles.icon}
-          />
+        <Text style={boolean ? styles.name : difStyles.name}>{recipe.title}</Text>
+        <TouchableOpacity onPress={() => youClickedMe()}>
+          <AntDesign name="heart" size={24} color="red" />
         </TouchableOpacity>
       </View>
     </View>

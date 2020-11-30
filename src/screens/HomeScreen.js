@@ -14,6 +14,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const receiveRecipes = async () => {
+      console.log('hola');
       setLoading(true);
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.get('/home');

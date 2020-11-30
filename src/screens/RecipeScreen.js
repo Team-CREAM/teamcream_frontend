@@ -40,6 +40,7 @@ const RecipeScreen = ({ navigation }) => {
       // console.log(response.data.Recipe);
       setRecipe(response.data.Recipe);
       setSaved(response.data.saved);
+      console.log(response.data);
       // setLoading(false);
     };
 
@@ -50,14 +51,14 @@ const RecipeScreen = ({ navigation }) => {
     if (!saved) {
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
-        recipe,
+        recipe: recipe._id,
         add: true,
       });
       console.log(response.data.message);
     } else {
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
-        recipe,
+        recipe: recipe._id,
         add: false,
       });
       console.log(response.data.message);
