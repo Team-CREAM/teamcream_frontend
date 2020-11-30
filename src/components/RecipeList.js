@@ -15,7 +15,7 @@ const RecipeList = ({ title, results, navigation }) => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={results}
+        // data={results}
         keyExtractor={(result) => result.id}
         renderItem={({ item }) => {
           return (

@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fef4d1',
     alignItems: 'center',
+    paddingTop: 40,
   },
 
   boxes: {
