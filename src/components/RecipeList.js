@@ -15,12 +15,11 @@ const RecipeList = ({ title, results, navigation }) => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        // data={results}
+        data={results}
         keyExtractor={(result) => result.id}
         renderItem={({ item }) => {
           return (
-            // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
-            <TouchableOpacity onPress={() => console.log(item.id)}>
+            <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item._id })}>
               <RecipeDetail result={item} />
             </TouchableOpacity>
           );

@@ -41,10 +41,10 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <TopMenu
-        // title="Home"
-        searchbar
-        term={term}
-        onTermChange={(newTerm) => setTerm(newTerm)}
+        title="Home"
+        // searchbar
+        // term={term}
+        // onTermChange={(newTerm) => setTerm(newTerm)}
         // onTermSubmit={() => searchApi(term)}
       />
       <View style={styles.marginTop}>
