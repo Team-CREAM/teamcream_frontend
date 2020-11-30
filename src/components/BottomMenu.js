@@ -11,7 +11,9 @@ const BottomMenu = ({ navigation }) => {
   // console.log(routeName);
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('RecipeScreen')}>
+      <TouchableOpacity
+        style={styles.menuItem}
+        onPress={() => navigation.navigate('SavedRecipeScreen')}>
         <Entypo
           name="open-book"
           size={24}
