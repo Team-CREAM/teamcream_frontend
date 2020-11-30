@@ -111,56 +111,42 @@ const RecipeScreen = ({ navigation }) => {
           </View>
           {/* Area for the ingredients */}
           <View style={styles.parentInstructions}>
-            <View style={styles.ingredients}>
-              {/* <ScrollView
-              bounces={false}
-              // style={{ marginVertical: height * 0.01, marginHorizontal: width * 0.07 }}
-              contentContainerStyle={{ flex: 1, flexDirection: 'column', flexWrap: 'wrap' }}>
-              {recipe.extendedIngredients
-                ? recipe.extendedIngredients.map(({ item, key }) => (
+            {recipe.extendedIngredients ? (
+              <View style={styles.ingredients}>
+                <Text style={styles.header}>Ingredients</Text>
+                <FlatList
+                  data={recipe.extendedIngredients}
+                  renderItem={({ item }) => (
                     <View key={item.id} style={{ flexDirection: 'row' }}>
-                      <Text>{'\u25AA'}</Text>
+                      <Text>{'\u25AA '}</Text>
                       <Text>
-                        {item}
+                        {item.name}
                         {'\n'}
                       </Text>
                     </View>
-                  ))
-                : null}
-            </ScrollView> */}
-              <Text style={styles.header}>Ingredients</Text>
-              <FlatList
-                data={recipe.extendedIngredients}
-                renderItem={({ item }) => (
-                  <View key={item.id} style={{ flexDirection: 'row' }}>
-                    <Text>{'\u25AA '}</Text>
-                    <Text>
-                      {item.name}
-                      {'\n'}
-                    </Text>
-                  </View>
-                )}
-              />
-            </View>
+                  )}
+                />
+              </View>
+            ) : null}
 
             {/* Area for the instructions */}
-
-            <View style={styles.instructions}>
-              <Text style={styles.header}>Instructions</Text>
-
-              <FlatList
-                data={recipe.analyzedInstructions[0].steps}
-                renderItem={({ item }) => (
-                  <View key={item.number} style={{ flexDirection: 'row' }}>
-                    <Text>{`${item.number}. `}</Text>
-                    <Text>
-                      {item.step}
-                      {'\n'}
-                    </Text>
-                  </View>
-                )}
-              />
-            </View>
+            {recipe.analyzedInstructions[0] ? (
+              <View style={styles.instructions}>
+                <Text style={styles.header}>Instructions</Text>
+                <FlatList
+                  data={recipe.analyzedInstructions[0].steps}
+                  renderItem={({ item }) => (
+                    <View key={item.number} style={{ flexDirection: 'row' }}>
+                      <Text>{`${item.number}. `}</Text>
+                      <Text>
+                        {item.step}
+                        {'\n'}
+                      </Text>
+                    </View>
+                  )}
+                />
+              </View>
+            ) : null}
 
             {/* <HTML html={recipe.instructions} imagesMaxWidth={Dimensions.get('window').width} /> */}
           </View>
