@@ -10,6 +10,7 @@ import Home from './src/screens/HomeScreen';
 import Explore from './src/screens/ExploreScreen';
 import SavedRecipeScreen from './src/screens/SavedRecipeScreen';
 import RecipeScreen from './src/screens/RecipeScreen';
+import Inventory from './src/screens/InventoryScreen';
 
 const navigator = createStackNavigator(
   {
@@ -47,6 +48,7 @@ const navigator = createStackNavigator(
     DietaryRestrictions,
     EmailSent,
     ProfilePic,
+    Inventory,
     SavedRecipeScreen: {
       screen: SavedRecipeScreen,
       navigationOptions: {

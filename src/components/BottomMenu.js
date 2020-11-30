@@ -32,7 +32,7 @@ const BottomMenu = ({ navigation }) => {
         </Text>
       </TouchableOpacity>
       {/* TODO: Change This to Inventory */}
-      <TouchableOpacity style={styles.menuItem} onPress={() => alert('Inventory Pressed')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Inventory')}>
         <MaterialCommunityIcons
           name="fridge-outline"
           size={24}
