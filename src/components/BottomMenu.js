@@ -17,10 +17,12 @@ const BottomMenu = ({ navigation }) => {
         <Entypo
           name="open-book"
           size={24}
-          color={routeName === 'RecipeScreen' ? 'white' : 'black'}
+          color={routeName === 'SavedRecipeScreen' ? 'white' : 'black'}
         />
         <Text
-          style={routeName === 'RecipeScreen' ? styles.menuItemTextScreen : styles.menuItemText}>
+          style={
+            routeName === 'SavedRecipeScreen' ? styles.menuItemTextScreen : styles.menuItemText
+          }>
           Saved Recipes
         </Text>
       </TouchableOpacity>
