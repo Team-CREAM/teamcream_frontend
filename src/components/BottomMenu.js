@@ -17,10 +17,12 @@ const BottomMenu = ({ navigation }) => {
         <Entypo
           name="open-book"
           size={24}
-          color={routeName === 'RecipeScreen' ? 'white' : 'black'}
+          color={routeName === 'SavedRecipeScreen' ? 'white' : 'black'}
         />
         <Text
-          style={routeName === 'RecipeScreen' ? styles.menuItemTextScreen : styles.menuItemText}>
+          style={
+            routeName === 'SavedRecipeScreen' ? styles.menuItemTextScreen : styles.menuItemText
+          }>
           Saved Recipes
         </Text>
       </TouchableOpacity>
@@ -32,7 +34,7 @@ const BottomMenu = ({ navigation }) => {
         </Text>
       </TouchableOpacity>
       {/* TODO: Change This to Inventory */}
-      <TouchableOpacity style={styles.menuItem} onPress={() => alert('Inventory Pressed')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Inventory')}>
         <MaterialCommunityIcons
           name="fridge-outline"
           size={24}
