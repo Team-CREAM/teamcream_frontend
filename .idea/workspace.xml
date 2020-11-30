@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d333b181-4549-4626-9f47-a6f50fb54160" name="Default Changelist" comment="" />
+    <list default="true" id="d333b181-4549-4626-9f47-a6f50fb54160" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RecipeDetail_R.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RecipeDetail_R.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,10 +45,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="322" y="77" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1280.680/-1440.0.1440.860@0.0.1280.680" timestamp="1605655112393" />
-    <state x="110" y="120" width="1060" height="440" key="AVDManager" timestamp="1606499842811">
+    <state x="110" y="120" width="1060" height="440" key="AVDManager" timestamp="1606699872706">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="110" y="120" width="1060" height="440" key="AVDManager/0.0.1280.680/-1440.0.1440.860@0.0.1280.680" timestamp="1605896755923" />
+    <state x="110" y="120" width="1060" height="440" key="AVDManager/0.0.1280.680/-1440.0.1440.860@0.0.1280.680" timestamp="1606699872706" />
     <state x="110" y="120" width="1060" height="440" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1606499842811" />
     <state x="150" y="0" key="SettingsEditor" timestamp="1605030513673">
       <screen x="0" y="0" width="1280" height="680" />
