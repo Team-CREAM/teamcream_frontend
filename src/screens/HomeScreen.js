@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator, Text } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
@@ -7,14 +8,14 @@ import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
   const [term, setTerm] = useState('');
   const [results, setResults] = useState('');
   const [loading, setLoading] = useState(false);
+  // const isFocused = navigation.useIsFocused();
 
   useEffect(() => {
     const receiveRecipes = async () => {
-      console.log('hola');
       setLoading(true);
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.get('/home');
@@ -61,10 +62,10 @@ const HomeScreen = () => {
           ) : null}
           <RecipeList title="Popular!" results={filterResults('Popular')} />
         </ScrollView>
-      </View>
-      <View style={styles.bottomMenu}>
+      <View style={{ height: 400 }}>
         <BottomMenu />
       </View>
+    </View>
     </View>
   );
 };

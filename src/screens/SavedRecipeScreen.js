@@ -18,11 +18,10 @@ const SavedRecipeScreen = () => {
 
     useEffect(() => {
         const getRecipes = async() => {
-            console.log('hellooooo');
             const axiosInstance = await axiosWithToken();
             const response = await axiosInstance.get('./savedRecipes');
-            setRecipes(response.data);
-            // console.log(response.data.result);
+            console.log(response.data.result);
+            setRecipes(response.data.result);
         };
         getRecipes();
     }, []);
@@ -41,12 +40,12 @@ const SavedRecipeScreen = () => {
                 <FlatList
                     data={recipes}
                     extraData={refresh}
-                    keyExtractor={(result) => result.id}
+                    keyExtractor={(result) => result.recipe}
                     renderItem={({ item }) => {
                         return (
                             // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
-                            <TouchableOpacity onPress={() => console.log(item.id)}>
-                                <RecipeDetail result={item} savedRecipes = {recipes} recipes={setRecipes} boolean={false} refresh={setRefresh} hi={refresh}/>
+                            <TouchableOpacity onPress={() => console.log(item.recipe)}>
+                                <RecipeDetail result={item} savedRecipes = {recipes} recipes={setRecipes} refresh={setRefresh} hi={refresh}/>
                             </TouchableOpacity>
                         );
                     }}

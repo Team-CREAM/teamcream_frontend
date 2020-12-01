@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Image, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import heartIcon from 'react-native-vector-icons/AntDesign';
@@ -21,9 +21,23 @@ const RecipeDetail = ({ result }) => {
     setSaved(!saved);
   };
 
+  useEffect(() => {
+    const getSaved = async () => {
+      const axiosToken = await axiosWithToken();
+      const savedResponse = await axiosToken.get('./savedRecipes');
+      setSaved(savedResponse.data.result.some(item => item.recipe === result._id));
+      // console.log(result);
+      // console.log('==============================');
+      // console.log(savedResponse.data.result);
+      // console.log('-----------------------------');
+    };
+    getSaved();
+  }, []);
+
   const youClickedMe = async () => {
     if (!saved) {
       const axiosInstance = await axiosWithToken();
+      console.log(result._id);
       const response = await axiosInstance.post('./savedRecipes', {
         recipe: result._id,
         add: true,
@@ -40,8 +54,7 @@ const RecipeDetail = ({ result }) => {
     setSaved(!saved);
   };
 
-
-  const { title, image } = result;
+  // const { title, image } = result;
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{ uri: result.image }} />

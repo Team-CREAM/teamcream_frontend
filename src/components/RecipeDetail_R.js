@@ -7,8 +7,8 @@ import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
-const RecipeDetail = ({ result, savedRecipes, recipes, boolean, refresh, hi }) => {
-  const [liked, toggleLike] = useState(!boolean);
+const RecipeDetail = ({ result, savedRecipes, recipes, refresh, hi }) => {
+  const [liked, toggleLike] = useState(true);
   const [recipe, setRecipe] = useState('');
   const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
   let smallAnimatedIcon = AnimatedHeart;
@@ -52,8 +52,11 @@ const RecipeDetail = ({ result, savedRecipes, recipes, boolean, refresh, hi }) =
     });
     console.log(response.data.message);
     console.log(response.data.result);
-    // recipes(response.data.result);
-    recipes([...savedRecipes.filter((sRecipes) => sRecipes._id != recipe._id)]);
+    recipes(response.data.result);
+    // eslint-disable-next-line eqeqeq
+    // const recipeList = savedRecipes.filter((sRecipes) => sRecipes.recipe != recipe._id);
+    // console.log(recipeList);
+    // recipes(recipeList);
     refresh(!hi);
   };
 
@@ -95,12 +98,10 @@ const RecipeDetail = ({ result, savedRecipes, recipes, boolean, refresh, hi }) =
   //   spoonacularSourceUrl,
   // } = result;
   return (
-    <View style={boolean ? styles.container : difStyles.container}>
-      {recipe.image ? (
-        <Image style={boolean ? styles.image : difStyles.image} source={{ uri: recipe.image }} />
-      ) : null}
-      <View style={boolean ? styles.recipeDescription : difStyles.recipeDescription}>
-        <Text style={boolean ? styles.name : difStyles.name}>{recipe.title}</Text>
+    <View style={difStyles.container}>
+      {recipe.image ? <Image style={difStyles.image} source={{ uri: recipe.image }} /> : null}
+      <View style={difStyles.recipeDescription}>
+        <Text style={difStyles.name}>{recipe.title}</Text>
         <TouchableOpacity onPress={() => youClickedMe()}>
           <AntDesign name="heart" size={24} color="red" />
         </TouchableOpacity>
