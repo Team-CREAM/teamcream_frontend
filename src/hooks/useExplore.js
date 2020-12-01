@@ -7,29 +7,28 @@ export default () => {
   const [loading, setLoading] = useState(false);
 
   const exploreSearch = async (
-    searchTerm,
-    veryHealthy,
-    veryPopular,
-    sustainable,
-    inventory,
-    cheap,
+    search = '',
+    healthy = false,
+    popular = false,
+    sustainable = false,
+    inventory = false,
+    cheap = false,
   ) => {
     try {
       setLoading(true);
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance
-        .get('/home', {
-          params: {
-            searchTerm,
-            veryHealthy,
-            veryPopular,
-            sustainable,
-            inventory,
-            cheap,
-          },
+        .post('/explore', {
+          search,
+          filter: true,
+          inventory,
+          healthy,
+          cheap,
+          popular,
+          sustainable,
         })
         .then(({ data }) => {
-          setResults(data.popular_recipes);
+          setResults(data);
         });
       setLoading(false);
     } catch (err) {
@@ -38,7 +37,7 @@ export default () => {
   };
 
   useEffect(() => {
-    exploreSearch();
+    exploreSearch('', false, false, false, false, false);
   }, []);
 
   return [exploreSearch, results, errorMessage, loading];

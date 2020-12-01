@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'http://10.0.2.2:3000',
+  baseURL: 'http://10.0.2.2:80',
   headers: {
     'Content-Type': 'application/json',
   },
