@@ -13,7 +13,7 @@ const BottomMenu = ({ navigation }) => {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.menuItem}
-        onPress={() => navigation.navigate('SavedRecipeScreen')}>
+        onPress={() => navigation.replace('SavedRecipeScreen')}>
         <Entypo
           name="open-book"
           size={24}
@@ -27,14 +27,14 @@ const BottomMenu = ({ navigation }) => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.replace('Home')}>
         <Entypo name="circle" size={24} color={routeName === 'Home' ? 'white' : 'black'} />
         <Text style={routeName === 'Home' ? styles.menuItemTextScreen : styles.menuItemText}>
           Home
         </Text>
       </TouchableOpacity>
       {/* TODO: Change This to Inventory */}
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Inventory')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.replace('Inventory')}>
         <MaterialCommunityIcons
           name="fridge-outline"
           size={24}
@@ -45,7 +45,7 @@ const BottomMenu = ({ navigation }) => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Explore')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.replace('Explore')}>
         <Feather
           style={styles.iconStyle}
           name="search"
