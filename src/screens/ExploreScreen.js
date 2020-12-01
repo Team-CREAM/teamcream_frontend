@@ -23,64 +23,14 @@ const { width, height } = Dimensions.get('window');
 
 const ExploreScreen = ({ navigation }) => {
   const [term, setTerm] = useState('');
-  const [searchApi, results, errorMessage] = useRecipes();
-  const [result, setResult] = useState(['hello', 'goodbye']);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const cuisines = [
-    'African',
-    'American',
-    'British',
-    'Cajun',
-    'Caribbean',
-    'Chinese',
-    'Eastern European',
-    'European',
-    'French',
-    'German',
-    'Greek',
-    'Indian',
-    'Irish',
-    'Italian',
-    'Japanese',
-    'Jewish',
-    'Korean',
-    'Latin American',
-    'Mediterranean',
-    'Mexican',
-    'Middle Eastern',
-    'Nordic',
-    'Southern',
-    'Spanish',
-    'Thai',
-    'Vietnamese',
-  ];
-
-  const dishTypes = [
-    'main course',
-    'side dish',
-    'dessert',
-    'appetizer',
-    'salad',
-    'bread',
-    'breakfast',
-    'soup',
-    'beverage',
-    'sauce',
-    'marinade',
-    'fingerfood',
-    'snack',
-    'drink',
-  ];
   // Filtering
   const [veryHealthy, setVeryHealthy] = useState(false);
   const [cheap, setCheap] = useState(false);
   const [veryPopular, setVeryPopular] = useState(false);
   const [sustainable, setSustainable] = useState(false);
   const [inventory, setInventory] = useState(false);
-  const [cuisine, setCuisine] = useState('');
-  const [dishType, setDishType] = useState('');
-  const [number, setNumber] = useState(99);
 
   const [exploreSearch, searchResults, errMsg, loading] = useExplore();
 
@@ -96,7 +46,7 @@ const ExploreScreen = ({ navigation }) => {
         searchbar
         term={term}
         onTermChange={(newTerm) => setTerm(newTerm)}
-        onTermSubmit={() => searchApi(term)}
+        onTermSubmit={() => exploreSearch(term, veryHealthy, veryPopular, inventory, cheap)}
         onFilterSubmit={() => filterOptions()}
       />
       <View>
@@ -161,23 +111,12 @@ const ExploreScreen = ({ navigation }) => {
                     }}
                   />
                 </View>
-                <View style={styles.row}>
-                  <View style={styles.boolText}>
-                    <Text>Sustainable:</Text>
-                  </View>
-                  <Checkbox
-                    title="sustainable"
-                    status={sustainable ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                      setSustainable(!sustainable);
-                    }}
-                  />
-                </View>
 
                 <TouchableHighlight
                   style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
                   onPress={() => {
                     setModalVisible(!modalVisible);
+                    exploreSearch(term, veryHealthy, veryPopular, inventory, cheap);
                   }}>
                   <Text style={styles.textStyle}>Save</Text>
                 </TouchableHighlight>
@@ -186,6 +125,9 @@ const ExploreScreen = ({ navigation }) => {
           </Modal>
         </View>
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
+        {searchResults < 1 && !loading ? (
+          <Text style={{ fontSize: 150 }}>Just be better.</Text>
+        ) : null}
         <FlatList
           columnWrapperStyle={{ flexWrap: 'wrap', flex: 1, marginTop: 2, marginLeft: 4 }}
           data={searchResults}
