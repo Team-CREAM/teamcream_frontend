@@ -50,7 +50,6 @@ const ResetPw = ({ navigation }) => {
   };
 
   const buttonColor = Platform.OS === 'ios' ? '#ffffff' : '#D9B580';
-
   return (
     <View style={styles.container}>
       <Text style={styles.SignUpText}>Send Reset Password Link</Text>
@@ -85,7 +84,7 @@ const ResetPw = ({ navigation }) => {
 
         <Text
           style={{ ...styles.goBackToLogin, fontWeight: 'bold' }}
-          onPress={() => navigation.navigate('SignIn')}>
+          onPress={() => navigation.navigate('Login')}>
           {' '}
           Log In.
         </Text>

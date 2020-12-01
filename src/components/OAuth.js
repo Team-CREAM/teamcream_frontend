@@ -5,13 +5,19 @@ import React from 'react';
 import { StyleSheet, Text, Image, View, Alert, Dimensions, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import * as Google from 'expo-google-app-auth';
+import * as Facebook from 'expo-facebook';
+import axiosWithoutToken from '../api/axiosWithoutToken';
+import useSetToken from '../hooks/useSetToken';
 
 const dimensions = Dimensions.get('window');
 const { width } = dimensions;
 const { height } = dimensions;
 
 const OAuth = ({ navigation }) => {
+  const [storeToken] = useSetToken();
+
   const signInGoogle = async () => {
+    // Init Google
     try {
       const { type, accessToken, user } = await Google.logInAsync({
         iosClientId: '1082251707964-qu924lu7cj0hcbtu6t7ppq23nb3c9b43.apps.googleusercontent.com',
@@ -24,16 +30,24 @@ const OAuth = ({ navigation }) => {
         scopes: ['profile', 'email'],
       });
 
+      // Call /google and store token
       if (type === 'success') {
         console.log('success');
-        /* `accessToken` is now valid and can be used to get data from the Google API with HTTP requests */
-        console.log(accessToken);
-        console.log(user);
-
-        // TODO!
-        // Call backend, send email to them... they either create a new user or return existing user json web token
-
-        navigation.navigate('Home');
+        await axiosWithoutToken
+          .post('/google', {
+            email: user.email,
+          })
+          .then(function (response) {
+            if (response.data.token) {
+              console.log('Axios google worked', response.data.token);
+              storeToken(response.data.token);
+              navigation.navigate('Home');
+            }
+          })
+          .catch(function (error) {
+            console.log('error');
+            console.log(error);
+          });
       }
     } catch (err) {
       console.log(err);
@@ -42,13 +56,6 @@ const OAuth = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image style={styles.facebookLogo} source={require('../../images/facebook_logo.png')} />
-        <TouchableOpacity onPress={() => Alert.alert('Facebook Button Pressed')}>
-          <Text style={{ color: 'blue' }}>Connect with Facebook</Text>
-        </TouchableOpacity>
-      </View>
-
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Image style={styles.googleLogo} source={require('../../images/google_logo.png')} />
         <TouchableOpacity onPress={() => signInGoogle()}>

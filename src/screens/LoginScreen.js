@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,6 +11,8 @@ import {
   ActivityIndicator,
   Platform,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import useSetToken from '../hooks/useSetToken';
 import OAuth from '../components/OAuth';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 import useValidation from '../hooks/useValidation';
@@ -23,8 +25,8 @@ const SignIn = ({ navigation }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [focus2, setFocus2] = useState(false);
-
   const [validateInputs] = useValidation();
+  const [storeToken] = useSetToken();
 
   const SignInAxios = async () => {
     setLoading(true);
@@ -36,7 +38,8 @@ const SignIn = ({ navigation }) => {
       .then(function (response) {
         setLoading(false);
         if (response.data.token) {
-          navigation.navigate('Home', { token: response.data.token });
+          storeToken(response.data.token);
+          navigation.navigate('Home');
         }
 
         if (response.data.error) {
@@ -67,6 +70,18 @@ const SignIn = ({ navigation }) => {
       setError('');
     }, 5000);
   };
+
+  useEffect(() => {
+    const alreadySignedIn = async () => {
+      setLoading(true);
+      const token = await AsyncStorage.getItem('@token');
+      token ? navigation.navigate('Home') : null;
+      setLoading(false);
+    };
+
+    alreadySignedIn();
+  }, []);
+
   const buttonColor = Platform.OS === 'ios' ? '#ffffff' : '#D9B580';
 
   return (
@@ -125,12 +140,12 @@ const SignIn = ({ navigation }) => {
       <View style={styles.accountWrapper}>
         <View style={styles.noAccount}>
           <Text>No Account? </Text>
-          <Text style={styles.textWeight} onPress={() => navigation.navigate('SignUp2')}>
+          <Text style={styles.textWeight} onPress={() => navigation.navigate('SignUp')}>
             Sign up
           </Text>
         </View>
         {/* Forgot Password */}
-        <Text style={styles.textWeight} onPress={() => navigation.navigate('ResetPw2')}>
+        <Text style={styles.textWeight} onPress={() => navigation.navigate('ForgotPassword')}>
           Forgot Password?
         </Text>
       </View>

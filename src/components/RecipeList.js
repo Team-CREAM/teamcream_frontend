@@ -4,7 +4,8 @@ import { withNavigation } from 'react-navigation';
 import RecipeDetail from './RecipeDetail';
 
 const RecipeList = ({ title, results, navigation }) => {
-  if (!results.length) {
+  if (!results) {
+    console.log(title);
     return null;
   }
 
@@ -18,8 +19,7 @@ const RecipeList = ({ title, results, navigation }) => {
         keyExtractor={(result) => result.id}
         renderItem={({ item }) => {
           return (
-            // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
-            <TouchableOpacity onPress={() => console.log(item.id)}>
+            <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item._id })}>
               <RecipeDetail result={item} />
             </TouchableOpacity>
           );
