@@ -11,6 +11,7 @@ import Explore from './src/screens/ExploreScreen';
 import SavedRecipeScreen from './src/screens/SavedRecipeScreen';
 import RecipeScreen from './src/screens/RecipeScreen';
 import Inventory from './src/screens/InventoryScreen';
+
 const navigator = createStackNavigator(
   {
     Home: {
@@ -57,10 +58,10 @@ const navigator = createStackNavigator(
     },
     RecipeScreen: {
       screen: RecipeScreen,
-      navigationOptions: {
-        headerShown: true,
-        title: '',
-      },
+      // navigationOptions: {
+      //   headerShown: true,
+      //   title: '',
+      // },
     },
   },
   {

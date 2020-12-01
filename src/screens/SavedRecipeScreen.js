@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity, Dimensions, ActivityIndicator, Text } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import useRecipes from '../hooks/useRecipes2';
 import RecipeDetail from '../components/RecipeDetail_R';
@@ -10,25 +10,50 @@ import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
-const SavedRecipeScreen = () => {
+const SavedRecipeScreen = ({navigation}) => {
     const [refresh, setRefresh] = useState(false);
     const [term, setTerm] = useState('');
     const [recipes, setRecipes] = useState([]);
-    // const [number, setNumber] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const getRecipes = async() => {
+            setLoading(true);
             const axiosInstance = await axiosWithToken();
             const response = await axiosInstance.get('./savedRecipes');
-            console.log(response.data.result);
-            setRecipes(response.data.result);
+            setRecipes(response.data);
+            setLoading(false);
         };
         getRecipes();
     }, []);
 
+    const HasSavedRecipes = () => {
+        if (recipes.length > 0){
+            return <FlatList
+            data={recipes}
+            extraData={refresh}
+            keyExtractor={(result) => result.recipe}
+            renderItem={({ item }) => {
+                return (
+                    // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
+                    // <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { item })}> // DO NOT UNCOMMENT
+                   <TouchableOpacity onPress={() => console.log(item)}> 
+                        <RecipeDetail result={item} savedRecipes = {recipes} recipes={setRecipes} refresh={setRefresh} hi={refresh}/>
+                    </TouchableOpacity>
+                );
+            }}
+        />;
+        }
+        if(!loading){
+            return <Text style={styles.noRecipe}>No Saved Recipes</Text>;
+        }
+        return null;
+        
+    };
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container}> 
+        {/* WORK ON SEARCH BAR?? */}
             <TopMenu
                 // title="Saved Recipes"
                 searchbar
@@ -37,19 +62,8 @@ const SavedRecipeScreen = () => {
                 onTermSubmit={() => searchApi(term)}
             />
             <View style={styles.marginTop}>
-                <FlatList
-                    data={recipes}
-                    extraData={refresh}
-                    keyExtractor={(result) => result.recipe}
-                    renderItem={({ item }) => {
-                        return (
-                            // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
-                            <TouchableOpacity onPress={() => console.log(item.recipe)}>
-                                <RecipeDetail result={item} savedRecipes = {recipes} recipes={setRecipes} refresh={setRefresh} hi={refresh}/>
-                            </TouchableOpacity>
-                        );
-                    }}
-                />
+            {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
+            <HasSavedRecipes />
             </View>
             <View style={styles.bottomMenu}>
                 <BottomMenu />
@@ -67,6 +81,11 @@ const styles = StyleSheet.create({
     marginTop: {
         marginTop: 10,
         alignItems: 'center'
+    },
+    noRecipe: {
+        // letterSpacing: 2,
+        // fontWeight: 'bold',
+        // fontSize: 100,
     },
     bottomMenu: {
         position: 'absolute',

@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="d333b181-4549-4626-9f47-a6f50fb54160" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/RecipeDetail_R.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RecipeDetail_R.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/RecipeDetail_home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RecipeDetail_home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RecipeList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RecipeList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/RecipeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RecipeScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/SavedRecipeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/SavedRecipeScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,12 +50,11 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="322" y="77" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1280.680/-1440.0.1440.860@0.0.1280.680" timestamp="1605655112393" />
-    <state x="3" y="195" width="1590" height="699" key="AVDManager" timestamp="1606797111082">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="-5" y="2" width="703" height="394" key="AVDManager" timestamp="1606843287430">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="110" y="120" width="1060" height="440" key="AVDManager/0.0.1280.680/-1440.0.1440.860@0.0.1280.680" timestamp="1606699872706" />
-    <state x="110" y="120" width="1060" height="440" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1606499842811" />
-    <state x="3" y="195" width="1590" height="699" key="AVDManager/0.0.1920.1080@0.0.1920.1080" timestamp="1606797111082" />
+    <state x="-5" y="2" width="703" height="394" key="AVDManager/0.0.1280.680/-1440.0.1440.860@0.0.1280.680" timestamp="1606843287430" />
+    <state x="-2" y="2" width="703" height="394" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1606807386183" />
     <state x="150" y="0" key="SettingsEditor" timestamp="1605030513673">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

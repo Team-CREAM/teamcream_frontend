@@ -8,45 +8,27 @@ import axiosWithToken from '../api/axiosWithToken';
 const { width, height } = Dimensions.get('window');
 
 const RecipeDetail = ({ result }) => {
-  const [saved, setSaved] = useState(false);
+  // console.log(result);
+  const [saved, setSaved] = useState(result.saved);
   const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
   let smallAnimatedIcon = AnimatedHeart;
-
   const handleSmallAnimatedIconRef = (ref) => {
     smallAnimatedIcon = ref;
   };
 
-  const handleOnPressLike = () => {
-    youClickedMe();
-    setSaved(!saved);
-  };
-
-  useEffect(() => {
-    const getSaved = async () => {
-      const axiosToken = await axiosWithToken();
-      const savedResponse = await axiosToken.get('./savedRecipes');
-      setSaved(savedResponse.data.result.some(item => item.recipe === result._id));
-      // console.log(result);
-      // console.log('==============================');
-      // console.log(savedResponse.data.result);
-      // console.log('-----------------------------');
-    };
-    getSaved();
-  }, []);
-
   const youClickedMe = async () => {
+    console.log(result.saved);
     if (!saved) {
       const axiosInstance = await axiosWithToken();
-      console.log(result._id);
       const response = await axiosInstance.post('./savedRecipes', {
-        recipe: result._id,
+        recipe: result.recipe,
         add: true,
       });
       console.log(response.data.message);
     } else {
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
-        recipe: result._id,
+        recipe: result.recipe,
         add: false,
       });
       console.log(response.data.message);
@@ -54,13 +36,12 @@ const RecipeDetail = ({ result }) => {
     setSaved(!saved);
   };
 
-  // const { title, image } = result;
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: result.image }} />
+      <Image style={styles.image} source={{ uri: result.recipe.image }} />
       <View style={styles.recipeDescription}>
-        <Text style={styles.name}>{result.title}</Text>
-        <TouchableOpacity activeOpacity={1} onPress={handleOnPressLike}>
+        <Text style={styles.name}>{result.recipe.title}</Text>
+        <TouchableOpacity activeOpacity={1} onPress={youClickedMe}>
           <AnimatedHeart
             ref={handleSmallAnimatedIconRef}
             name={saved ? 'heart' : 'hearto'}

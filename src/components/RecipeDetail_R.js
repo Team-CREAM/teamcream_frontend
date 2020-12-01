@@ -10,13 +10,11 @@ const { width, height } = Dimensions.get('window');
 const RecipeDetail = ({ result, savedRecipes, recipes, refresh, hi }) => {
   const [liked, toggleLike] = useState(true);
   const [recipe, setRecipe] = useState('');
-  const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
-  let smallAnimatedIcon = AnimatedHeart;
-
-  const handleSmallAnimatedIconRef = (ref) => {
-    smallAnimatedIcon = ref;
-  };
-
+  // const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
+  //   let smallAnimatedIcon = AnimatedHeart;
+  //   const handleSmallAnimatedIconRef = (ref) => {
+  //     smallAnimatedIcon = ref;
+  //   };
   useEffect(() => {
     const getRecipes = async () => {
       const axiosInstance = await axiosWithToken();
@@ -28,75 +26,16 @@ const RecipeDetail = ({ result, savedRecipes, recipes, refresh, hi }) => {
     getRecipes();
   }, []);
 
-  // const handleOnPressLike = () => {
-  //   smallAnimatedIcon.bounceIn();
-  //   if (liked === true) {
-  //     const index = savedRecipeList.indexOf(result);
-  //     if (index > -1) {
-  //       savedRecipeList.splice(index, 1);
-  //       refresh(!hi);
-  //     }
-  //   } else {
-  //     savedRecipeList.push(result);
-  //   }
-  //   toggleLike(!liked);
-  //   console.log(liked);
-  // };
-
   const youClickedMe = async () => {
-    console.log(recipe._id);
     const axiosInstance = await axiosWithToken();
     const response = await axiosInstance.post('./savedRecipes', {
       recipe: recipe._id,
       add: false,
     });
-    console.log(response.data.message);
-    console.log(response.data.result);
-    recipes(response.data.result);
-    // eslint-disable-next-line eqeqeq
-    // const recipeList = savedRecipes.filter((sRecipes) => sRecipes.recipe != recipe._id);
-    // console.log(recipeList);
-    // recipes(recipeList);
+    recipes(savedRecipes.filter((r) => r.recipe !== recipe._id));
     refresh(!hi);
   };
 
-  // const {
-  //   vegetarian,
-  //   vegan,
-  //   glutenFree,
-  //   dairyFree,
-  //   veryHealthy,
-  //   cheap,
-  //   veryPopular,
-  //   sustainable,
-  //   weightWatcherSmartPoints,
-  //   gaps,
-  //   lowFodMap,
-  //   aggregateLikes,
-  //   spoonacularScore,
-  //   healthScore,
-  //   creditsText,
-  //   license,
-  //   sourceName,
-  //   pricePerServing,
-  //   extendedIngredients,
-  //   id,
-  //   title,
-  //   readyInMinutes,
-  //   servings,
-  //   sourceUrl,
-  //   image,
-  //   imageType,
-  //   summary,
-  //   cuisines,
-  //   dishTypes,
-  //   diets,
-  //   occasions,
-  //   instructions,
-  //   analyzedInstructions,
-  //   originalId,
-  //   spoonacularSourceUrl,
-  // } = result;
   return (
     <View style={difStyles.container}>
       {recipe.image ? <Image style={difStyles.image} source={{ uri: recipe.image }} /> : null}
