@@ -7,13 +7,14 @@ import {
   Dimensions,
   TouchableOpacity,
   Platform,
+  Alert,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Autocomplete from 'react-native-autocomplete-input';
 
 const { width, height } = Dimensions.get('window');
 
-const AddIngredientBar = ({ data, addIngredient }) => {
+const AddIngredientBar = ({ data, addIngredient, save }) => {
   const [filteredIngredients, setFilteredIngredients] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
   const [show, setShow] = useState(false);
@@ -51,18 +52,33 @@ const AddIngredientBar = ({ data, addIngredient }) => {
           filterIngred(change);
         }}
         placeholder="add your ingredient"
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={{ flexDirection: 'row' }}
-            onPress={() => {
-              addIngredient(item.name);
-              setFilteredIngredients([]);
-              setSelectedValue('');
-            }}>
-            <Feather name="plus" size={24} color="#000000" />
-            <Text>{item.name}</Text>
-          </TouchableOpacity>
-        )}
+        keyExtractor={(item) => item.name}
+        renderItem={({ item }) => {
+          // console.log(save.includes({ name: item.name }));
+          // console.log({ name: item.name } === save[0]);
+          // console.log(save[0]);
+          // console.log(save);
+          return (
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                backgroundColor: save.includes(item.name) ? 'green' : 'white',
+                // backgroundColor: save.length !== 0 ? 'red' : 'green',
+              }}
+              onPress={() => {
+                if (save.includes(item.name)) {
+                  Alert.alert('Error', 'Ingredient Already in Inventory');
+                } else {
+                  addIngredient(item.name);
+                  setFilteredIngredients([]);
+                  setSelectedValue('');
+                }
+              }}>
+              <Feather name="plus" size={24} color="#000000" />
+              <Text>{item.name}</Text>
+            </TouchableOpacity>
+          );
+        }}
       />
       <Feather
         style={{ marginTop: height * 0.01, position: 'absolute', right: 10 }}

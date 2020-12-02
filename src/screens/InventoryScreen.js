@@ -61,7 +61,11 @@ const Inventory = () => {
       <TopMenu title="Inventory" />
       {/* <SearchIngredient /> */}
 
-      <AddIngredientBar data={ingredients} addIngredient={addIngredient} />
+      <AddIngredientBar
+        data={ingredients}
+        addIngredient={addIngredient}
+        save={arr.map((i) => i.name)}
+      />
       <View style={styles.box}>
         <Text style={styles.pantryText}>Your Pantry</Text>
         <Text style={styles.numIngred}>
