@@ -23,25 +23,21 @@ const Inventory = () => {
   const [onTermChange, setOntermChange] = useState('');
   const [arr, setArr] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [save, setSave] = useState(false);
 
   useEffect(() => {
-    console.log('hi');
+    setTerm('hello');
     const getIngred = async () => {
-      console.log('bye');
       const axiosInstance = await axiosWithToken();
       const responseIngredients = await axiosInstance.get('/allIngredients');
       const responseInventory = await axiosInstance.get('/inventory');
-      console.log(responseInventory);
-      console.log(responseIngredients);
+      const newInventory = responseInventory.data.map((item) => ({ name: item }));
       setIngredients(responseIngredients.data);
-      setArr([]); // TODO: set to responseInventory when Reshma finishes
+      setArr(newInventory); // TODO: set to responseInventory when Reshma finishes
     };
     getIngred();
-    return async () => {
+    return () => {
       console.log('bye');
-      const axiosInstance = await axiosWithToken();
-      const response = await axiosInstance.post('/inventory', { ingredients: arr });
-      console.log(response.data.message);
     };
   }, []);
 
@@ -49,11 +45,13 @@ const Inventory = () => {
     const arr2 = [...arr];
     arr2.splice(key, 1);
     setArr(arr2);
+    setSave(true);
   };
   const addIngredient = (name) => {
     const arr2 = [...arr];
     arr2.push({ name });
     setArr(arr2);
+    setSave(true);
   };
 
   return (
@@ -101,7 +99,7 @@ const Inventory = () => {
       </View>
 
       <View style={styles.bottomMenu}>
-        <BottomMenu />
+        <BottomMenu data={arr} save={save} />
       </View>
     </View>
   );
