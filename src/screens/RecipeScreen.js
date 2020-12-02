@@ -24,7 +24,6 @@ const { width, height } = Dimensions.get('window');
 const RecipeScreen = ({ navigation }) => {
   //   const [results, errorMessage] = retrieveRecipes();
   const { id } = navigation.state.params;
-  // const { recipe } = item;
   const [recipe, setRecipe] = useState('');
   const [saved, setSaved] = useState(false);
 
