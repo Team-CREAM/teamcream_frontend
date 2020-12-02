@@ -5,21 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d333b181-4549-4626-9f47-a6f50fb54160" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hooks/useGetToken.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hooks/useSetToken.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/ExploreScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/submit.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/axiosWithToken.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/axiosWithToken.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RecipeDetail_R.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RecipeDetail_R.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/RecipeDetail_home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RecipeDetail_home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/RecipeList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/RecipeList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/retrieveRecipes.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/RecipeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RecipeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/SignInScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/SignInScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/SignUpScreen2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/SignUpScreen2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/SavedRecipeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/SavedRecipeScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,11 +50,11 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="322" y="77" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1280.680/-1440.0.1440.860@0.0.1280.680" timestamp="1605655112393" />
-    <state x="110" y="120" width="1060" height="440" key="AVDManager" timestamp="1606499842811">
+    <state x="-5" y="2" width="703" height="394" key="AVDManager" timestamp="1606843287430">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="110" y="120" width="1060" height="440" key="AVDManager/0.0.1280.680/-1440.0.1440.860@0.0.1280.680" timestamp="1605896755923" />
-    <state x="110" y="120" width="1060" height="440" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1606499842811" />
+    <state x="-5" y="2" width="703" height="394" key="AVDManager/0.0.1280.680/-1440.0.1440.860@0.0.1280.680" timestamp="1606843287430" />
+    <state x="-2" y="2" width="703" height="394" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1606807386183" />
     <state x="150" y="0" key="SettingsEditor" timestamp="1605030513673">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
