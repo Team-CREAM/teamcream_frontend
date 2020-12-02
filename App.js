@@ -58,10 +58,10 @@ const navigator = createStackNavigator(
     },
     RecipeScreen: {
       screen: RecipeScreen,
-      // navigationOptions: {
-      //   headerShown: true,
-      //   title: '',
-      // },
+      navigationOptions: {
+        headerShown: true,
+        title: '',
+      },
     },
   },
   {

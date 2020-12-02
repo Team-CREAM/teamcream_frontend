@@ -9,25 +9,23 @@ const RecipeList = ({ title, results, navigation }) => {
   }
 
   return (
-    console.log(results.length),
-    (
-      <View style={styles.container}>
-        <Text style={styles.title}>{title}</Text>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={results}
-          keyExtractor={(result) => result.recipe._id} // CHANGE TO RESULT.RECIPE.ID
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { item })}>
-                <RecipeDetail result={item} />
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
-    )
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={results}
+        keyExtractor={(result) => result.recipe._id} // CHANGE TO RESULT.RECIPE.ID
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('RecipeScreen', { id: item.recipe._id })}>
+              <RecipeDetail result={item} />
+            </TouchableOpacity>
+          );
+        }}
+      />
+    </View>
   );
 };
 

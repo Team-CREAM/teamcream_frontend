@@ -35,9 +35,7 @@ const SavedRecipeScreen = ({navigation}) => {
             keyExtractor={(result) => result.recipe}
             renderItem={({ item }) => {
                 return (
-                    // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
-                    // <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { item })}> // DO NOT UNCOMMENT
-                   <TouchableOpacity onPress={() => console.log(item)}> 
+                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.recipe })}> 
                         <RecipeDetail result={item} savedRecipes = {recipes} recipes={setRecipes} refresh={setRefresh} hi={refresh}/>
                     </TouchableOpacity>
                 );
