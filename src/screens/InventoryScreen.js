@@ -10,11 +10,11 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import axios from 'axios';
 import { Feather } from '@expo/vector-icons';
 import TopMenu from '../components/TopMenu';
 import AddIngredientBar from '../components/AddIngredientBar';
 import BottomMenu from '../components/BottomMenu';
+import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
@@ -37,8 +37,11 @@ const Inventory = () => {
       setArr([]); // TODO: set to responseInventory when Reshma finishes
     };
     getIngred();
-    return () => {
+    return async () => {
       console.log('bye');
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.post('/inventory', { ingredients: arr });
+      console.log(response.data.message);
     };
   }, []);
 
@@ -71,24 +74,30 @@ const Inventory = () => {
           <View style={styles.line} />
         </View>
 
-        <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
-          <ScrollView
-            horizontal
-            bounces={false}
-            style={{ marginVertical: height * 0.01, marginHorizontal: width * 0.07 }}
-            contentContainerStyle={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-            {arr.map((item, key) => (
-              <View key={key} style={styles.itemBox}>
-                <Feather
-                  style={styles.iconStyle}
-                  name="minus"
-                  onPress={(key) => deleteElement(key)}
-                />
-                <Text>{item.name}</Text>
-              </View>
-            ))}
+        {arr.length === 0 ? (
+          <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
+            Your Ingredients will be here
+          </Text>
+        ) : (
+          <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+            <ScrollView
+              horizontal
+              bounces={false}
+              style={{ marginVertical: height * 0.01, marginHorizontal: width * 0.07 }}
+              contentContainerStyle={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+              {arr.map((item, key) => (
+                <View key={key} style={styles.itemBox}>
+                  <Feather
+                    style={styles.iconStyle}
+                    name="minus"
+                    onPress={(key) => deleteElement(key)}
+                  />
+                  <Text>{item.name}</Text>
+                </View>
+              ))}
+            </ScrollView>
           </ScrollView>
-        </ScrollView>
+        )}
       </View>
 
       <View style={styles.bottomMenu}>
