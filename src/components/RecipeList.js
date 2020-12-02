@@ -1,31 +1,33 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import RecipeDetail from './RecipeDetail';
+import RecipeDetail from './RecipeDetail_home';
 
 const RecipeList = ({ title, results, navigation }) => {
   if (!results) {
-    console.log(title);
     return null;
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={results}
-        keyExtractor={(result) => result.id}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item._id })}>
-              <RecipeDetail result={item} />
-            </TouchableOpacity>
-          );
-        }}
-      />
-    </View>
+    console.log(results.length),
+    (
+      <View style={styles.container}>
+        <Text style={styles.title}>{title}</Text>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={results}
+          keyExtractor={(result) => result.recipe._id} // CHANGE TO RESULT.RECIPE.ID
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { item })}>
+                <RecipeDetail result={item} />
+              </TouchableOpacity>
+            );
+          }}
+        />
+      </View>
+    )
   );
 };
 
