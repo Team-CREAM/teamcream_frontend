@@ -23,29 +23,28 @@ const { width, height } = Dimensions.get('window');
 
 const RecipeScreen = ({ navigation }) => {
   //   const [results, errorMessage] = retrieveRecipes();
-  const { item } = navigation.state.params;
-  const { recipe } = item;
-  // const [recipe, setRecipe] = useState('');
-  const [saved, setSaved] = useState(item.saved);
+  const { id } = navigation.state.params;
+  const [recipe, setRecipe] = useState('');
+  const [saved, setSaved] = useState(false);
 
   // TODO call axios request
-  // useEffect(() => {
-  //   const getRecipe = async () => {
-  //     // setLoading(true);
-  //     console.log('hello');
-  //     const axiosInstance = await axiosWithToken();
-  //     const response = await axiosInstance.post('./recipeClicked', {
-  //       recipe: id,
-  //     });
-  //     console.log(response.data.saved);
-  //     // console.log(response.data.Recipe);
-  //     setRecipe(response.data.Recipe);
-  //     setSaved(response.data.saved);
-  //     // setLoading(false);
-  //   };
+  useEffect(() => {
+    const getRecipe = async () => {
+      // setLoading(true);
+      console.log('hello');
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.post('./recipeClicked', {
+        recipe: id,
+      });
+      console.log(response.data.saved);
+      // console.log(response.data.Recipe);
+      setRecipe(response.data.Recipe);
+      setSaved(response.data.saved);
+      // setLoading(false);
+    };
 
-  //   getRecipe();
-  // }, []);
+    getRecipe();
+  }, []);
 
   const youClickedMe = async () => {
     if (!saved) {
@@ -153,10 +152,6 @@ const RecipeScreen = ({ navigation }) => {
           </View>
         </ScrollView>
       ) : null}
-      {/* Bottom Nav bar */}
-      <View style={styles.bottomMenu}>
-        <BottomMenu />
-      </View>
     </View>
   );
 };

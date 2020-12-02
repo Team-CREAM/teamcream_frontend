@@ -10,6 +10,7 @@ const axiosWithToken = async () => {
   });
 
   const token = await AsyncStorage.getItem('@token');
+  console.log(token);
   axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
 
   return axiosInstance;
