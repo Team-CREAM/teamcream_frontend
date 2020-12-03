@@ -3,17 +3,36 @@ import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-nati
 import { Entypo, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
-const BottomMenu = ({ navigation }) => {
+const BottomMenu = ({ navigation, data, save }) => {
   const { routeName } = navigation.state;
   // console.log(routeName);
+
+  const saveInventory = async () => {
+    // console.log(data);
+
+    const revisedData = data.map((item) => item.name);
+    // console.log(hello);
+    const axiosInstance = await axiosWithToken();
+    const response = await axiosInstance
+      .post('/inventory', { ingredients: revisedData })
+      .then((res) => {
+        console.log('inventory updated');
+      });
+  };
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.menuItem}
-        onPress={() => navigation.replace('SavedRecipeScreen')}>
+        onPress={() => {
+          if (save) {
+            saveInventory();
+          }
+          navigation.replace('SavedRecipeScreen');
+        }}>
         <Entypo
           name="open-book"
           size={24}
@@ -27,7 +46,14 @@ const BottomMenu = ({ navigation }) => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.replace('Home')}>
+      <TouchableOpacity
+        style={styles.menuItem}
+        onPress={() => {
+          if (save) {
+            saveInventory();
+          }
+          navigation.replace('Home');
+        }}>
         <Entypo name="circle" size={24} color={routeName === 'Home' ? 'white' : 'black'} />
         <Text style={routeName === 'Home' ? styles.menuItemTextScreen : styles.menuItemText}>
           Home
@@ -45,7 +71,14 @@ const BottomMenu = ({ navigation }) => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.replace('Explore')}>
+      <TouchableOpacity
+        style={styles.menuItem}
+        onPress={() => {
+          if (save) {
+            saveInventory();
+          }
+          navigation.replace('Explore');
+        }}>
         <Feather
           style={styles.iconStyle}
           name="search"

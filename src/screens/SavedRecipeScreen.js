@@ -7,6 +7,7 @@ import RecipeDetail from '../components/RecipeDetail_R';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
 import axiosWithToken from '../api/axiosWithToken';
+import ProfileModal from '../components/ProfileModal';
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,6 +16,8 @@ const SavedRecipeScreen = ({navigation}) => {
     const [term, setTerm] = useState('');
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [proflileModalVisible, setProfileModalVisible] = useState(false);
+
 
     useEffect(() => {
         const getRecipes = async() => {
@@ -35,10 +38,7 @@ const SavedRecipeScreen = ({navigation}) => {
             keyExtractor={(result) => result.recipe}
             renderItem={({ item }) => {
                 return (
-                    // <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
-                    // <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { item })}> // DO NOT UNCOMMENT
-                    <TouchableOpacity
-                            onPress={() => navigation.navigate('RecipeScreen', { id: item.recipe })}>
+                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.recipe })}> 
                         <RecipeDetail result={item} savedRecipes = {recipes} recipes={setRecipes} refresh={setRefresh} hi={refresh}/>
                     </TouchableOpacity>
                 );
@@ -59,9 +59,14 @@ const SavedRecipeScreen = ({navigation}) => {
                 // title="Saved Recipes"
                 searchbar
                 term={term}
+                profileIcon
+                onProfilePress={setProfileModalVisible}
                 onTermChange={(newTerm) => setTerm(newTerm)}
                 onTermSubmit={() => searchApi(term)}
             />
+            {proflileModalVisible === true ? (
+            <ProfileModal isVisible={setProfileModalVisible} />
+          ) : null}
             <View style={styles.marginTop}>
             {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
             <HasSavedRecipes />
