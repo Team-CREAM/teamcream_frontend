@@ -113,7 +113,6 @@ const SignIn = ({ navigation }) => {
         onChangeText={(newTerm) => setPassword(newTerm)}
         onSubmitEditing={() => validateSubmit()}
       />
-
       <TouchableHighlight style={styles.loginButtonWrapper}>
         <Button onPress={() => validateSubmit()} title="Login" color={buttonColor} />
       </TouchableHighlight>
