@@ -41,9 +41,15 @@ const AddIngredientBar = ({ data, addIngredient, save }) => {
           // top: '20%',
           // backgroundColor: 'purple',
         }}
-        inputContainerStyle={{ borderWidth: 0 }}
-        listStyle={{ maxHeight: height * 0.2 }}
-        // listContainerStyle={{ backgroundColor: 'blue', maxHeight: height * 0.3 }}
+        inputContainerStyle={{
+          borderWidth: 2,
+          borderColor: 'grey',
+          borderRadius: 3,
+          backgroundColor: 'red',
+          shadowColor: 'red',
+        }}
+        listStyle={{ maxHeight: height * 0.2, marginHorizontal: width * 0.015 }}
+        // listContainerStyle={{ backgroundColor: 'blue' }}
         data={filteredIngredients}
         defaultValue={selectedValue}
         onChangeText={(change) => {
@@ -51,7 +57,7 @@ const AddIngredientBar = ({ data, addIngredient, save }) => {
           setSelectedValue(change);
           filterIngred(change);
         }}
-        placeholder="add your ingredient"
+        placeholder="   add your ingredient"
         keyExtractor={(item) => item.name}
         renderItem={({ item }) => {
           // console.log(save.includes({ name: item.name }));
@@ -62,20 +68,32 @@ const AddIngredientBar = ({ data, addIngredient, save }) => {
             <TouchableOpacity
               style={{
                 flexDirection: 'row',
-                backgroundColor: save.includes(item.name) ? 'green' : 'white',
+                borderWidth: 0.4,
+                // backgroundColor: save.includes(item.name) ? 'green' : 'white',
                 // backgroundColor: save.length !== 0 ? 'red' : 'green',
               }}
               onPress={() => {
                 if (save.includes(item.name)) {
-                  Alert.alert('Error', 'Ingredient Already in Inventory');
+                  Alert.alert('Oops!', 'Ingredient Already in Inventory');
                 } else {
                   addIngredient(item.name);
                   setFilteredIngredients([]);
                   setSelectedValue('');
                 }
               }}>
-              <Feather name="plus" size={24} color="#000000" />
-              <Text>{item.name}</Text>
+              <Feather
+                name={save.includes(item.name) ? 'check' : 'plus'}
+                size={24}
+                color={save.includes(item.name) ? 'green' : 'black'}
+              />
+              <Text
+                style={{
+                  color: save.includes(item.name) ? 'green' : 'black',
+                  marginTop: 1.8,
+                  marginLeft: 10,
+                }}>
+                {item.name}
+              </Text>
             </TouchableOpacity>
           );
         }}
