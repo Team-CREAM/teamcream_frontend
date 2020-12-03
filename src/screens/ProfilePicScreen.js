@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,7 @@ import {
   FlatList,
   Button,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import useSetIcon from '../hooks/useSetIcon';
 
 const dimensions = Dimensions.get('window');
@@ -22,6 +23,14 @@ const ProfilePicScreen = ({ navigation }) => {
   );
   const [index, setIndex] = useState(0);
   const [storeIcon] = useSetIcon();
+
+  useEffect(() => {
+    const getProfileIcon = async () => {
+      const icon = await AsyncStorage.getItem('@icon');
+      setProfilePicture(ICONDATA[icon].name);
+    };
+    getProfileIcon();
+  }, []);
 
   const ICONDATA = [
     {

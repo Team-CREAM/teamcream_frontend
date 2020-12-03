@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Button } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 import axiosWithToken from '../api/axiosWithToken';
 
@@ -16,9 +15,24 @@ const DietaryRestrictions = ({ navigation, route }) => {
   const [glutenFree, setIsGlutenfree] = useState(false);
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    const getPreferences = async () => {
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance
+        .get('/profile')
+        .then((response) => {
+          const { vegetarian, dairyFree, vegan, glutenFree } = response.data.preferences;
+          setIsDairyfree(dairyFree);
+          setIsVegetarian(vegetarian);
+          setIsVegan(vegan);
+          setIsGlutenfree(glutenFree);
+        })
+        .error((err) => errorHandle(err));
+    };
+    getPreferences();
+  }, []);
+
   const DietaryRestrictionsAxios = async () => {
-    const icon = await AsyncStorage.getItem('@icon');
-    console.log(icon);
     const axiosInstance = await axiosWithToken();
     const response = await axiosInstance
       .post('/preferences', {

@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Checkbox } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import TopMenu from '../components/TopMenu';
 import BottomMenu from '../components/BottomMenu';
 import useExplore from '../hooks/useExplore';
@@ -39,7 +40,7 @@ const ExploreScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TopMenu
         // title="Home"
         profileIcon
@@ -155,7 +156,7 @@ const ExploreScreen = ({ navigation }) => {
       <View style={styles.bottomMenu}>
         <BottomMenu />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

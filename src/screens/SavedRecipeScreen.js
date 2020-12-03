@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, TouchableOpacity, Dimensions, ActivityIndicator, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../components/SearchBar';
 import useRecipes from '../hooks/useRecipes2';
 import RecipeDetail from '../components/RecipeDetail_R';
@@ -8,6 +9,7 @@ import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
 import axiosWithToken from '../api/axiosWithToken';
 import ProfileModal from '../components/ProfileModal';
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -53,16 +55,16 @@ const SavedRecipeScreen = ({navigation}) => {
     };
 
     return (
-        <View style={styles.container}> 
+        <SafeAreaView style={styles.container}> 
         {/* WORK ON SEARCH BAR?? */}
             <TopMenu
-                // title="Saved Recipes"
-                searchbar
-                term={term}
+                title="Saved Recipes"
+                // searchbar
+                // term={term}
                 profileIcon
                 onProfilePress={setProfileModalVisible}
-                onTermChange={(newTerm) => setTerm(newTerm)}
-                onTermSubmit={() => searchApi(term)}
+                // onTermChange={(newTerm) => setTerm(newTerm)}
+                // onTermSubmit={() => searchApi(term)}
             />
             {proflileModalVisible === true ? (
             <ProfileModal isVisible={setProfileModalVisible} />
@@ -74,7 +76,7 @@ const SavedRecipeScreen = ({navigation}) => {
             <View style={styles.bottomMenu}>
                 <BottomMenu />
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 

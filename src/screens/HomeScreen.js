@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
@@ -53,7 +54,7 @@ const HomeScreen = (props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TopMenu profileIcon title="Home" onProfilePress={setProfileModalVisible} />
       <View style={styles.marginTop}>
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
@@ -72,7 +73,7 @@ const HomeScreen = (props) => {
       <View style={styles.bottomMenu}>
         <BottomMenu />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

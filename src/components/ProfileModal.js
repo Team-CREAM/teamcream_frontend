@@ -23,6 +23,7 @@ const ProfileModal = ({ navigation, isVisible }) => {
           <TouchableHighlight
             style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
             onPress={() => {
+              isVisible(false);
               navigation.replace('ProfilePic');
             }}>
             <Text style={styles.textStyle}>User Settings</Text>
@@ -31,6 +32,7 @@ const ProfileModal = ({ navigation, isVisible }) => {
           <TouchableHighlight
             style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
             onPress={() => {
+              isVisible(false);
               storeToken('');
               navigation.replace('Login');
             }}>
