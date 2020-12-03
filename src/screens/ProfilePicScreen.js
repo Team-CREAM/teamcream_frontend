@@ -86,11 +86,9 @@ const ProfilePicScreen = ({ navigation }) => {
       {/* Next Button */}
       <TouchableHighlight style={styles.nextButtonWrapper}>
         <Button
-          onPress={() =>
-            navigation.navigate('DietaryRestrictions', {
-              profilePicture,
-            })
-          }
+          onPress={async () => {
+            navigation.navigate('DietaryRestrictions', { profilePic });
+          }}
           title="Next"
           color="#D9B580"
         />

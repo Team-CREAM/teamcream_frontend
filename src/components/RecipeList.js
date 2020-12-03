@@ -8,8 +8,6 @@ const RecipeList = ({ title, results, navigation }) => {
     return null;
   }
 
-  console.log(results[0]);
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
