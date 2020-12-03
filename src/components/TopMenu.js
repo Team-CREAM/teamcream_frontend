@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
 import SearchBar from './SearchBar';
 import useSetToken from '../hooks/useSetToken';
+import ProfileModal from './ProfileModal';
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,18 +16,22 @@ const TopMenu = ({
   onTermChange,
   onTermSubmit,
   onFilterSubmit,
+  profileIcon,
+  onProfilePress
 }) => {
   const [storeToken] = useSetToken();
   return (
     <View style={styles.container}>
+      { profileIcon ? ( 
       <TouchableOpacity
         style={styles.icon}
-        onPress={() => {
-          storeToken('');
-          navigation.navigate('Login');
+        onPress={() => {     
+          onProfilePress(true)
         }}>
         <MaterialIcons name="face" size={24} color="black" />
       </TouchableOpacity>
+      ) : null}
+      
       {title ? (
         <View style={styles.title}>
           <Text style={styles.titleText}>{title}</Text>

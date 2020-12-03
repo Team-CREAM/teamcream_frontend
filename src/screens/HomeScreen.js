@@ -4,6 +4,7 @@ import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
 import axiosWithToken from '../api/axiosWithToken';
+import ProfileModal from '../components/ProfileModal';
 
 const { width, height } = Dimensions.get('window');
 
@@ -11,6 +12,7 @@ const HomeScreen = (props) => {
   const [term, setTerm] = useState('');
   const [results, setResults] = useState('');
   const [loading, setLoading] = useState(false);
+  const [proflileModalVisible, setProfileModalVisible] = useState(false);
 
   useEffect(() => {
     const receiveRecipes = async () => {
@@ -52,10 +54,10 @@ const HomeScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <TopMenu title="Home" />
+      <TopMenu profileIcon title="Home" onProfilePress={setProfileModalVisible} />
       <View style={styles.marginTop}>
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
-
+        {proflileModalVisible === true ? <ProfileModal isVisible={setProfileModalVisible} /> : null}
         <ScrollView>
           <RecipeList title="Welcome Back!" results={filterResults('')} />
           {/* {displayList('Recent') ? (

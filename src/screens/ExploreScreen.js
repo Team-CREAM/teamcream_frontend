@@ -16,6 +16,7 @@ import { Checkbox } from 'react-native-paper';
 import TopMenu from '../components/TopMenu';
 import BottomMenu from '../components/BottomMenu';
 import useExplore from '../hooks/useExplore';
+import ProfileModal from '../components/ProfileModal';
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,6 +29,7 @@ const ExploreScreen = ({ navigation }) => {
   const [cheap, setCheap] = useState(false);
   const [veryPopular, setVeryPopular] = useState(false);
   const [inventory, setInventory] = useState(false);
+  const [proflileModalVisible, setProfileModalVisible] = useState(false);
 
   const [exploreSearch, searchResults, errMsg, loading] = useExplore();
 
@@ -40,6 +42,8 @@ const ExploreScreen = ({ navigation }) => {
     <View style={styles.container}>
       <TopMenu
         // title="Home"
+        profileIcon
+        onProfilePress={setProfileModalVisible}
         searchbar
         term={term}
         onTermChange={(newTerm) => setTerm(newTerm)}
@@ -48,6 +52,9 @@ const ExploreScreen = ({ navigation }) => {
       />
       <View>
         <View style={{ ...styles.centeredView, marginTop: 0 }}>
+          {proflileModalVisible === true ? (
+            <ProfileModal isVisible={setProfileModalVisible} />
+          ) : null}
           <Modal
             animationType="slide"
             transparent
