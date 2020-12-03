@@ -10,6 +10,7 @@ import {
   FlatList,
   Button,
 } from 'react-native';
+import useSetIcon from '../hooks/useSetIcon';
 
 const dimensions = Dimensions.get('window');
 const { width } = dimensions;
@@ -19,6 +20,8 @@ const ProfilePicScreen = ({ navigation }) => {
   const [profilePicture, setProfilePicture] = useState(
     require('../../images/profilepicicons/bento_box.png'),
   );
+  const [index, setIndex] = useState(0);
+  const [storeIcon] = useSetIcon();
 
   const ICONDATA = [
     {
@@ -68,9 +71,14 @@ const ProfilePicScreen = ({ navigation }) => {
     },
   ];
   // <Image source={navigation.state.params.profilePicture} />;
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity onPress={() => setProfilePicture(item.name)} style={styles.gridElement}>
+      <TouchableOpacity
+        onPress={() => {
+          setIndex(index);
+          setProfilePicture(item.name);
+        }}
+        style={styles.gridElement}>
         <Image style={styles.imageThumbnail} source={item.name} resizeMode="contain" />
       </TouchableOpacity>
     );
@@ -87,7 +95,8 @@ const ProfilePicScreen = ({ navigation }) => {
       <TouchableHighlight style={styles.nextButtonWrapper}>
         <Button
           onPress={async () => {
-            navigation.navigate('DietaryRestrictions', { profilePic });
+            await storeIcon(index.toString());
+            navigation.navigate('DietaryRestrictions');
           }}
           title="Next"
           color="#D9B580"

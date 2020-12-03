@@ -15,7 +15,6 @@ const DietaryRestrictions = ({ navigation, route }) => {
   const [vegan, setIsVegan] = useState(false);
   const [glutenFree, setIsGlutenfree] = useState(false);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const DietaryRestrictionsAxios = async () => {
     const icon = await AsyncStorage.getItem('@icon');
