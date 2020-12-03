@@ -5,6 +5,7 @@ import axios from 'axios';
 import TopMenu from '../components/TopMenu';
 import AddIngredientBar from '../components/AddIngredientBar';
 import BottomMenu from '../components/BottomMenu';
+import ProfileModal from '../components/ProfileModal';
 
 class Inventory extends Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class Inventory extends Component {
 
     const hi = await bye.get('/allIngredients');
     this.setState({ ingredients: hi.data });
+
     // console.log(this.state);
     // const current = await bye.get('/inventory');
 
@@ -170,7 +172,7 @@ class Inventory extends Component {
       <View style={styles.container}>
         {/* Search in Pantry */}
 
-        <TopMenu title="Inventory" />
+        <TopMenu title="Inventory" profileIcon onProfilePress={setProfileModalVisible} />
         {/* <SearchIngredient /> */}
         <View
           style={{
@@ -178,6 +180,7 @@ class Inventory extends Component {
           }}>
           <AddIngredientBar data={this.state.ingredients} addIngredient={this.addIngredient} />
         </View>
+        {proflileModalVisible === true ? <ProfileModal isVisible={setProfileModalVisible} /> : null}
         <View style={styles.box}>
           <Text style={styles.pantryText}>Your Pantry</Text>
           <Text style={styles.numIngred}>

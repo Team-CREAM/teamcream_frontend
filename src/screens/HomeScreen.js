@@ -53,7 +53,7 @@ const HomeScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <TopMenu title="Home" />
+      <TopMenu profileIcon title="Home" />
       <View style={styles.marginTop}>
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
 
