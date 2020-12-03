@@ -130,7 +130,9 @@ const ExploreScreen = ({ navigation }) => {
           </Modal>
         </View>
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
-        {searchResults < 1 && !loading ? <Text style={{ fontSize: 150 }}>No results.</Text> : null}
+        {searchResults < 1 && !loading ? (
+          <Text style={{ fontSize: 32 }}>Add ingredients to inventory...</Text>
+        ) : null}
         <FlatList
           columnWrapperStyle={{ flexWrap: 'wrap', flex: 1, marginTop: 2, marginLeft: 4 }}
           data={searchResults}

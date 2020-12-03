@@ -61,9 +61,9 @@ const HomeScreen = (props) => {
         {proflileModalVisible === true ? <ProfileModal isVisible={setProfileModalVisible} /> : null}
         <ScrollView>
           <RecipeList title="Welcome Back!" results={filterResults('')} />
-          {/* {displayList('Recent') ? (
+          {displayList('Recent') ? (
             <RecipeList title="Continue where you left off!" results={filterResults('Recent')} />
-          ) : null} */}
+          ) : null}
           {displayList('Can Make') ? (
             <RecipeList title="What you can make right now!" results={filterResults('Can Make')} />
           ) : null}
