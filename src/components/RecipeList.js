@@ -1,13 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import RecipeDetail from './RecipeDetail';
+import RecipeDetail from './RecipeDetail_home';
 
 const RecipeList = ({ title, results, navigation }) => {
   if (!results) {
-    console.log(title);
     return null;
   }
+
+  console.log(results[0]);
 
   return (
     <View style={styles.container}>
@@ -16,10 +17,11 @@ const RecipeList = ({ title, results, navigation }) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={results}
-        keyExtractor={(result) => result.id}
+        keyExtractor={(result) => result.recipe._id} // CHANGE TO RESULT.RECIPE.ID
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item._id })}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('RecipeScreen', { id: item.recipe._id })}>
               <RecipeDetail result={item} />
             </TouchableOpacity>
           );

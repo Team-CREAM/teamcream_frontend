@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator, Text } from 'react-native';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
@@ -7,12 +7,13 @@ import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
   const [term, setTerm] = useState('');
   const [results, setResults] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log('Refreshing');
     const receiveRecipes = async () => {
       setLoading(true);
       const axiosInstance = await axiosWithToken();
@@ -23,6 +24,18 @@ const HomeScreen = () => {
     receiveRecipes();
   }, []);
 
+  const displayList = (type) => {
+    if (results) {
+      switch (type) {
+        case 'Recent':
+          return results.recent_recipes.length > 0;
+        case 'Can Make':
+          return results.possible_recipes.length > 0;
+        default:
+          return false;
+      }
+    }
+  };
   const filterResults = (type) => {
     if (results) {
       switch (type) {
@@ -40,22 +53,16 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TopMenu
-        title="Home"
-        // searchbar
-        // term={term}
-        // onTermChange={(newTerm) => setTerm(newTerm)}
-        // onTermSubmit={() => searchApi(term)}
-      />
+      <TopMenu title="Home" />
       <View style={styles.marginTop}>
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
 
         <ScrollView>
           <RecipeList title="Welcome Back!" results={filterResults('')} />
-          {results.size > 0 ? (
+          {/* {displayList('Recent') ? (
             <RecipeList title="Continue where you left off!" results={filterResults('Recent')} />
-          ) : null}
-          {results.size > 0 ? (
+          ) : null} */}
+          {displayList('Can Make') ? (
             <RecipeList title="What you can make right now!" results={filterResults('Can Make')} />
           ) : null}
           <RecipeList title="Popular!" results={filterResults('Popular')} />
