@@ -152,10 +152,6 @@ const RecipeScreen = ({ navigation }) => {
           </View>
         </ScrollView>
       ) : null}
-      {/* Bottom Nav bar */}
-      <View style={styles.bottomMenu}>
-        <BottomMenu />
-      </View>
     </View>
   );
 };
