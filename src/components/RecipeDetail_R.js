@@ -1,87 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Image, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import heartIcon from 'react-native-vector-icons/AntDesign';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
+import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
-const RecipeDetail = ({ result, savedRecipeList, boolean, refresh, hi }) => {
-  const [liked, toggleLike] = useState(!boolean);
-  const [props, setProps] = useState([]);
-  const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
-  let smallAnimatedIcon = AnimatedHeart;
+const RecipeDetail = ({ result, savedRecipes, recipes, refresh, hi }) => {
+  const [liked, toggleLike] = useState(true);
+  const [recipe, setRecipe] = useState('');
+  // const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
+  //   let smallAnimatedIcon = AnimatedHeart;
+  //   const handleSmallAnimatedIconRef = (ref) => {
+  //     smallAnimatedIcon = ref;
+  //   };
+  useEffect(() => {
+    const getRecipes = async () => {
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.post('./recipeClicked', {
+        recipe: result.recipe,
+      });
+      setRecipe(response.data.Recipe);
+    };
+    getRecipes();
+  }, []);
 
-  const handleSmallAnimatedIconRef = (ref) => {
-    smallAnimatedIcon = ref;
+  const youClickedMe = async () => {
+    const axiosInstance = await axiosWithToken();
+    const response = await axiosInstance.post('./savedRecipes', {
+      recipe: recipe._id,
+      add: false,
+    });
+    recipes(savedRecipes.filter((r) => r.recipe !== recipe._id));
+    refresh(!hi);
   };
-
-  const handleOnPressLike = () => {
-    smallAnimatedIcon.bounceIn();
-    if (liked === true) {
-      const index = savedRecipeList.indexOf(result);
-      if (index > -1) {
-        savedRecipeList.splice(index, 1);
-        refresh(!hi);
-      }
-    } else {
-      savedRecipeList.push(result);
-    }
-    toggleLike(!liked);
-    console.log(liked);
-  };
-
-  const {
-    vegetarian,
-    vegan,
-    glutenFree,
-    dairyFree,
-    veryHealthy,
-    cheap,
-    veryPopular,
-    sustainable,
-    weightWatcherSmartPoints,
-    gaps,
-    lowFodMap,
-    aggregateLikes,
-    spoonacularScore,
-    healthScore,
-    creditsText,
-    license,
-    sourceName,
-    pricePerServing,
-    extendedIngredients,
-    id,
-    title,
-    readyInMinutes,
-    servings,
-    sourceUrl,
-    image,
-    imageType,
-    summary,
-    cuisines,
-    dishTypes,
-    diets,
-    occasions,
-    instructions,
-    analyzedInstructions,
-    originalId,
-    spoonacularSourceUrl,
-  } = result;
 
   return (
-    <View style={boolean ? styles.container : difStyles.container}>
-      <Image style={boolean ? styles.image : difStyles.image} source={{ uri: image }} />
-      <View style={boolean ? styles.recipeDescription : difStyles.recipeDescription}>
-        <Text style={boolean ? styles.name : difStyles.name}>{title}</Text>
-        <TouchableOpacity activeOpacity={1} onPress={handleOnPressLike}>
-          <AnimatedHeart
-            ref={handleSmallAnimatedIconRef}
-            name={liked ? 'heart' : 'hearto'}
-            color={liked ? colors.heartColor : colors.black}
-            size={18}
-            style={styles.icon}
-          />
+    <View style={difStyles.container}>
+      {recipe.image ? <Image style={difStyles.image} source={{ uri: recipe.image }} /> : null}
+      <View style={difStyles.recipeDescription}>
+        <Text style={difStyles.name}>{recipe.title}</Text>
+        <TouchableOpacity onPress={() => youClickedMe()}>
+          <AntDesign name="heart" size={24} color="red" />
         </TouchableOpacity>
       </View>
     </View>

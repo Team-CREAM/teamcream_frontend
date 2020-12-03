@@ -31,7 +31,6 @@ const RecipeScreen = ({ navigation }) => {
   useEffect(() => {
     const getRecipe = async () => {
       // setLoading(true);
-      console.log('hello');
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./recipeClicked', {
         recipe: id,
@@ -152,10 +151,6 @@ const RecipeScreen = ({ navigation }) => {
           </View>
         </ScrollView>
       ) : null}
-      {/* Bottom Nav bar */}
-      <View style={styles.bottomMenu}>
-        <BottomMenu />
-      </View>
     </View>
   );
 };
@@ -208,10 +203,6 @@ const styles = StyleSheet.create({
   },
   instructions: {
     width: '50%',
-  },
-  bottomMenu: {
-    position: 'absolute',
-    bottom: 0,
   },
   lineContainer: {
     flexDirection: 'row',
