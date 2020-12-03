@@ -15,8 +15,6 @@ import {
 import { Checkbox } from 'react-native-paper';
 import TopMenu from '../components/TopMenu';
 import BottomMenu from '../components/BottomMenu';
-import useRecipes from '../hooks/useRecipes';
-import axiosWithToken from '../api/axiosWithToken';
 import useExplore from '../hooks/useExplore';
 
 const { width, height } = Dimensions.get('window');
@@ -29,7 +27,6 @@ const ExploreScreen = ({ navigation }) => {
   const [veryHealthy, setVeryHealthy] = useState(false);
   const [cheap, setCheap] = useState(false);
   const [veryPopular, setVeryPopular] = useState(false);
-  const [sustainable, setSustainable] = useState(false);
   const [inventory, setInventory] = useState(false);
 
   const [exploreSearch, searchResults, errMsg, loading] = useExplore();
@@ -125,9 +122,7 @@ const ExploreScreen = ({ navigation }) => {
           </Modal>
         </View>
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
-        {searchResults < 1 && !loading ? (
-          <Text style={{ fontSize: 150 }}>Just be better.</Text>
-        ) : null}
+        {searchResults < 1 && !loading ? <Text style={{ fontSize: 150 }}>No results.</Text> : null}
         <FlatList
           columnWrapperStyle={{ flexWrap: 'wrap', flex: 1, marginTop: 2, marginLeft: 4 }}
           data={searchResults}
