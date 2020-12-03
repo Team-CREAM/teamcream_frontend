@@ -9,8 +9,10 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import TopMenu from '../components/TopMenu';
 import AddIngredientBar from '../components/AddIngredientBar';
 import BottomMenu from '../components/BottomMenu';
@@ -31,14 +33,12 @@ const Inventory = () => {
       const axiosInstance = await axiosWithToken();
       const responseIngredients = await axiosInstance.get('/allIngredients');
       const responseInventory = await axiosInstance.get('/inventory');
-      const newInventory = responseInventory.data.map((item) => ({ name: item }));
+      const newInventory = responseInventory.data.map((item) => ({ name: item.name }));
       setIngredients(responseIngredients.data);
       setArr(newInventory); // TODO: set to responseInventory when Reshma finishes
     };
     getIngred();
-    return () => {
-      console.log('bye');
-    };
+    return;
   }, []);
 
   const deleteElement = (key) => {
@@ -55,13 +55,17 @@ const Inventory = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Search in Pantry */}
 
       <TopMenu title="Inventory" />
       {/* <SearchIngredient /> */}
 
-      <AddIngredientBar data={ingredients} addIngredient={addIngredient} />
+      <AddIngredientBar
+        data={ingredients}
+        addIngredient={addIngredient}
+        save={arr.map((i) => i.name)}
+      />
       <View style={styles.box}>
         <Text style={styles.pantryText}>Your Pantry</Text>
         <Text style={styles.numIngred}>
@@ -83,12 +87,14 @@ const Inventory = () => {
               bounces={false}
               style={{ marginVertical: height * 0.01, marginHorizontal: width * 0.07 }}
               contentContainerStyle={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-              {arr.map((item, key) => (
-                <View key={key} style={styles.itemBox}>
+              {arr.map((item, num) => (
+                <View key={num} style={styles.itemBox}>
                   <Feather
                     style={styles.iconStyle}
                     name="minus"
-                    onPress={(key) => deleteElement(key)}
+                    onPress={() => {
+                      deleteElement(num);
+                    }}
                   />
                   <Text>{item.name}</Text>
                 </View>
@@ -98,10 +104,10 @@ const Inventory = () => {
         )}
       </View>
 
-      <View style={styles.bottomMenu}>
+      <KeyboardAvoidingView style={styles.bottomMenu}>
         <BottomMenu data={arr} save={save} />
-      </View>
-    </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
@@ -109,8 +115,9 @@ const styles = StyleSheet.create({
   box: {
     maxHeight: height * 0.5,
     borderWidth: 2,
-    marginHorizontal: width * 0.1,
+    marginHorizontal: width * 0.07,
     borderRadius: 5,
+    // borderColor: '#DADADA',
   },
   pantryText: {
     marginLeft: width * 0.05,
@@ -126,6 +133,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
+    minHeight: Math.round(height),
   },
   lineLine: {
     flexDirection: 'row',
@@ -139,14 +147,15 @@ const styles = StyleSheet.create({
   },
   itemBox: {
     backgroundColor: '#D9B580',
-    padding: '0.3%',
+    paddingVertical: '0.3%',
+    paddingHorizontal: '2%',
     borderRadius: 5,
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'white',
+    // borderWidth: 1,
+    // borderColor: 'black',
     marginHorizontal: 3,
     marginVertical: 5,
   },
