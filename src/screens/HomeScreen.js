@@ -13,7 +13,6 @@ const HomeScreen = (props) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log('Refreshing');
     const receiveRecipes = async () => {
       setLoading(true);
       const axiosInstance = await axiosWithToken();

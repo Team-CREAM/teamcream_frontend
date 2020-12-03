@@ -8,7 +8,6 @@ import axiosWithToken from '../api/axiosWithToken';
 const { width, height } = Dimensions.get('window');
 
 const RecipeDetail = ({ result }) => {
-  // console.log(result);
   const [saved, setSaved] = useState(result.saved);
   const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
   let smallAnimatedIcon = AnimatedHeart;
@@ -17,7 +16,6 @@ const RecipeDetail = ({ result }) => {
   };
 
   const youClickedMe = async () => {
-    console.log(result.saved);
     if (!saved) {
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {

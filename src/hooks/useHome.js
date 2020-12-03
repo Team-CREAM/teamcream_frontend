@@ -16,7 +16,6 @@ export default () => {
       });
       //   setResults(response.data);
       setLoading(false);
-      console.log('test');
     } catch (err) {
       setErrorMessage('Something went wrong');
     }
