@@ -31,6 +31,7 @@ const ProfilePicScreen = ({ navigation }) => {
     };
     getProfileIcon();
   }, []);
+  const buttonColor = Platform.OS === 'ios' ? '#ffffff' : '#D9B580';
 
   const ICONDATA = [
     {
@@ -107,8 +108,8 @@ const ProfilePicScreen = ({ navigation }) => {
             await storeIcon(index.toString());
             navigation.navigate('DietaryRestrictions');
           }}
-          title="Next"
-          color="#D9B580"
+          title="NEXT"
+          color={buttonColor}
         />
       </TouchableHighlight>
       {/* Choose an Icon */}
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
   profilePicContainer: {
     backgroundColor: 'white',
     marginTop: height * 0.05,
-    width: 0.46 * width,
+    width: 0.5 * width,
     height: 0.24 * height,
     borderRadius: (width * height) / 2,
     borderColor: 'black',
@@ -177,6 +178,11 @@ const styles = StyleSheet.create({
     height: height * 0.052,
     justifyContent: 'center',
     marginBottom: 15,
+    backgroundColor: '#D9B580',
+    shadowRadius: 2,
+    shadowColor: 'black',
+    shadowOpacity: 0.3,
+    shadowOffset: { height: 4 },
   },
 });
 
