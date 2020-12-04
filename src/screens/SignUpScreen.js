@@ -84,6 +84,7 @@ const SignUp = ({ navigation }) => {
         />
       </View>
       <Text style={styles.SignUpText}>Email Sign-Up</Text>
+      {Platform.OS === 'ios' ? <View style={styles.line} /> : null}
       <TextInput
         returnKeyType="next"
         style={styles.textInputStyle}
@@ -136,7 +137,7 @@ const SignUp = ({ navigation }) => {
       <OAuth />
 
       <View style={styles.noAccount}>
-        <Text>Already have an account? </Text>
+        <Text style={{ fontFamily: 'roboto-regular' }}>Already have an account? </Text>
         <Text style={styles.textWeight} onPress={() => navigation.navigate('Login')}>
           Login
         </Text>
@@ -146,6 +147,13 @@ const SignUp = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  line: {
+    height: 2,
+    backgroundColor: 'black',
+    marginLeft: '12%',
+    marginRight: '12%',
+    marginBottom: 20,
+  },
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
@@ -163,14 +171,15 @@ const styles = StyleSheet.create({
   },
   SignUpText: {
     paddingBottom: 10,
-    fontFamily: 'monospace',
-    fontStyle: 'normal',
-    fontWeight: '500',
+    fontFamily: 'roboto-regular',
+    // fontStyle: 'normal',
+    // fontWeight: '500',
     fontSize: width * 0.05,
-    lineHeight: 20,
+    lineHeight: height * 0.03,
     borderBottomWidth: 2,
-    marginBottom: 20,
+    marginBottom: Platform.OS === 'ios' ? 0 : 20,
     marginHorizontal: width * 0.12,
+    // backgroundColor: 'red',
   },
   textInputStyle: {
     paddingLeft: width * 0.02,
@@ -184,7 +193,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: width * 0.12,
     fontSize: 14,
-    fontFamily: 'monospace',
+    fontFamily: 'roboto-regular',
   },
   loginButtonWrapper: {
     marginHorizontal: width * 0.12,
@@ -235,7 +244,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     top: '15%',
   },
-  textWeight: { fontWeight: 'bold' },
+  textWeight: { fontFamily: 'roboto-bold' },
 });
 
 export default SignUp;

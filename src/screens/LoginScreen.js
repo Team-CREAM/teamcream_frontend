@@ -139,7 +139,7 @@ const SignIn = ({ navigation }) => {
       {/* SIGN UP */}
       <View style={styles.accountWrapper}>
         <View style={styles.noAccount}>
-          <Text>No Account? </Text>
+          <Text style={{ fontFamily: 'roboto-regular' }}>No Account? </Text>
           <Text style={styles.textWeight} onPress={() => navigation.navigate('SignUp')}>
             Sign up
           </Text>
