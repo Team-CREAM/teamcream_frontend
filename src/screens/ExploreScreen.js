@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { MaterialIcons } from '@expo/vector-icons';
 import TopMenu from '../components/TopMenu';
 import BottomMenu from '../components/BottomMenu';
 import useExplore from '../hooks/useExplore';
@@ -71,9 +72,11 @@ const ExploreScreen = ({ navigation }) => {
                   <View style={styles.boolText}>
                     <Text>Inventory:</Text>
                   </View>
-                  <Checkbox
-                    title="Inventory"
-                    status={inventory ? 'checked' : 'unchecked'}
+                  <MaterialIcons
+                    style={{ position: 'absolute', right: 0 }}
+                    name={inventory ? 'check-box' : 'check-box-outline-blank'}
+                    size={24}
+                    color={inventory ? 'black' : 'grey'}
                     onPress={() => {
                       setInventory(!inventory);
                     }}
@@ -84,33 +87,26 @@ const ExploreScreen = ({ navigation }) => {
                   <View style={styles.boolText}>
                     <Text>Healthy:</Text>
                   </View>
-                  <Checkbox
-                    title="veryHealthy"
-                    status={veryHealthy ? 'checked' : 'unchecked'}
+                  <MaterialIcons
+                    style={{ position: 'absolute', right: 0 }}
+                    name={veryHealthy ? 'check-box' : 'check-box-outline-blank'}
+                    size={24}
+                    color={veryHealthy ? 'black' : 'grey'}
                     onPress={() => {
                       setVeryHealthy(!veryHealthy);
                     }}
                   />
                 </View>
-                <View style={styles.row}>
-                  <View style={styles.boolText}>
-                    <Text>Cheap:</Text>
-                  </View>
-                  <Checkbox
-                    title="Cheap"
-                    status={cheap ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                      setCheap(!cheap);
-                    }}
-                  />
-                </View>
+
                 <View style={styles.row}>
                   <View style={styles.boolText}>
                     <Text>Popular:</Text>
                   </View>
-                  <Checkbox
-                    title="veryPopular"
-                    status={veryPopular ? 'checked' : 'unchecked'}
+                  <MaterialIcons
+                    style={{ position: 'absolute', right: 0 }}
+                    name={veryPopular ? 'check-box' : 'check-box-outline-blank'}
+                    size={24}
+                    color={veryPopular ? 'black' : 'grey'}
                     onPress={() => {
                       setVeryPopular(!veryPopular);
                     }}
@@ -166,7 +162,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
-    paddingBottom: height * 0.17,
+    // paddingBottom: height * 0.17,
   },
   bottomMenu: {
     position: 'absolute',
@@ -205,9 +201,10 @@ const styles = StyleSheet.create({
   },
   boolText: {
     justifyContent: 'center',
-    width: '50%',
+    width: '75%',
   },
   row: {
+    marginVertical: 10,
     marginHorizontal: 20,
     flexDirection: 'row',
   },
