@@ -53,7 +53,7 @@ const ResetPw = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.SignUpText}>Send Reset Password Link</Text>
-
+      {Platform.OS === 'ios' ? <View style={styles.lineline} /> : null}
       <TextInput
         returnKeyType="done"
         style={styles.textInputStyle}
@@ -82,9 +82,7 @@ const ResetPw = ({ navigation }) => {
       <View style={styles.loginWrapper}>
         <Text style={styles.goBackToLogin}>Already have an account? </Text>
 
-        <Text
-          style={{ ...styles.goBackToLogin, fontWeight: 'bold' }}
-          onPress={() => navigation.navigate('Login')}>
+        <Text style={{ fontFamily: 'roboto-bold' }} onPress={() => navigation.navigate('Login')}>
           {' '}
           Log In.
         </Text>
@@ -94,6 +92,13 @@ const ResetPw = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  lineline: {
+    height: height * 0.003,
+    backgroundColor: 'black',
+    marginLeft: '12%',
+    marginRight: '12%',
+    marginBottom: 20,
+  },
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
@@ -112,13 +117,13 @@ const styles = StyleSheet.create({
   },
   SignUpText: {
     paddingBottom: 10,
-    fontFamily: 'monospace',
-    fontStyle: 'normal',
-    fontWeight: '500',
+    fontFamily: 'roboto-regular',
+    // fontStyle: 'normal',
+    // fontWeight: '500',
     fontSize: 20,
     lineHeight: 20,
     borderBottomWidth: 2,
-    marginBottom: 20,
+    marginBottom: Platform.OS === 'ios' ? 0 : 20,
     marginHorizontal: width * 0.12,
   },
   textInputStyle: {
@@ -133,7 +138,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: width * 0.12,
     fontSize: 14,
-    fontFamily: 'monospace',
+    fontFamily: 'roboto-regular',
   },
   loginButtonWrapper: {
     marginHorizontal: width * 0.12,
@@ -192,9 +197,9 @@ const styles = StyleSheet.create({
   },
   goBackToLogin: {
     paddingBottom: 10,
-    fontFamily: 'monospace',
-    fontStyle: 'normal',
-    fontWeight: '500',
+    fontFamily: 'roboto-regular',
+    // ontStyle: 'normal',
+    // fontWeight: '500',
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 20,
