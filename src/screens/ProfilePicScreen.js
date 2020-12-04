@@ -116,7 +116,12 @@ const ProfilePicScreen = ({ navigation }) => {
       <Text style={styles.anish}>Choose an Icon</Text>
       {/* Gridview of Icons */}
       <View style={styles.container}>
-        <FlatList data={ICONDATA} numColumns={3} renderItem={renderItem} />
+        <FlatList
+          data={ICONDATA}
+          numColumns={3}
+          renderItem={renderItem}
+          keyExtractor={(key, index) => `${key}${index}`}
+        />
       </View>
     </View>
   );
