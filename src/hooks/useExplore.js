@@ -10,7 +10,7 @@ export default () => {
     search = '',
     healthy = false,
     popular = false,
-    sustainable = false,
+    // sustainable = false,
     inventory = false,
     cheap = false,
   ) => {
@@ -25,7 +25,7 @@ export default () => {
           healthy,
           cheap,
           popular,
-          sustainable,
+          sustainable: false,
         })
         .then(({ data }) => {
           setResults(data);
