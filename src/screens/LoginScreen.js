@@ -95,6 +95,7 @@ const SignIn = ({ navigation }) => {
       </View>
       <TextInput
         returnKeyType="next"
+        keyboardType="email-address"
         style={styles.textInputStyle}
         placeholder=" Enter email or username"
         value={email}

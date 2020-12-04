@@ -56,6 +56,7 @@ const ResetPw = ({ navigation }) => {
       {Platform.OS === 'ios' ? <View style={styles.lineline} /> : null}
       <TextInput
         returnKeyType="done"
+        keyboardType="email-address"
         style={styles.textInputStyle}
         placeholder=" Enter Email"
         value={email}

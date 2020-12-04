@@ -87,6 +87,7 @@ const SignUp = ({ navigation }) => {
       {Platform.OS === 'ios' ? <View style={styles.line} /> : null}
       <TextInput
         returnKeyType="next"
+        keyboardType="email-address"
         style={styles.textInputStyle}
         placeholder=" Enter email or username"
         value={email}
