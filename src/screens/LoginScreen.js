@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: width * 0.12,
     fontSize: 14,
-    fontFamily: 'monospace',
+    fontFamily: 'roboto-regular',
   },
   loginButtonWrapper: {
     marginHorizontal: width * 0.12,
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: height * 0.01,
   },
-  textWeight: { fontWeight: 'bold' },
+  textWeight: { fontFamily: 'roboto-bold' },
 });
 
 export default SignIn;
