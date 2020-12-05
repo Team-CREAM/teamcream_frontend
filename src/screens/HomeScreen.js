@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Dimensions,
-  ActivityIndicator,
-} from 'react-native';
+import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import RecipeList from '../components/RecipeList';
@@ -63,7 +57,7 @@ const HomeScreen = (props) => {
       }
     }
   };
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <TopMenu profileIcon title="Home" onProfilePress={setProfileModalVisible} />

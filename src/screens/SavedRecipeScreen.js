@@ -24,7 +24,7 @@ const SavedRecipeScreen = ({navigation}) => {
     
     // re-render when user unlikes a recipe
     useEffect(() => {
-        setRecipes(r);
+        setRecipes(reducerList);
     }, [reducerList]);
 
     // checks to see if user has saved recipe, conditional render
