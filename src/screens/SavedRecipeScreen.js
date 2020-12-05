@@ -1,12 +1,14 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, TouchableOpacity, Dimensions, ActivityIndicator, Text } from 'react-native';
+import { useDispatch,  useSelector } from 'react-redux';
 import SearchBar from '../components/SearchBar';
 import useRecipes from '../hooks/useRecipes2';
 import RecipeDetail from '../components/RecipeDetail_R';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
 import axiosWithToken from '../api/axiosWithToken';
+import { addSavedRecipe } from '../actions/savedRecipes';
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,28 +17,21 @@ const SavedRecipeScreen = ({navigation}) => {
     const [term, setTerm] = useState('');
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const r = useSelector(state => state.savedRecipeReducer.savedRecipeList);
+    
+    // re-render when user unlikes a recipe
     useEffect(() => {
-        const getRecipes = async() => {
-            setLoading(true);
-            const axiosInstance = await axiosWithToken();
-            const response = await axiosInstance.get('./savedRecipes');
-            setRecipes(response.data);
-            setLoading(false);
-        };
-        getRecipes();
-    }, []);
-
+        setRecipes(r);
+    }, [r]);
     const HasSavedRecipes = () => {
         if (recipes.length > 0){
             return <FlatList
             data={recipes}
-            extraData={refresh}
-            keyExtractor={(result) => result.recipe}
+            keyExtractor={(result) => result.id}
             renderItem={({ item }) => {
                 return (
-                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.recipe })}> 
-                        <RecipeDetail result={item} savedRecipes = {recipes} recipes={setRecipes} refresh={setRefresh} hi={refresh}/>
+                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.id })}> 
+                        <RecipeDetail result={item}/>
                     </TouchableOpacity>
                 );
             }}

@@ -3,20 +3,44 @@ import { View, Image, Text, StyleSheet, Dimensions, TouchableOpacity } from 'rea
 import * as Animatable from 'react-native-animatable';
 import heartIcon from 'react-native-vector-icons/AntDesign';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
 import axiosWithToken from '../api/axiosWithToken';
+import { addSavedRecipe, removeSavedRecipe } from '../actions/savedRecipes';
 
 const { width, height } = Dimensions.get('window');
 
 const RecipeDetail = ({ result }) => {
+  const dispatch = useDispatch();
   const [saved, setSaved] = useState(result.saved);
+  const reducerList = useSelector((state) => state.savedRecipeReducer.savedRecipeList);
   const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
   let smallAnimatedIcon = AnimatedHeart;
   const handleSmallAnimatedIconRef = (ref) => {
     smallAnimatedIcon = ref;
   };
 
+  // When component mounts, store the saved recipe
+  useEffect(() => {
+    if (result.saved) {
+      dispatch(addSavedRecipe(result.recipe));
+    }
+  }, []);
+
+  // Whever the reducer saved list updates, update 'heart' prop and re-render
+  useEffect(() => {
+    if (reducerList.some((r) => r.id === result.recipe._id)) {
+      setSaved(true);
+    } else {
+      setSaved(false);
+    }
+  }, [reducerList]);
+
+  // Sends a post request to save/remove recipe when user toggles the heart
+  // also changes the heart color by updating 'heart' prop
   const youClickedMe = async () => {
     if (!saved) {
+      setSaved(!saved);
+      dispatch(addSavedRecipe(result.recipe));
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
         recipe: result.recipe,
@@ -24,6 +48,8 @@ const RecipeDetail = ({ result }) => {
       });
       console.log(response.data.message);
     } else {
+      setSaved(!saved);
+      dispatch(removeSavedRecipe(result.recipe._id));
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
         recipe: result.recipe,
@@ -31,7 +57,7 @@ const RecipeDetail = ({ result }) => {
       });
       console.log(response.data.message);
     }
-    setSaved(!saved);
+    // setSaved(!saved);
   };
 
   return (

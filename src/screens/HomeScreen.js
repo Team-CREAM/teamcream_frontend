@@ -1,16 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator, Text } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  ActivityIndicator,
+  Text,
+  ListHeaderComponent,
+  List,
+} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
 import axiosWithToken from '../api/axiosWithToken';
+import { addSavedRecipe, clearSavedRecipes } from '../actions/savedRecipes';
 
 const { width, height } = Dimensions.get('window');
 
 const HomeScreen = (props) => {
+  const dispatch = useDispatch();
   const [term, setTerm] = useState('');
+
   const [results, setResults] = useState('');
   const [loading, setLoading] = useState(false);
+  const [heart, setHeart] = useState(false);
 
   useEffect(() => {
     const receiveRecipes = async () => {
@@ -21,8 +35,8 @@ const HomeScreen = (props) => {
       setLoading(false);
     };
     receiveRecipes();
+    dispatch(clearSavedRecipes());
   }, []);
-
   const displayList = (type) => {
     if (results) {
       switch (type) {
@@ -49,7 +63,7 @@ const HomeScreen = (props) => {
       }
     }
   };
-
+  // console.log(useSelector((state) => state.savedRecipeReducer.savedRecipeList));
   return (
     <View style={styles.container}>
       <TopMenu title="Home" />
@@ -58,9 +72,9 @@ const HomeScreen = (props) => {
 
         <ScrollView>
           <RecipeList title="Welcome Back!" results={filterResults('')} />
-          {/* {displayList('Recent') ? (
+          {displayList('Recent') ? (
             <RecipeList title="Continue where you left off!" results={filterResults('Recent')} />
-          ) : null} */}
+          ) : null}
           {displayList('Can Make') ? (
             <RecipeList title="What you can make right now!" results={filterResults('Can Make')} />
           ) : null}

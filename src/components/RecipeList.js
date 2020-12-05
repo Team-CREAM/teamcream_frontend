@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import RecipeDetail from './RecipeDetail_home';
@@ -7,8 +7,7 @@ const RecipeList = ({ title, results, navigation }) => {
   if (!results) {
     return null;
   }
-
-  console.log(results[0]);
+  // console.log(results[0]);
 
   return (
     <View style={styles.container}>
@@ -21,7 +20,11 @@ const RecipeList = ({ title, results, navigation }) => {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate('RecipeScreen', { id: item.recipe._id })}>
+              onPress={() =>
+                navigation.navigate('RecipeScreen', {
+                  id: item.recipe._id,
+                })
+              }>
               <RecipeDetail result={item} />
             </TouchableOpacity>
           );

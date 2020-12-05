@@ -1,15 +1,16 @@
-import { createAppContainer } from 'react-navigation';
+import { Component } from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
 import Login from './src/screens/LoginScreen';
 import SignUp from './src/screens/SignUpScreen';
 import ForgotPassword from './src/screens/ForgotPasswordScreen';
-import DietaryRestrictions from './src/screens/DietaryRestrictionsScreen';
-import EmailSent from './src/screens/EmailSentScreen';
-import ProfilePic from './src/screens/ProfilePicScreen';
 import Home from './src/screens/HomeScreen';
 import Explore from './src/screens/ExploreScreen';
 import SavedRecipeScreen from './src/screens/SavedRecipeScreen';
 import RecipeScreen from './src/screens/RecipeScreen';
+import DietaryRestrictions from './src/screens/DietaryRestrictionsScreen';
+import EmailSent from './src/screens/EmailSentScreen';
+import ProfilePic from './src/screens/ProfilePicScreen';
 import Inventory from './src/screens/InventoryScreen';
 
 const navigator = createStackNavigator(
