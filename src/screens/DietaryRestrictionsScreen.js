@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Button } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axiosWithoutToken from '../api/axiosWithoutToken';
@@ -14,38 +14,38 @@ const DietaryRestrictions = ({ navigation, route }) => {
   const [vegan, setIsVegan] = useState(false);
   const [glutenFree, setIsGlutenfree] = useState(false);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const getPreferences = async () => {
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance
+        .get('/profile')
+        .then((response) => {
+          const { vegetarian, dairyFree, vegan, glutenFree } = response.data.preferences;
+          setIsDairyfree(dairyFree);
+          setIsVegetarian(vegetarian);
+          setIsVegan(vegan);
+          setIsGlutenfree(glutenFree);
+        })
+        .error((err) => errorHandle(err));
+    };
+    getPreferences();
+  }, []);
 
   const DietaryRestrictionsAxios = async () => {
-    setLoading(true);
-    await axiosWithToken
-      .post(
-        '/preferences',
-        { headers: { Authorization: navigation.getParam('token') } },
-        {
-          vegetarian,
-          dairyFree,
-          vegan,
-          glutenFree,
-        },
-      )
-      .then(function (response) {
-        setLoading(false);
-        // if (response.data.token) {
-        navigation.navigate('Home', {
-          token: response.data.token,
-          preferences: response.data.preferences,
-        });
-        // }
-
-        if (response.data.error) {
-          errorHandle(response.data.error);
-        }
+    const axiosInstance = await axiosWithToken();
+    const response = await axiosInstance
+      .post('/preferences', {
+        vegetarian,
+        dairyFree,
+        vegan,
+        glutenFree,
       })
-      .catch(function (error) {
-        console.log('error');
-        console.log(error);
-      });
+      .then((response) => {
+        console.log(response.data);
+        navigation.navigate('Home');
+      })
+      .error((err) => errorHandle(err));
   };
 
   const errorHandle = (err) => {

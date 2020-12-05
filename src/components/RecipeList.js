@@ -7,7 +7,6 @@ const RecipeList = ({ title, results, navigation }) => {
   if (!results) {
     return null;
   }
-  // console.log(results[0]);
 
   return (
     <View style={styles.container}>

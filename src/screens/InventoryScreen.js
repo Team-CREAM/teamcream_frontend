@@ -17,6 +17,7 @@ import TopMenu from '../components/TopMenu';
 import AddIngredientBar from '../components/AddIngredientBar';
 import BottomMenu from '../components/BottomMenu';
 import axiosWithToken from '../api/axiosWithToken';
+import ProfileModal from '../components/ProfileModal';
 
 const { width, height } = Dimensions.get('window');
 
@@ -26,6 +27,7 @@ const Inventory = () => {
   const [arr, setArr] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [save, setSave] = useState(false);
+  const [proflileModalVisible, setProfileModalVisible] = useState(false);
 
   useEffect(() => {
     setTerm('hello');
@@ -58,7 +60,7 @@ const Inventory = () => {
     <SafeAreaView style={styles.container}>
       {/* Search in Pantry */}
 
-      <TopMenu title="Inventory" />
+      <TopMenu title="Inventory" profileIcon onProfilePress={setProfileModalVisible} />
       {/* <SearchIngredient /> */}
 
       <AddIngredientBar
@@ -67,6 +69,7 @@ const Inventory = () => {
         save={arr.map((i) => i.name)}
       />
       <View style={styles.box}>
+        {proflileModalVisible === true ? <ProfileModal isVisible={setProfileModalVisible} /> : null}
         <Text style={styles.pantryText}>Your Pantry</Text>
         <Text style={styles.numIngred}>
           {/* need to change this to the array length that gets from axios request8 */}

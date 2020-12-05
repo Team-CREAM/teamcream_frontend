@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,8 @@ import {
   FlatList,
   Button,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import useSetIcon from '../hooks/useSetIcon';
 
 const dimensions = Dimensions.get('window');
 const { width } = dimensions;
@@ -19,6 +21,16 @@ const ProfilePicScreen = ({ navigation }) => {
   const [profilePicture, setProfilePicture] = useState(
     require('../../images/profilepicicons/bento_box.png'),
   );
+  const [index, setIndex] = useState(0);
+  const [storeIcon] = useSetIcon();
+
+  useEffect(() => {
+    const getProfileIcon = async () => {
+      const icon = await AsyncStorage.getItem('@icon');
+      setProfilePicture(ICONDATA[icon].name);
+    };
+    getProfileIcon();
+  }, []);
 
   const ICONDATA = [
     {
@@ -68,9 +80,14 @@ const ProfilePicScreen = ({ navigation }) => {
     },
   ];
   // <Image source={navigation.state.params.profilePicture} />;
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity onPress={() => setProfilePicture(item.name)} style={styles.gridElement}>
+      <TouchableOpacity
+        onPress={() => {
+          setIndex(index);
+          setProfilePicture(item.name);
+        }}
+        style={styles.gridElement}>
         <Image style={styles.imageThumbnail} source={item.name} resizeMode="contain" />
       </TouchableOpacity>
     );
@@ -86,11 +103,10 @@ const ProfilePicScreen = ({ navigation }) => {
       {/* Next Button */}
       <TouchableHighlight style={styles.nextButtonWrapper}>
         <Button
-          onPress={() =>
-            navigation.navigate('DietaryRestrictions', {
-              profilePicture,
-            })
-          }
+          onPress={async () => {
+            await storeIcon(index.toString());
+            navigation.navigate('DietaryRestrictions');
+          }}
           title="Next"
           color="#D9B580"
         />

@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, TouchableOpacity, Dimensions, ActivityIndicator, Text } from 'react-native';
-import { useDispatch,  useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../components/SearchBar';
 import useRecipes from '../hooks/useRecipes2';
 import RecipeDetail from '../components/RecipeDetail_R';
@@ -9,6 +10,7 @@ import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
 import axiosWithToken from '../api/axiosWithToken';
 import { addSavedRecipe } from '../actions/savedRecipes';
+import ProfileModal from '../components/ProfileModal';
 
 const { width, height } = Dimensions.get('window');
 
@@ -17,12 +19,15 @@ const SavedRecipeScreen = ({navigation}) => {
     const [term, setTerm] = useState('');
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(false);
-    const r = useSelector(state => state.savedRecipeReducer.savedRecipeList);
+    const [proflileModalVisible, setProfileModalVisible] = useState(false);
+    const reducerList = useSelector(state => state.savedRecipeReducer.savedRecipeList);
     
     // re-render when user unlikes a recipe
     useEffect(() => {
         setRecipes(r);
-    }, [r]);
+    }, [reducerList]);
+
+    // checks to see if user has saved recipe, conditional render
     const HasSavedRecipes = () => {
         if (recipes.length > 0){
             return <FlatList
@@ -45,15 +50,20 @@ const SavedRecipeScreen = ({navigation}) => {
     };
 
     return (
-        <View style={styles.container}> 
+        <SafeAreaView style={styles.container}> 
         {/* WORK ON SEARCH BAR?? */}
             <TopMenu
-                // title="Saved Recipes"
-                searchbar
-                term={term}
-                onTermChange={(newTerm) => setTerm(newTerm)}
-                onTermSubmit={() => searchApi(term)}
+                title="Saved Recipes"
+                // searchbar
+                // term={term}
+                profileIcon
+                onProfilePress={setProfileModalVisible}
+                // onTermChange={(newTerm) => setTerm(newTerm)}
+                // onTermSubmit={() => searchApi(term)}
             />
+            {proflileModalVisible === true ? (
+            <ProfileModal isVisible={setProfileModalVisible} />
+          ) : null}
             <View style={styles.marginTop}>
             {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
             <HasSavedRecipes />
@@ -61,7 +71,7 @@ const SavedRecipeScreen = ({navigation}) => {
             <View style={styles.bottomMenu}>
                 <BottomMenu />
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -76,9 +86,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     noRecipe: {
-        // letterSpacing: 2,
-        // fontWeight: 'bold',
-        // fontSize: 100,
+        
     },
     bottomMenu: {
         position: 'absolute',

@@ -5,16 +5,15 @@ import {
   ScrollView,
   Dimensions,
   ActivityIndicator,
-  Text,
-  ListHeaderComponent,
-  List,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
 import axiosWithToken from '../api/axiosWithToken';
-import { addSavedRecipe, clearSavedRecipes } from '../actions/savedRecipes';
+import { clearSavedRecipes } from '../actions/savedRecipes';
+import ProfileModal from '../components/ProfileModal';
 
 const { width, height } = Dimensions.get('window');
 
@@ -25,6 +24,7 @@ const HomeScreen = (props) => {
   const [results, setResults] = useState('');
   const [loading, setLoading] = useState(false);
   const [heart, setHeart] = useState(false);
+  const [proflileModalVisible, setProfileModalVisible] = useState(false);
 
   useEffect(() => {
     const receiveRecipes = async () => {
@@ -63,13 +63,13 @@ const HomeScreen = (props) => {
       }
     }
   };
-  // console.log(useSelector((state) => state.savedRecipeReducer.savedRecipeList));
+  
   return (
-    <View style={styles.container}>
-      <TopMenu title="Home" />
+    <SafeAreaView style={styles.container}>
+      <TopMenu profileIcon title="Home" onProfilePress={setProfileModalVisible} />
       <View style={styles.marginTop}>
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
-
+        {proflileModalVisible === true ? <ProfileModal isVisible={setProfileModalVisible} /> : null}
         <ScrollView>
           <RecipeList title="Welcome Back!" results={filterResults('')} />
           {displayList('Recent') ? (
@@ -84,7 +84,7 @@ const HomeScreen = (props) => {
       <View style={styles.bottomMenu}>
         <BottomMenu />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
