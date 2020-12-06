@@ -14,7 +14,7 @@ import Autocomplete from 'react-native-autocomplete-input';
 
 const { width, height } = Dimensions.get('window');
 
-const AddIngredientBar = ({ data, addIngredient, save }) => {
+const AddIngredientBar = ({ data, addIngredient, save, deleteIngredient, userData }) => {
   const [filteredIngredients, setFilteredIngredients] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
   const [show, setShow] = useState(false);
@@ -37,18 +37,18 @@ const AddIngredientBar = ({ data, addIngredient, save }) => {
     <View style={styles.backgroundStyle}>
       <Autocomplete
         containerStyle={{
-          position: 'relative',
+          // position: 'relative',
           // top: '20%',
           // backgroundColor: 'purple',
+          flex: 1,
+          marginHorizontal: '7%',
         }}
         inputContainerStyle={{
           borderWidth: 2,
           borderColor: 'grey',
           borderRadius: 3,
-          backgroundColor: 'red',
-          shadowColor: 'red',
         }}
-        listStyle={{ maxHeight: height * 0.2, marginHorizontal: width * 0.015 }}
+        listStyle={{ maxHeight: height * 0.2, marginHorizontal: width * 0.015, zIndex: 1 }}
         // listContainerStyle={{ backgroundColor: 'blue' }}
         data={filteredIngredients}
         defaultValue={selectedValue}
@@ -74,7 +74,11 @@ const AddIngredientBar = ({ data, addIngredient, save }) => {
               }}
               onPress={() => {
                 if (save.includes(item.name)) {
-                  Alert.alert('Oops!', 'Ingredient Already in Inventory');
+                  const index = userData.indexOf({ name: item.name });
+                  deleteIngredient(index);
+                  setFilteredIngredients([]);
+                  setSelectedValue('');
+                  // Alert.alert('Oops!', 'Ingredient Already in Inventory');
                 } else {
                   addIngredient(item.name);
                   setFilteredIngredients([]);
@@ -99,7 +103,7 @@ const AddIngredientBar = ({ data, addIngredient, save }) => {
         }}
       />
       <Feather
-        style={{ marginTop: height * 0.01, position: 'absolute', right: 10 }}
+        style={{ marginTop: height * 0.01, position: 'absolute', right: '10%', zIndex: 1 }}
         name="x"
         size={24}
         color="#000000"
@@ -115,11 +119,13 @@ const AddIngredientBar = ({ data, addIngredient, save }) => {
 const styles = StyleSheet.create({
   backgroundStyle: {
     // backgroundColor: 'red',
+    flex: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
     // alignItems: 'center',
-    margin: height * 0.04,
+    // margin: height * 0.4,
+    zIndex: 1,
   },
 
   inputStyle1: {

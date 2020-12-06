@@ -71,11 +71,15 @@ const Inventory = () => {
 
         {loading ? null : (
           <View>
-            <AddIngredientBar
-              data={ingredients}
-              addIngredient={addIngredient}
-              save={arr.map((i) => i.name)}
-            />
+            <View style={{ zIndex: 1, marginTop: '10%', marginBottom: '7%' }}>
+              <AddIngredientBar
+                data={ingredients}
+                addIngredient={addIngredient}
+                save={arr.map((i) => i.name)}
+                deleteIngredient={deleteElement}
+                userData={arr}
+              />
+            </View>
 
             <View style={styles.box}>
               {proflileModalVisible === true ? (
