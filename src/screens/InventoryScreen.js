@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
     // paddingBottom: height * 0.17,
-    minHeight: Math.round(height),
+    // minHeight: Math.round(height),
   },
   box: {
     maxHeight: height * 0.5,
@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
+    minHeight: Math.round(height),
     // minHeight: Math.round(height),
   },
   lineLine: {
