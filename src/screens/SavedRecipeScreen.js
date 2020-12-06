@@ -26,21 +26,21 @@ const SavedRecipeScreen = ({navigation}) => {
     const reducerList = useSelector(state => state.savedRecipeReducer.savedRecipeList);
     
     useEffect(()=>{
+        setLoading(true);
         // Checks if redcuer has been populated, if not makes get request
         if(reducerList.length === 0){
             const receiveSavedRecipes = async () => {
-                setLoading(true);
                 const axiosInstance = await axiosWithToken();
                 const response = await axiosInstance.get('/savedRecipes');
                 const list = (response.data).map(({id, title, imageUrl})=> ({id, name:title, image:imageUrl}));
                 const storeInReducer = (response.data).map(({id, title, imageUrl})=> (dispatch(addSavedRecipe({_id:id, title, image:imageUrl}))));
                 
                 setRecipes(list);
-                setLoading(false);
               };
               receiveSavedRecipes();
         }
         setRecipes(reducerList);
+        setLoading(false);
     }, [reducerList]);
 
 

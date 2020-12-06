@@ -3,12 +3,15 @@ import { View, Alert, Modal, Text, TouchableHighlight, Dimensions, StyleSheet } 
 import { Checkbox } from 'react-native-paper';
 import { withNavigation } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
 import useSetToken from '../hooks/useSetToken';
+import { clearSavedRecipes } from '../actions/savedRecipes';
 
 // two buttons: One that sends you to Dietary Restriction Screen and one that logs you out
 const { width, height } = Dimensions.get('window');
 
 const ProfileModal = ({ navigation, isVisible }) => {
+  const dispatch = useDispatch();
   const [storeToken] = useSetToken();
   return (
     <Modal
@@ -34,6 +37,7 @@ const ProfileModal = ({ navigation, isVisible }) => {
             onPress={() => {
               isVisible(false);
               storeToken('');
+              dispatch(clearSavedRecipes());
               navigation.replace('Login');
             }}>
             <Text style={styles.textStyle}>Logout</Text>
