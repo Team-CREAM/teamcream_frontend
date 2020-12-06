@@ -24,12 +24,12 @@ const SavedRecipeScreen = ({navigation}) => {
     const [loading, setLoading] = useState(false);
     const [proflileModalVisible, setProfileModalVisible] = useState(false);
     const reducerList = useSelector(state => state.savedRecipeReducer.savedRecipeList);
-    
     useEffect(()=>{
         setLoading(true);
         console.log(reducerList.length);
         // Checks if redcuer has been populated, if not makes get request
         if(reducerList.length === 0){
+            console.log('hello');
             const receiveSavedRecipes = async () => {
                 console.log('did the axios request');
                 const axiosInstance = await axiosWithToken();
@@ -67,7 +67,6 @@ const SavedRecipeScreen = ({navigation}) => {
         return null;
         
     };
-
     return (
         <SafeAreaView style={styles.somecontainer}> 
          <StatusBar barstyle="light-content" />

@@ -35,6 +35,7 @@ const ProfileModal = ({ navigation, isVisible }) => {
           <TouchableHighlight
             style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
             onPress={() => {
+              dispatch(clearSavedRecipes());
               isVisible(false);
               storeToken('');
               dispatch(clearSavedRecipes());
