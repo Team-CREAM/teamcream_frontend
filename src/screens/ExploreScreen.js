@@ -139,7 +139,9 @@ const ExploreScreen = ({ navigation }) => {
             keyExtractor={(result) => result.id}
             renderItem={({ item, index }) => (
               <TouchableOpacity
-                onPress={() => navigation.navigate('RecipeScreen', { id: item._id })}>
+                onPress={() =>
+                  navigation.navigate('RecipeScreen', { id: item._id, previousScreen: 'Explore' })
+                }>
                 <View
                   style={[
                     { width: width / 3 - 2 },

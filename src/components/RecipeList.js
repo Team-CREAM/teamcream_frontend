@@ -22,6 +22,7 @@ const RecipeList = ({ title, results, navigation }) => {
               onPress={() =>
                 navigation.navigate('RecipeScreen', {
                   id: item.recipe._id,
+                  previousScreen: 'Home',
                 })
               }>
               <RecipeDetail result={item} />

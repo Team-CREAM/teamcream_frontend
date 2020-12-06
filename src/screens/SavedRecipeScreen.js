@@ -54,7 +54,7 @@ const SavedRecipeScreen = ({navigation}) => {
             keyExtractor={(result) => result.id}
             renderItem={({ item }) => {
                 return (
-                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.id })}> 
+                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.id, previousScreen: 'SavedRecipeScreen' })}> 
                         <RecipeDetail result={item}/>
                     </TouchableOpacity>
                 );
@@ -77,7 +77,6 @@ const SavedRecipeScreen = ({navigation}) => {
             <TopMenu
                 title="Saved Recipes"
                 // searchbar
-                // term={term}
                 profileIcon
                 onProfilePress={setProfileModalVisible}
                 // onTermChange={(newTerm) => setTerm(newTerm)}
