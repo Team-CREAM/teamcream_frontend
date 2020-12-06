@@ -36,6 +36,7 @@ const RecipeScreen = ({ navigation }) => {
         recipe: id,
       });
       console.log(response.data.saved);
+      console.log(response.data);
       // console.log(response.data.Recipe);
       setRecipe(response.data.Recipe);
       setSaved(response.data.saved);
