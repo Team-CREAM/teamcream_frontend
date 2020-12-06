@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Dimensions, ActivityIndicator, Text } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity, Dimensions, ActivityIndicator, Text, StatusBar } from 'react-native';
+import {  useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../components/SearchBar';
 import useRecipes from '../hooks/useRecipes2';
@@ -8,8 +9,8 @@ import RecipeDetail from '../components/RecipeDetail_R';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
 import axiosWithToken from '../api/axiosWithToken';
+import { addSavedRecipe } from '../actions/savedRecipes';
 import ProfileModal from '../components/ProfileModal';
-
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,29 +20,23 @@ const SavedRecipeScreen = ({navigation}) => {
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(false);
     const [proflileModalVisible, setProfileModalVisible] = useState(false);
-
-
+    const reducerList = useSelector(state => state.savedRecipeReducer.savedRecipeList);
+    
+    // re-render when user unlikes a recipe
     useEffect(() => {
-        const getRecipes = async() => {
-            setLoading(true);
-            const axiosInstance = await axiosWithToken();
-            const response = await axiosInstance.get('./savedRecipes');
-            setRecipes(response.data);
-            setLoading(false);
-        };
-        getRecipes();
-    }, []);
+        setRecipes(reducerList);
+    }, [reducerList]);
 
+    // checks to see if user has saved recipe, conditional render
     const HasSavedRecipes = () => {
         if (recipes.length > 0){
             return <FlatList
             data={recipes}
-            extraData={refresh}
-            keyExtractor={(result) => result.recipe}
+            keyExtractor={(result) => result.id}
             renderItem={({ item }) => {
                 return (
-                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.recipe })}> 
-                        <RecipeDetail result={item} savedRecipes = {recipes} recipes={setRecipes} refresh={setRefresh} hi={refresh}/>
+                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.id })}> 
+                        <RecipeDetail result={item}/>
                     </TouchableOpacity>
                 );
             }}
@@ -56,6 +51,8 @@ const SavedRecipeScreen = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.somecontainer}> 
+         <StatusBar barstyle="light-content" />
+
         {/* WORK ON SEARCH BAR?? */}
         <View style={styles.container}>
             <TopMenu
@@ -98,9 +95,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     noRecipe: {
-        // letterSpacing: 2,
-        // fontWeight: 'bold',
-        // fontSize: 100,
+        
     },
     bottomMenu: {
         position: 'absolute',

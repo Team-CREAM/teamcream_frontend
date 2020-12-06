@@ -85,7 +85,7 @@ const ResetPw = ({ navigation }) => {
 
         <Text style={{ fontFamily: 'roboto-bold' }} onPress={() => navigation.navigate('Login')}>
           {' '}
-          Log In.
+          Login
         </Text>
       </View>
     </View>

@@ -38,10 +38,14 @@ const OAuth = ({ navigation }) => {
             email: user.email,
           })
           .then(function (response) {
+            console.log(response.data);
             if (response.data.token) {
               console.log('Axios google worked', response.data.token);
               storeToken(response.data.token);
-              navigation.navigate('Home');
+
+              response.data.new
+                ? navigation.navigate('ProfilePicScreen')
+                : navigation.navigate('Home');
             }
           })
           .catch(function (error) {

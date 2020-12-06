@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator, Text } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  ActivityIndicator,
+  StatusBar,
+} from 'react-native';
+import { useDispatch } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
 import axiosWithToken from '../api/axiosWithToken';
+import { clearSavedRecipes } from '../actions/savedRecipes';
 import ProfileModal from '../components/ProfileModal';
 
 const { width, height } = Dimensions.get('window');
 
 const HomeScreen = (props) => {
-  const [term, setTerm] = useState('');
+  const dispatch = useDispatch();
   const [results, setResults] = useState('');
   const [loading, setLoading] = useState(false);
   const [proflileModalVisible, setProfileModalVisible] = useState(false);
@@ -24,6 +33,7 @@ const HomeScreen = (props) => {
       setLoading(false);
     };
     receiveRecipes();
+    dispatch(clearSavedRecipes());
   }, []);
 
   const displayList = (type) => {
@@ -55,6 +65,7 @@ const HomeScreen = (props) => {
 
   return (
     <SafeAreaView style={styles.somecontainer}>
+      <StatusBar barstyle="light-content" />
       <View style={styles.container}>
         <TopMenu profileIcon title="Home" onProfilePress={setProfileModalVisible} />
         <View style={styles.marginTop}>

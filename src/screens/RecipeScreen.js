@@ -11,9 +11,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
+import { HeaderBackButton } from 'react-navigation-stack';
 import HTML from 'react-native-render-html';
 import { FontAwesome, FontAwesome5, AntDesign } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { addSavedRecipe, removeSavedRecipe } from '../actions/savedRecipes';
 import BottomMenu from '../components/BottomMenu';
 import axiosWithToken from '../api/axiosWithToken';
 
@@ -22,8 +26,10 @@ import axiosWithToken from '../api/axiosWithToken';
 const { width, height } = Dimensions.get('window');
 
 const RecipeScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   //   const [results, errorMessage] = retrieveRecipes();
   const { id } = navigation.state.params;
+  // const [value, setValue] = useState('');
   const [recipe, setRecipe] = useState('');
   const [saved, setSaved] = useState(false);
 
@@ -36,17 +42,35 @@ const RecipeScreen = ({ navigation }) => {
         recipe: id,
       });
       console.log(response.data.saved);
+      console.log(response.data);
       // console.log(response.data.Recipe);
       setRecipe(response.data.Recipe);
       setSaved(response.data.saved);
       // setLoading(false);
     };
-
+    // setValue(val);
     getRecipe();
   }, []);
+  // const savedR = useSelector((state) => state.savedRecipeReducer.savedRecipeList);
+  // // console.log(list);
+  // if (savedR.length > 0) {
+  //   if (savedR.includes((r) => r.key === result.recipe._id)) {
+  //     // saved = true;
+  //   } else {
+  //     // saved = false;
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   ({ navigation }) => ({
+  //     headerLeft: <HeaderBackButton onPress={() => navigation.replace('SavedRecipeScreen')} />,
+  //   });
+  // }, [navigation, value]);
 
   const youClickedMe = async () => {
     if (!saved) {
+      setSaved(!saved);
+      dispatch(addSavedRecipe(recipe));
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
         recipe,
@@ -54,6 +78,8 @@ const RecipeScreen = ({ navigation }) => {
       });
       console.log(response.data.message);
     } else {
+      setSaved(!saved);
+      dispatch(removeSavedRecipe(recipe._id));
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
         recipe,
@@ -61,11 +87,11 @@ const RecipeScreen = ({ navigation }) => {
       });
       console.log(response.data.message);
     }
-    setSaved(!saved);
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barstyle="light-content" />
       {recipe ? (
         <ScrollView contentContainerStyle={styles.scrollView}>
           {/* Area for title */}
@@ -135,8 +161,10 @@ const RecipeScreen = ({ navigation }) => {
                 <FlatList
                   data={recipe.analyzedInstructions[0].steps}
                   renderItem={({ item }) => (
-                    <View key={item.number} style={{ flexDirection: 'row' }}>
-                      <Text>{`${item.number}. `}</Text>
+                    <View
+                      key={item.number}
+                      style={{ flexDirection: 'row', paddingRight: width * 0.1 }}>
+                      <Text>{`${item.number}.`}</Text>
                       <Text>
                         {item.step}
                         {'\n'}
@@ -151,7 +179,7 @@ const RecipeScreen = ({ navigation }) => {
           </View>
         </ScrollView>
       ) : null}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -185,25 +213,19 @@ const styles = StyleSheet.create({
     height: height * 0.3,
     borderRadius: 4,
     justifyContent: 'center',
-    borderWidth: 2,
     borderColor: 'black',
     resizeMode: 'stretch',
   },
   parentInstructions: {
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     alignItems: 'flex-start', // if you want to fill rows left to right
-    width: width * 0.9,
   },
   ingredients: {
     width: '40%',
     marginRight: '10%',
     alignItems: 'flex-start',
   },
-  instructions: {
-    width: '50%',
-  },
+  instructions: { flexWrap: 'wrap' },
   lineContainer: {
     flexDirection: 'row',
     alignItems: 'center',
