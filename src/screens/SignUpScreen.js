@@ -36,7 +36,7 @@ const SignUp = ({ navigation }) => {
         email,
         password,
       })
-      .then(function (response) {
+      .then((response) => {
         setLoading(false);
         if (response.data.token) {
           storeToken(response.data.token);
@@ -57,8 +57,7 @@ const SignUp = ({ navigation }) => {
     const [isValidated, error] = validateInputs('Signup', email, password, conPassword);
     if (isValidated) {
       SignUpAxios();
-    }
-    if (error) {
+    } else {
       errorHandle(error);
     }
   };
@@ -134,6 +133,7 @@ const SignUp = ({ navigation }) => {
         </View>
         <View style={styles.rightLine} />
       </View>
+
       {/* Facebook and google OAuth */}
       <OAuth />
 
@@ -241,9 +241,10 @@ const styles = StyleSheet.create({
   },
   noAccount: {
     flexDirection: 'row',
-    marginBottom: height * 0.15,
+    marginBottom: height * 0.05,
     justifyContent: 'center',
-    top: '15%',
+    // backgroundColor: 'blue',
+    // top: '15%',
   },
   textWeight: { fontFamily: 'roboto-bold' },
 });

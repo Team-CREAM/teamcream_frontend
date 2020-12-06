@@ -31,6 +31,7 @@ const SavedRecipeScreen = ({navigation}) => {
         // Checks if redcuer has been populated, if not makes get request
         if(reducerList.length === 0){
             const receiveSavedRecipes = async () => {
+                console.log('did the axios request');
                 const axiosInstance = await axiosWithToken();
                 const response = await axiosInstance.get('/savedRecipes');
                 const list = (response.data).map(({id, title, imageUrl})=> ({id, name:title, image:imageUrl}));
