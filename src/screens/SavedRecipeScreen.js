@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Dimensions, ActivityIndicator, Text } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity, Dimensions, ActivityIndicator, Text, StatusBar } from 'react-native';
 import {  useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../components/SearchBar';
@@ -51,6 +51,8 @@ const SavedRecipeScreen = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.somecontainer}> 
+         <StatusBar barstyle="light-content" />
+
         {/* WORK ON SEARCH BAR?? */}
         <View style={styles.container}>
             <TopMenu

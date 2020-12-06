@@ -16,6 +16,7 @@ import HTML from 'react-native-render-html';
 import { FontAwesome, FontAwesome5, AntDesign } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { addSavedRecipe, removeSavedRecipe } from '../actions/savedRecipes';
 import BottomMenu from '../components/BottomMenu';
 import axiosWithToken from '../api/axiosWithToken';
@@ -89,7 +90,8 @@ const RecipeScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barstyle="light-content" />
       {recipe ? (
         <ScrollView contentContainerStyle={styles.scrollView}>
           {/* Area for title */}
@@ -177,7 +179,7 @@ const RecipeScreen = ({ navigation }) => {
           </View>
         </ScrollView>
       ) : null}
-    </View>
+    </SafeAreaView>
   );
 };
 
