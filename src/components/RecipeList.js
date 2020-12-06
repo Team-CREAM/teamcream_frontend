@@ -35,7 +35,7 @@ const RecipeList = ({ title, results, navigation }) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: 'bold',
     marginLeft: 15,
     marginBottom: 5,
