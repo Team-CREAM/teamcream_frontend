@@ -158,8 +158,10 @@ const RecipeScreen = ({ navigation }) => {
                 <FlatList
                   data={recipe.analyzedInstructions[0].steps}
                   renderItem={({ item }) => (
-                    <View key={item.number} style={{ flexDirection: 'row' }}>
-                      <Text>{`${item.number}. `}</Text>
+                    <View
+                      key={item.number}
+                      style={{ flexDirection: 'row', paddingRight: width * 0.1 }}>
+                      <Text>{`${item.number}.`}</Text>
                       <Text>
                         {item.step}
                         {'\n'}
@@ -208,25 +210,19 @@ const styles = StyleSheet.create({
     height: height * 0.3,
     borderRadius: 4,
     justifyContent: 'center',
-    borderWidth: 2,
     borderColor: 'black',
     resizeMode: 'stretch',
   },
   parentInstructions: {
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     alignItems: 'flex-start', // if you want to fill rows left to right
-    width: width * 0.9,
   },
   ingredients: {
     width: '40%',
     marginRight: '10%',
     alignItems: 'flex-start',
   },
-  instructions: {
-    width: '50%',
-  },
+  instructions: { flexWrap: 'wrap' },
   lineContainer: {
     flexDirection: 'row',
     alignItems: 'center',
