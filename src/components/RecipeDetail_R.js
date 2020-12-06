@@ -73,7 +73,7 @@ const difStyles = StyleSheet.create({
     textAlign: 'left',
     flexWrap: 'wrap',
     flex: 1,
-    fontFamily: 'Roboto-regular',
+    fontFamily: 'roboto-regular',
     fontSize: 15,
   },
 });

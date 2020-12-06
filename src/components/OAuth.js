@@ -38,9 +38,9 @@ const OAuth = ({ navigation }) => {
             email: user.email,
           })
           .then(function (response) {
-            console.log(response.data);
+            // console.log(response.data);
             if (response.data.token) {
-              console.log('Axios google worked', response.data.token);
+              // console.log('Axios google worked', response.data.token);
               storeToken(response.data.token);
 
               response.data.new

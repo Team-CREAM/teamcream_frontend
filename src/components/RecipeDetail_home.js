@@ -15,20 +15,22 @@ const RecipeDetail = ({ result }) => {
   const reducerList = useSelector((state) => state.savedRecipeReducer.savedRecipeList);
   const AnimatedHeart = Animatable.createAnimatableComponent(heartIcon);
   let smallAnimatedIcon = AnimatedHeart;
+  const exists = reducerList.some((r) => r.id === result.recipe._id);
   const handleSmallAnimatedIconRef = (ref) => {
     smallAnimatedIcon = ref;
   };
 
   // When component mounts, store the saved recipe
   useEffect(() => {
-    if (result.saved) {
+    if (result.saved && !exists) {
       dispatch(addSavedRecipe(result.recipe));
     }
   }, []);
 
   // Whever the reducer saved list updates, update 'heart' prop and re-render
   useEffect(() => {
-    if (reducerList.some((r) => r.id === result.recipe._id)) {
+    // if (reducerList.some((r) => r.id === result.recipe._id)) {
+    if (exists) {
       setSaved(true);
     } else {
       setSaved(false);
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
     marginRight: '3%',
   },
   icon: {
-    marginLeft: '5%',
+    marginLeft: 10,
   },
   name: {
     fontWeight: 'bold',

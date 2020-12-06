@@ -17,35 +17,40 @@ const DietaryRestrictions = ({ navigation, route }) => {
 
   useEffect(() => {
     const getPreferences = async () => {
-      const axiosInstance = await axiosWithToken();
-      const response = await axiosInstance
-        .get('/profile')
-        .then((response) => {
+      try {
+        const axiosInstance = await axiosWithToken();
+        const response = await axiosInstance.get('/profile').then((response) => {
           const { vegetarian, dairyFree, vegan, glutenFree } = response.data.preferences;
           setIsDairyfree(dairyFree);
           setIsVegetarian(vegetarian);
           setIsVegan(vegan);
           setIsGlutenfree(glutenFree);
-        })
-        .error((err) => errorHandle(err));
+        });
+      } catch (err) {
+        setError('Something went wrong');
+      }
     };
+
     getPreferences();
   }, []);
 
   const DietaryRestrictionsAxios = async () => {
-    const axiosInstance = await axiosWithToken();
-    const response = await axiosInstance
-      .post('/preferences', {
-        vegetarian,
-        dairyFree,
-        vegan,
-        glutenFree,
-      })
-      .then((response) => {
-        console.log(response.data);
-        navigation.navigate('Home');
-      })
-      .error((err) => errorHandle(err));
+    try {
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance
+        .post('/preferences', {
+          vegetarian,
+          dairyFree,
+          vegan,
+          glutenFree,
+        })
+        .then((response) => {
+          console.log(response.data);
+          navigation.navigate('Home');
+        });
+    } catch (err) {
+      setError('Something went wrong');
+    }
   };
 
   const errorHandle = (err) => {

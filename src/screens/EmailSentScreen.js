@@ -21,10 +21,10 @@ const EmailSent = ({ navigation }) => {
         <Text style={{ fontfamily: 'Robot' }}> Go back to </Text>
 
         <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-          <Text style={{ fontfamily: 'Roboto', fontWeight: 'bold' }}>login</Text>
+          <Text style={{ fontfamily: 'roboto', fontWeight: 'bold' }}>login</Text>
         </TouchableOpacity>
 
-        <Text style={{ fontfamily: 'Roboto', paddingLeft: width * 0.01 }}>after verification.</Text>
+        <Text style={{ fontfamily: 'roboto', paddingLeft: width * 0.01 }}>after verification.</Text>
       </View>
     </View>
   );

@@ -1,10 +1,12 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, TouchableOpacity, Dimensions, ActivityIndicator, Text, StatusBar } from 'react-native';
-import {  useSelector } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { add } from 'react-native-reanimated';
 import SearchBar from '../components/SearchBar';
 import useRecipes from '../hooks/useRecipes2';
+import Home from './HomeScreen';
 import RecipeDetail from '../components/RecipeDetail_R';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
@@ -15,6 +17,7 @@ import ProfileModal from '../components/ProfileModal';
 const { width, height } = Dimensions.get('window');
 
 const SavedRecipeScreen = ({navigation}) => {
+    const dispatch = useDispatch();
     const [refresh, setRefresh] = useState(false);
     const [term, setTerm] = useState('');
     const [recipes, setRecipes] = useState([]);
@@ -22,10 +25,26 @@ const SavedRecipeScreen = ({navigation}) => {
     const [proflileModalVisible, setProfileModalVisible] = useState(false);
     const reducerList = useSelector(state => state.savedRecipeReducer.savedRecipeList);
     
-    // re-render when user unlikes a recipe
-    useEffect(() => {
+    useEffect(()=>{
+        setLoading(true);
+        console.log(reducerList.length);
+        // Checks if redcuer has been populated, if not makes get request
+        if(reducerList.length === 0){
+            const receiveSavedRecipes = async () => {
+                console.log('did the axios request');
+                const axiosInstance = await axiosWithToken();
+                const response = await axiosInstance.get('/savedRecipes');
+                const list = (response.data).map(({id, title, imageUrl})=> ({id, name:title, image:imageUrl}));
+                const storeInReducer = (response.data).map(({id, title, imageUrl})=> (dispatch(addSavedRecipe({_id:id, title, image:imageUrl}))));
+                
+                setRecipes(list);
+              };
+              receiveSavedRecipes();
+        }
         setRecipes(reducerList);
+        setLoading(false);
     }, [reducerList]);
+
 
     // checks to see if user has saved recipe, conditional render
     const HasSavedRecipes = () => {
@@ -35,7 +54,7 @@ const SavedRecipeScreen = ({navigation}) => {
             keyExtractor={(result) => result.id}
             renderItem={({ item }) => {
                 return (
-                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.id })}> 
+                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.id, previousScreen: 'SavedRecipeScreen' })}> 
                         <RecipeDetail result={item}/>
                     </TouchableOpacity>
                 );
@@ -58,7 +77,6 @@ const SavedRecipeScreen = ({navigation}) => {
             <TopMenu
                 title="Saved Recipes"
                 // searchbar
-                // term={term}
                 profileIcon
                 onProfilePress={setProfileModalVisible}
                 // onTermChange={(newTerm) => setTerm(newTerm)}

@@ -33,7 +33,7 @@ const HomeScreen = (props) => {
       setLoading(false);
     };
     receiveRecipes();
-    dispatch(clearSavedRecipes());
+    // dispatch(clearSavedRecipes());
   }, []);
 
   const displayList = (type) => {
@@ -62,7 +62,7 @@ const HomeScreen = (props) => {
       }
     }
   };
-
+  // console.log(useSelector((state) => state.savedRecipeReducer.savedRecipeList));
   return (
     <SafeAreaView style={styles.somecontainer}>
       <StatusBar barstyle="light-content" />
@@ -74,7 +74,7 @@ const HomeScreen = (props) => {
             <ProfileModal isVisible={setProfileModalVisible} />
           ) : null}
           <ScrollView>
-            <RecipeList title="Welcome Back!" results={filterResults('')} />
+            <RecipeList title="Welcome!" results={filterResults('')} />
             {displayList('Recent') ? (
               <RecipeList title="Continue where you left off!" results={filterResults('Recent')} />
             ) : null}

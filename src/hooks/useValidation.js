@@ -1,39 +1,38 @@
 import { useState } from 'react';
 
 export default () => {
-  const [error, setError] = useState('');
-  const [isValidated, setIsValidated] = useState(false);
-
+  let error = '';
+  let isValidated = false;
   const validateInputs = (type, email, password, conPassword) => {
     if (type === 'Login') {
       if (!validateEmail(email) && !validatePassword(password)) {
-        setError('Email and Password do not meet requirements..');
-        setIsValidated(false);
+        error = 'Email and Password do not meet requirements..';
+        isValidated = false;
       } else if (!validateEmail(email)) {
-        setError('Email does not meet requirements..');
-        setIsValidated(false);
+        error = 'Email does not meet requirements..';
+        isValidated = false;
       } else if (!validatePassword(password)) {
-        setError('Password does not meet requirements..');
-        setIsValidated(false);
+        error = 'Password does not meet requirements..';
+        isValidated = false;
       } else {
-        setIsValidated(true);
+        isValidated = true;
       }
     }
     if (type === 'Signup') {
       if (!validateEmail(email) && !validatePassword(password)) {
-        setError('Email and Password do not meet requirements..');
-        setIsValidated(false);
+        error = 'Email and Password do not meet requirements..';
+        isValidated = false;
       } else if (!validateEmail(email)) {
-        setError('Email does not meet requirements..');
-        setIsValidated(false);
+        error = 'Email does not meet requirements..';
+        isValidated = false;
       } else if (!validatePassword(password)) {
-        setError('Password must be 4 characters or longer');
-        setIsValidated(false);
+        error = 'Password must be 4 characters or longer';
+        isValidated = false;
       } else if (password !== conPassword) {
-        setError('Passwords do not match');
-        setIsValidated(false);
+        error = 'Passwords do not match';
+        isValidated = false;
       } else {
-        setIsValidated(true);
+        isValidated = true;
       }
     }
     return [isValidated, error];

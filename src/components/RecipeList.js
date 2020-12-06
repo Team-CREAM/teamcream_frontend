@@ -22,6 +22,7 @@ const RecipeList = ({ title, results, navigation }) => {
               onPress={() =>
                 navigation.navigate('RecipeScreen', {
                   id: item.recipe._id,
+                  previousScreen: 'Home',
                 })
               }>
               <RecipeDetail result={item} />
@@ -35,7 +36,7 @@ const RecipeList = ({ title, results, navigation }) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: 'bold',
     marginLeft: 15,
     marginBottom: 5,
