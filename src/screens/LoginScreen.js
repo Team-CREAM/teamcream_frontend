@@ -95,6 +95,7 @@ const SignIn = ({ navigation }) => {
       </View>
       <TextInput
         returnKeyType="next"
+        keyboardType="email-address"
         style={styles.textInputStyle}
         placeholder=" Enter email or username"
         value={email}
@@ -139,7 +140,7 @@ const SignIn = ({ navigation }) => {
       {/* SIGN UP */}
       <View style={styles.accountWrapper}>
         <View style={styles.noAccount}>
-          <Text>No Account? </Text>
+          <Text style={{ fontFamily: 'roboto-regular' }}>No Account? </Text>
           <Text style={styles.textWeight} onPress={() => navigation.navigate('SignUp')}>
             Sign up
           </Text>
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: width * 0.12,
     fontSize: 14,
-    fontFamily: 'monospace',
+    fontFamily: 'roboto-regular',
   },
   loginButtonWrapper: {
     marginHorizontal: width * 0.12,
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: height * 0.01,
   },
-  textWeight: { fontWeight: 'bold' },
+  textWeight: { fontFamily: 'roboto-bold' },
 });
 
 export default SignIn;

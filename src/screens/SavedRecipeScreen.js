@@ -50,8 +50,9 @@ const SavedRecipeScreen = ({navigation}) => {
     };
 
     return (
-        <SafeAreaView style={styles.container}> 
+        <SafeAreaView style={styles.somecontainer}> 
         {/* WORK ON SEARCH BAR?? */}
+        <View style={styles.container}>
             <TopMenu
                 title="Saved Recipes"
                 // searchbar
@@ -68,6 +69,7 @@ const SavedRecipeScreen = ({navigation}) => {
             {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
             <HasSavedRecipes />
             </View>
+            </View>
             <View style={styles.bottomMenu}>
                 <BottomMenu />
             </View>
@@ -76,6 +78,11 @@ const SavedRecipeScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+    somecontainer: {
+        flex: 1,
+        backgroundColor: 'black',
+        // paddingBottom: height * 0.17,
+      },
     container: {
         flex: 1,
         backgroundColor: '#FEF4D1',

@@ -59,21 +59,28 @@ const HomeScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TopMenu profileIcon title="Home" onProfilePress={setProfileModalVisible} />
-      <View style={styles.marginTop}>
-        {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
-        {proflileModalVisible === true ? <ProfileModal isVisible={setProfileModalVisible} /> : null}
-        <ScrollView>
-          <RecipeList title="Welcome Back!" results={filterResults('')} />
-          {displayList('Recent') ? (
-            <RecipeList title="Continue where you left off!" results={filterResults('Recent')} />
+    <SafeAreaView style={styles.somecontainer}>
+      <View style={styles.container}>
+        <TopMenu profileIcon title="Home" onProfilePress={setProfileModalVisible} />
+        <View style={styles.marginTop}>
+          {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
+          {proflileModalVisible === true ? (
+            <ProfileModal isVisible={setProfileModalVisible} />
           ) : null}
-          {displayList('Can Make') ? (
-            <RecipeList title="What you can make right now!" results={filterResults('Can Make')} />
-          ) : null}
-          <RecipeList title="Popular!" results={filterResults('Popular')} />
-        </ScrollView>
+          <ScrollView>
+            <RecipeList title="Welcome Back!" results={filterResults('')} />
+            {displayList('Recent') ? (
+              <RecipeList title="Continue where you left off!" results={filterResults('Recent')} />
+            ) : null}
+            {displayList('Can Make') ? (
+              <RecipeList
+                title="What you can make right now!"
+                results={filterResults('Can Make')}
+              />
+            ) : null}
+            <RecipeList title="Popular!" results={filterResults('Popular')} />
+          </ScrollView>
+        </View>
       </View>
       <View style={styles.bottomMenu}>
         <BottomMenu />
@@ -83,6 +90,11 @@ const HomeScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
+  somecontainer: {
+    flex: 1,
+    backgroundColor: 'black',
+    // paddingBottom: height * 0.17,
+  },
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',

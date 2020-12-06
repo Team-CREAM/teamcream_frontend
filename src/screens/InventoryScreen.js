@@ -10,6 +10,7 @@ import {
   Dimensions,
   TouchableOpacity,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -28,16 +29,19 @@ const Inventory = () => {
   const [ingredients, setIngredients] = useState([]);
   const [save, setSave] = useState(false);
   const [proflileModalVisible, setProfileModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setTerm('hello');
     const getIngred = async () => {
+      setLoading(true);
       const axiosInstance = await axiosWithToken();
       const responseIngredients = await axiosInstance.get('/allIngredients');
       const responseInventory = await axiosInstance.get('/inventory');
       const newInventory = responseInventory.data.map((item) => ({ name: item.name }));
       setIngredients(responseIngredients.data);
-      setArr(newInventory); // TODO: set to responseInventory when Reshma finishes
+      setArr(newInventory);
+      setLoading(false);
     };
     getIngred();
     return;
@@ -57,56 +61,64 @@ const Inventory = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.somecontainer}>
       {/* Search in Pantry */}
+      <View style={styles.container}>
+        <TopMenu title="Inventory" profileIcon onProfilePress={setProfileModalVisible} />
+        {/* <SearchIngredient /> */}
+        {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
 
-      <TopMenu title="Inventory" profileIcon onProfilePress={setProfileModalVisible} />
-      {/* <SearchIngredient /> */}
+        {loading ? null : (
+          <View>
+            <AddIngredientBar
+              data={ingredients}
+              addIngredient={addIngredient}
+              save={arr.map((i) => i.name)}
+            />
 
-      <AddIngredientBar
-        data={ingredients}
-        addIngredient={addIngredient}
-        save={arr.map((i) => i.name)}
-      />
-      <View style={styles.box}>
-        {proflileModalVisible === true ? <ProfileModal isVisible={setProfileModalVisible} /> : null}
-        <Text style={styles.pantryText}>Your Pantry</Text>
-        <Text style={styles.numIngred}>
-          {/* need to change this to the array length that gets from axios request8 */}
-          {arr.length} ingredients
-        </Text>
-        <View style={styles.lineLine}>
-          <View style={styles.line} />
-        </View>
+            <View style={styles.box}>
+              {proflileModalVisible === true ? (
+                <ProfileModal isVisible={setProfileModalVisible} />
+              ) : null}
+              <Text style={styles.pantryText}>Your Pantry</Text>
+              <Text style={styles.numIngred}>
+                {/* need to change this to the array length that gets from axios request8 */}
+                {arr.length} ingredients
+              </Text>
+              <View style={styles.lineLine}>
+                <View style={styles.line} />
+              </View>
 
-        {arr.length === 0 ? (
-          <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
-            Your Ingredients will be here
-          </Text>
-        ) : (
-          <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
-            <ScrollView
-              horizontal
-              bounces={false}
-              style={{ marginVertical: height * 0.01, marginHorizontal: width * 0.07 }}
-              contentContainerStyle={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-              {arr.map((item, num) => (
-                <View key={num} style={styles.itemBox}>
-                  <Feather
-                    style={styles.iconStyle}
-                    name="minus"
-                    onPress={() => {
-                      deleteElement(num);
-                    }}
-                  />
-                  <Text>{item.name}</Text>
-                </View>
-              ))}
-            </ScrollView>
-          </ScrollView>
+              {arr.length === 0 ? (
+                <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
+                  Your Ingredients will be here
+                </Text>
+              ) : (
+                <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+                  <ScrollView
+                    horizontal
+                    bounces={false}
+                    style={{ marginVertical: height * 0.01, marginHorizontal: width * 0.07 }}
+                    contentContainerStyle={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+                    {arr.map((item, num) => (
+                      <View key={num} style={styles.itemBox}>
+                        <Feather
+                          style={styles.iconStyle}
+                          name="minus"
+                          onPress={() => {
+                            deleteElement(num);
+                          }}
+                        />
+                        <Text>{item.name}</Text>
+                      </View>
+                    ))}
+                  </ScrollView>
+                </ScrollView>
+              )}
+            </View>
+          </View>
         )}
       </View>
-
       <KeyboardAvoidingView style={styles.bottomMenu}>
         <BottomMenu data={arr} save={save} />
       </KeyboardAvoidingView>
@@ -115,6 +127,12 @@ const Inventory = () => {
 };
 
 const styles = StyleSheet.create({
+  somecontainer: {
+    flex: 1,
+    backgroundColor: 'black',
+    // paddingBottom: height * 0.17,
+    minHeight: Math.round(height),
+  },
   box: {
     maxHeight: height * 0.5,
     borderWidth: 2,
@@ -136,7 +154,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
-    minHeight: Math.round(height),
+    // minHeight: Math.round(height),
   },
   lineLine: {
     flexDirection: 'row',

@@ -58,6 +58,7 @@ const DietaryRestrictions = ({ navigation, route }) => {
       setError('');
     }, 5000);
   };
+  const buttonColor = Platform.OS === 'ios' ? '#ffffff' : '#D9B580';
 
   return (
     // this is how to get profilepic from previous screen
@@ -122,12 +123,21 @@ const DietaryRestrictions = ({ navigation, route }) => {
           </View>
         </TouchableOpacity>
         {/* Confirm Button */}
-        <Button
-          style={styles.button}
-          title="confirm"
-          color="#D9B580"
-          onPress={() => DietaryRestrictionsAxios()}
-        />
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#D9B580',
+            shadowRadius: 2,
+            shadowColor: 'black',
+            shadowOpacity: 0.3,
+            shadowOffset: { height: 4 },
+          }}>
+          <Button
+            // style={styles.button}
+            title="confirm"
+            color={buttonColor}
+            onPress={() => DietaryRestrictionsAxios()}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -168,7 +178,7 @@ const styles = StyleSheet.create({
     marginRight: width * 0.03,
   },
   button: {
-    backgroundColor: '#C1BEBE',
+    backgroundColor: '#D9B580',
     height: '4.4%',
     marginTop: 10,
     borderStyle: 'solid',

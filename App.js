@@ -1,6 +1,8 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
+import { AppLoading } from 'expo';
+import { useFonts } from 'expo-font';
 import Login from './src/screens/LoginScreen';
 import SignUp from './src/screens/SignUpScreen';
 import ForgotPassword from './src/screens/ForgotPasswordScreen';
@@ -77,4 +79,16 @@ const navigator = createStackNavigator(
   },
 );
 
-export default createAppContainer(navigator);
+const RootApp = createAppContainer(navigator);
+
+export default App = () => {
+  const [loaded] = useFonts({
+    'roboto-regular': require('./assets/fonts/RobotoMono-Regular.ttf'),
+    'roboto-bold': require('./assets/fonts/RobotoMono-Bold.ttf'),
+  });
+
+  if (!loaded) {
+    return <AppLoading />;
+  }
+  return <RootApp />;
+};
