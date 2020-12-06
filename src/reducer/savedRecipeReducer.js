@@ -7,17 +7,15 @@ const initialState = {
 const savedRecipeReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_SAVED_RECIPE:
-      if (!state.savedRecipeList.some((r) => r.id === action.data.id)) {
-        return {
-          ...state,
-          savedRecipeList: state.savedRecipeList.concat({
-            id: action.data._id,
-            name: action.data.title,
-            image: action.data.image,
-            // image: action.data.image,
-          }),
-        };
-      }
+      return {
+        ...state,
+        savedRecipeList: state.savedRecipeList.concat({
+          id: action.data._id,
+          name: action.data.title,
+          image: action.data.image,
+          // image: action.data.image,
+        }),
+      };
       break;
     case REMOVE_SAVED_RECIPE:
       return {

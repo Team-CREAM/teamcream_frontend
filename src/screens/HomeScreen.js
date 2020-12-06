@@ -29,7 +29,7 @@ const HomeScreen = (props) => {
       setLoading(false);
     };
     receiveRecipes();
-    dispatch(clearSavedRecipes());
+    // dispatch(clearSavedRecipes());
   }, []);
   const displayList = (type) => {
     if (results) {
@@ -57,7 +57,7 @@ const HomeScreen = (props) => {
       }
     }
   };
-
+  // console.log(useSelector((state) => state.savedRecipeReducer.savedRecipeList));
   return (
     <SafeAreaView style={styles.somecontainer}>
       <View style={styles.container}>
