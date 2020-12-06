@@ -55,12 +55,11 @@ const difStyles = StyleSheet.create({
   },
   image: {
     width: width * 0.8,
-    height: height * 0.2,
+    height: height * 0.3,
     resizeMode: 'stretch',
     borderRadius: 4,
     marginBottom: 5,
     borderColor: 'black',
-    borderWidth: 2,
   },
   recipeDescription: {
     justifyContent: 'space-between',
@@ -74,6 +73,8 @@ const difStyles = StyleSheet.create({
     textAlign: 'left',
     flexWrap: 'wrap',
     flex: 1,
+    fontFamily: 'Roboto-regular',
+    fontSize: 15,
   },
 });
 

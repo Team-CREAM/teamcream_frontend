@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  ActivityIndicator,
+  StatusBar,
+} from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import RecipeList from '../components/RecipeList';
@@ -13,11 +20,8 @@ const { width, height } = Dimensions.get('window');
 
 const HomeScreen = (props) => {
   const dispatch = useDispatch();
-  const [term, setTerm] = useState('');
-
   const [results, setResults] = useState('');
   const [loading, setLoading] = useState(false);
-  const [heart, setHeart] = useState(false);
   const [proflileModalVisible, setProfileModalVisible] = useState(false);
 
   useEffect(() => {
@@ -31,6 +35,7 @@ const HomeScreen = (props) => {
     receiveRecipes();
     // dispatch(clearSavedRecipes());
   }, []);
+
   const displayList = (type) => {
     if (results) {
       switch (type) {
@@ -60,6 +65,7 @@ const HomeScreen = (props) => {
   // console.log(useSelector((state) => state.savedRecipeReducer.savedRecipeList));
   return (
     <SafeAreaView style={styles.somecontainer}>
+      <StatusBar barstyle="light-content" />
       <View style={styles.container}>
         <TopMenu profileIcon title="Home" onProfilePress={setProfileModalVisible} />
         <View style={styles.marginTop}>

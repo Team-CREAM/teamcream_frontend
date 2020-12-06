@@ -8,7 +8,7 @@ import {
   FlexBox,
   ScrollView,
   Dimensions,
-  TouchableOpacity,
+  StatusBar,
   KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
@@ -62,6 +62,7 @@ const Inventory = () => {
 
   return (
     <SafeAreaView style={styles.somecontainer}>
+      <StatusBar barstyle="light-content" />
       {/* Search in Pantry */}
       <View style={styles.container}>
         <TopMenu title="Inventory" profileIcon onProfilePress={setProfileModalVisible} />
@@ -70,11 +71,15 @@ const Inventory = () => {
 
         {loading ? null : (
           <View>
-            <AddIngredientBar
-              data={ingredients}
-              addIngredient={addIngredient}
-              save={arr.map((i) => i.name)}
-            />
+            <View style={{ zIndex: 1, marginTop: '10%', marginBottom: '7%' }}>
+              <AddIngredientBar
+                data={ingredients}
+                addIngredient={addIngredient}
+                save={arr.map((i) => i.name)}
+                deleteIngredient={deleteElement}
+                userData={arr}
+              />
+            </View>
 
             <View style={styles.box}>
               {proflileModalVisible === true ? (

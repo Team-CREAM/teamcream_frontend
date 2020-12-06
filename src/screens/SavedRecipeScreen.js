@@ -68,6 +68,8 @@ const SavedRecipeScreen = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.somecontainer}> 
+         <StatusBar barstyle="light-content" />
+
         {/* WORK ON SEARCH BAR?? */}
         <View style={styles.container}>
             <TopMenu

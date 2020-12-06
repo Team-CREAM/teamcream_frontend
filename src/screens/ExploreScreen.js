@@ -11,6 +11,7 @@ import {
   Text,
   TouchableHighlight,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -42,6 +43,7 @@ const ExploreScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.somecontainer}>
+      <StatusBar barstyle="light-content" />
       <View style={styles.container}>
         <TopMenu
           // title="Home"

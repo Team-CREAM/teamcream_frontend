@@ -16,6 +16,7 @@ import HTML from 'react-native-render-html';
 import { FontAwesome, FontAwesome5, AntDesign } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { addSavedRecipe, removeSavedRecipe } from '../actions/savedRecipes';
 import BottomMenu from '../components/BottomMenu';
 import axiosWithToken from '../api/axiosWithToken';
@@ -41,6 +42,7 @@ const RecipeScreen = ({ navigation }) => {
         recipe: id,
       });
       console.log(response.data.saved);
+      console.log(response.data);
       // console.log(response.data.Recipe);
       setRecipe(response.data.Recipe);
       setSaved(response.data.saved);
@@ -88,7 +90,8 @@ const RecipeScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barstyle="light-content" />
       {recipe ? (
         <ScrollView contentContainerStyle={styles.scrollView}>
           {/* Area for title */}
@@ -158,8 +161,10 @@ const RecipeScreen = ({ navigation }) => {
                 <FlatList
                   data={recipe.analyzedInstructions[0].steps}
                   renderItem={({ item }) => (
-                    <View key={item.number} style={{ flexDirection: 'row' }}>
-                      <Text>{`${item.number}. `}</Text>
+                    <View
+                      key={item.number}
+                      style={{ flexDirection: 'row', paddingRight: width * 0.1 }}>
+                      <Text>{`${item.number}.`}</Text>
                       <Text>
                         {item.step}
                         {'\n'}
@@ -174,7 +179,7 @@ const RecipeScreen = ({ navigation }) => {
           </View>
         </ScrollView>
       ) : null}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -208,25 +213,19 @@ const styles = StyleSheet.create({
     height: height * 0.3,
     borderRadius: 4,
     justifyContent: 'center',
-    borderWidth: 2,
     borderColor: 'black',
     resizeMode: 'stretch',
   },
   parentInstructions: {
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     alignItems: 'flex-start', // if you want to fill rows left to right
-    width: width * 0.9,
   },
   ingredients: {
     width: '40%',
     marginRight: '10%',
     alignItems: 'flex-start',
   },
-  instructions: {
-    width: '50%',
-  },
+  instructions: { flexWrap: 'wrap' },
   lineContainer: {
     flexDirection: 'row',
     alignItems: 'center',
