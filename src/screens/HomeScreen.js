@@ -7,14 +7,14 @@ import {
   ActivityIndicator,
   StatusBar,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import RecipeList from '../components/RecipeList';
 import BottomMenu from '../components/BottomMenu';
 import TopMenu from '../components/TopMenu';
 import axiosWithToken from '../api/axiosWithToken';
-import { clearSavedRecipes } from '../actions/savedRecipes';
 import ProfileModal from '../components/ProfileModal';
+import { addSavedRecipe } from '../actions/savedRecipes';
 
 const { width, height } = Dimensions.get('window');
 
@@ -23,6 +23,7 @@ const HomeScreen = (props) => {
   const [results, setResults] = useState('');
   const [loading, setLoading] = useState(false);
   const [proflileModalVisible, setProfileModalVisible] = useState(false);
+  const reducerList = useSelector((state) => state.savedRecipeReducer.savedRecipeList);
 
   useEffect(() => {
     const receiveRecipes = async () => {
@@ -31,9 +32,15 @@ const HomeScreen = (props) => {
       const response = await axiosInstance.get('/home');
       setResults(response.data);
       setLoading(false);
+      if (reducerList.length === 0) {
+        console.log('in homescreen');
+        const responseSavedR = await axiosInstance.get('/savedRecipes');
+        const storeInReducer = responseSavedR.data.map(({ id, title, imageUrl }) =>
+          dispatch(addSavedRecipe({ _id: id, title, image: imageUrl })),
+        );
+      }
     };
     receiveRecipes();
-    // dispatch(clearSavedRecipes());
   }, []);
 
   const displayList = (type) => {
@@ -62,7 +69,7 @@ const HomeScreen = (props) => {
       }
     }
   };
-  // console.log(useSelector((state) => state.savedRecipeReducer.savedRecipeList));
+
   return (
     <SafeAreaView style={styles.somecontainer}>
       <StatusBar barstyle="light-content" />

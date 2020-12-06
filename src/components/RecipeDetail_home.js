@@ -22,14 +22,13 @@ const RecipeDetail = ({ result }) => {
 
   // When component mounts, store the saved recipe
   useEffect(() => {
-    if (result.saved && !exists) {
+    if (result.saved) {
       dispatch(addSavedRecipe(result.recipe));
     }
   }, []);
 
   // Whever the reducer saved list updates, update 'heart' prop and re-render
   useEffect(() => {
-    // if (reducerList.some((r) => r.id === result.recipe._id)) {
     if (exists) {
       setSaved(true);
     } else {
