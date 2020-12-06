@@ -25,22 +25,24 @@ const SavedRecipeScreen = ({navigation}) => {
     const [proflileModalVisible, setProfileModalVisible] = useState(false);
     const reducerList = useSelector(state => state.savedRecipeReducer.savedRecipeList);
     useEffect(()=>{
+        setLoading(true);
+        console.log(reducerList.length);
         // Checks if redcuer has been populated, if not makes get request
         if(reducerList.length === 0){
             console.log('hello');
             const receiveSavedRecipes = async () => {
-                setLoading(true);
+                console.log('did the axios request');
                 const axiosInstance = await axiosWithToken();
                 const response = await axiosInstance.get('/savedRecipes');
                 const list = (response.data).map(({id, title, imageUrl})=> ({id, name:title, image:imageUrl}));
                 const storeInReducer = (response.data).map(({id, title, imageUrl})=> (dispatch(addSavedRecipe({_id:id, title, image:imageUrl}))));
                 
                 setRecipes(list);
-                setLoading(false);
               };
               receiveSavedRecipes();
         }
         setRecipes(reducerList);
+        setLoading(false);
     }, [reducerList]);
 
 
@@ -52,7 +54,7 @@ const SavedRecipeScreen = ({navigation}) => {
             keyExtractor={(result) => result.id}
             renderItem={({ item }) => {
                 return (
-                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.id })}> 
+                    <TouchableOpacity onPress={() => navigation.navigate('RecipeScreen', { id: item.id, previousScreen: 'SavedRecipeScreen' })}> 
                         <RecipeDetail result={item}/>
                     </TouchableOpacity>
                 );
@@ -74,7 +76,6 @@ const SavedRecipeScreen = ({navigation}) => {
             <TopMenu
                 title="Saved Recipes"
                 // searchbar
-                // term={term}
                 profileIcon
                 onProfilePress={setProfileModalVisible}
                 // onTermChange={(newTerm) => setTerm(newTerm)}

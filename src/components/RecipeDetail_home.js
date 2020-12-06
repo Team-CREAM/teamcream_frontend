@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     marginRight: '3%',
   },
   icon: {
-    marginLeft: '5%',
+    marginLeft: 10,
   },
   name: {
     fontWeight: 'bold',

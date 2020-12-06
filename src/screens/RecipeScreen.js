@@ -9,16 +9,13 @@ import {
   Platform,
   StatusBar,
   TouchableOpacity,
+  Button,
 } from 'react-native';
-import { NavigationEvents } from 'react-navigation';
-import { HeaderBackButton } from 'react-navigation-stack';
-import HTML from 'react-native-render-html';
-import { FontAwesome, FontAwesome5, AntDesign } from '@expo/vector-icons';
+import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { addSavedRecipe, removeSavedRecipe } from '../actions/savedRecipes';
-import BottomMenu from '../components/BottomMenu';
 import axiosWithToken from '../api/axiosWithToken';
 
 // import retrieveRecipes from '../hooks/retrieveRecipes';
@@ -28,7 +25,7 @@ const { width, height } = Dimensions.get('window');
 const RecipeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   //   const [results, errorMessage] = retrieveRecipes();
-  const { id } = navigation.state.params;
+  const { id, previousScreen } = navigation.state.params;
   // const [value, setValue] = useState('');
   const [recipe, setRecipe] = useState('');
   const [saved, setSaved] = useState(false);
@@ -51,21 +48,6 @@ const RecipeScreen = ({ navigation }) => {
     // setValue(val);
     getRecipe();
   }, []);
-  // const savedR = useSelector((state) => state.savedRecipeReducer.savedRecipeList);
-  // // console.log(list);
-  // if (savedR.length > 0) {
-  //   if (savedR.includes((r) => r.key === result.recipe._id)) {
-  //     // saved = true;
-  //   } else {
-  //     // saved = false;
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   ({ navigation }) => ({
-  //     headerLeft: <HeaderBackButton onPress={() => navigation.replace('SavedRecipeScreen')} />,
-  //   });
-  // }, [navigation, value]);
 
   const youClickedMe = async () => {
     if (!saved) {
@@ -89,8 +71,38 @@ const RecipeScreen = ({ navigation }) => {
     }
   };
 
+  const goBack = () => {
+    if (previousScreen === 'Explore') {
+      navigation.goBack();
+    }
+    if (previousScreen === 'Home') {
+      navigation.goBack();
+    }
+    if (previousScreen === 'SavedRecipeScreen') {
+      navigation.goBack();
+    } else {
+      navigation.replace(previousScreen);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <View
+        style={{
+          position: 'absolute',
+          left: 10,
+          top: 10,
+        }}>
+        <AntDesign
+          name="back"
+          size={30}
+          color="black"
+          onPress={() => {
+            goBack();
+          }}
+        />
+      </View>
+
       <StatusBar barstyle="light-content" />
       {recipe ? (
         <ScrollView contentContainerStyle={styles.scrollView}>
@@ -194,6 +206,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     marginHorizontal: '5%',
+    marginTop: 15,
     flexGrow: 1,
     justifyContent: 'center',
     paddingBottom: '20%',

@@ -38,6 +38,7 @@ const ProfileModal = ({ navigation, isVisible }) => {
               dispatch(clearSavedRecipes());
               isVisible(false);
               storeToken('');
+              dispatch(clearSavedRecipes());
               navigation.replace('Login');
             }}>
             <Text style={styles.textStyle}>Logout</Text>
