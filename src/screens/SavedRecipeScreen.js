@@ -27,6 +27,7 @@ const SavedRecipeScreen = ({navigation}) => {
     
     useEffect(()=>{
         setLoading(true);
+        console.log(reducerList.length);
         // Checks if redcuer has been populated, if not makes get request
         if(reducerList.length === 0){
             const receiveSavedRecipes = async () => {
