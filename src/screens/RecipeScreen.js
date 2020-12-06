@@ -11,9 +11,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
+import { HeaderBackButton } from 'react-navigation-stack';
 import HTML from 'react-native-render-html';
 import { FontAwesome, FontAwesome5, AntDesign } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
+import { addSavedRecipe, removeSavedRecipe } from '../actions/savedRecipes';
 import BottomMenu from '../components/BottomMenu';
 import axiosWithToken from '../api/axiosWithToken';
 
@@ -22,8 +25,10 @@ import axiosWithToken from '../api/axiosWithToken';
 const { width, height } = Dimensions.get('window');
 
 const RecipeScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   //   const [results, errorMessage] = retrieveRecipes();
   const { id } = navigation.state.params;
+  // const [value, setValue] = useState('');
   const [recipe, setRecipe] = useState('');
   const [saved, setSaved] = useState(false);
 
@@ -41,12 +46,29 @@ const RecipeScreen = ({ navigation }) => {
       setSaved(response.data.saved);
       // setLoading(false);
     };
-
+    // setValue(val);
     getRecipe();
   }, []);
+  // const savedR = useSelector((state) => state.savedRecipeReducer.savedRecipeList);
+  // // console.log(list);
+  // if (savedR.length > 0) {
+  //   if (savedR.includes((r) => r.key === result.recipe._id)) {
+  //     // saved = true;
+  //   } else {
+  //     // saved = false;
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   ({ navigation }) => ({
+  //     headerLeft: <HeaderBackButton onPress={() => navigation.replace('SavedRecipeScreen')} />,
+  //   });
+  // }, [navigation, value]);
 
   const youClickedMe = async () => {
     if (!saved) {
+      setSaved(!saved);
+      dispatch(addSavedRecipe(recipe));
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
         recipe,
@@ -54,6 +76,8 @@ const RecipeScreen = ({ navigation }) => {
       });
       console.log(response.data.message);
     } else {
+      setSaved(!saved);
+      dispatch(removeSavedRecipe(recipe._id));
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
         recipe,
@@ -61,7 +85,6 @@ const RecipeScreen = ({ navigation }) => {
       });
       console.log(response.data.message);
     }
-    setSaved(!saved);
   };
 
   return (
