@@ -40,12 +40,14 @@ const OAuth = ({ navigation }) => {
           .then(function (response) {
             // console.log(response.data);
             if (response.data.token) {
-              // console.log('Axios google worked', response.data.token);
+              console.log('Axios google worked', response.data.token);
+              console.log(response.data.new);
               storeToken(response.data.token);
 
-              response.data.new
-                ? navigation.navigate('ProfilePicScreen')
-                : navigation.navigate('Home');
+              console.log('before');
+              response.data.new ? navigation.navigate('ProfilePic') : navigation.navigate('Home');
+
+              console.log('after');
             }
           })
           .catch(function (error) {

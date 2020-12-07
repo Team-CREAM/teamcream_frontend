@@ -95,9 +95,9 @@ const HomeScreen = (props) => {
                 results={filterResults('Can Make')}
               />
             ) : null}
-            {/* {displayList('Popular') ? (
+            {displayList('Popular') ? (
               <RecipeList title="Popular!" results={filterResults('Popular')} />
-            ) : null} */}
+            ) : null}
             {/* <RecipeList title="Popular!" results={filterResults('Popular')} /> */}
           </ScrollView>
         </View>
