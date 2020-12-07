@@ -24,6 +24,7 @@ const HomeScreen = (props) => {
   const [loading, setLoading] = useState(false);
   const [proflileModalVisible, setProfileModalVisible] = useState(false);
   const reducerList = useSelector((state) => state.savedRecipeReducer.savedRecipeList);
+  const [test, setTest] = useState([]);
 
   useEffect(() => {
     const receiveRecipes = async () => {
@@ -31,6 +32,7 @@ const HomeScreen = (props) => {
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.get('/home');
       setResults(response.data);
+
       setLoading(false);
       if (reducerList.length === 0) {
         console.log('in homescreen');
@@ -50,6 +52,8 @@ const HomeScreen = (props) => {
           return results.recent_recipes.length > 0;
         case 'Can Make':
           return results.possible_recipes.length > 0;
+        case 'Popular':
+          return results.popular_recipes.length > 0;
         default:
           return false;
       }
@@ -91,7 +95,10 @@ const HomeScreen = (props) => {
                 results={filterResults('Can Make')}
               />
             ) : null}
-            <RecipeList title="Popular!" results={filterResults('Popular')} />
+            {/* {displayList('Popular') ? (
+              <RecipeList title="Popular!" results={filterResults('Popular')} />
+            ) : null} */}
+            {/* <RecipeList title="Popular!" results={filterResults('Popular')} /> */}
           </ScrollView>
         </View>
       </View>

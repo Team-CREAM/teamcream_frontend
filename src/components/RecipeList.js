@@ -5,6 +5,7 @@ import RecipeDetail from './RecipeDetail_home';
 
 const RecipeList = ({ title, results, navigation }) => {
   if (!results) {
+    console.log(results);
     return null;
   }
 

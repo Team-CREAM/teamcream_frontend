@@ -69,14 +69,15 @@ const TopMenu = ({
       name: require('../../images/profilepicicons/taco.png'),
     },
   ];
-  const [icon, setIcon] = useState();
+  const [icon, setIcon] = useState('0');
 
   useEffect(() => {
     const getProfileIcon = async () => {
       // setLoading(true);
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('/icon');
-      console.log(response.data.icon);
+      // console.log(response.data.icon);
+      // console.log(response);
 
       response.data.icon ? setIcon(response.data.icon) : null;
     };

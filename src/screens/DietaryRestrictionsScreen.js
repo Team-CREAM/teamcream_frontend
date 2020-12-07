@@ -39,10 +39,15 @@ const DietaryRestrictions = ({ navigation, route }) => {
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance
         .post('/preferences', {
-          vegetarian,
-          dairyFree,
-          vegan,
-          glutenFree,
+          preferences: {
+            vegetarian,
+            dairyFree,
+            vegan,
+            glutenFree,
+            keepMeSignedIn: false,
+            intolerables: [],
+            metric: false,
+          },
         })
         .then((response) => {
           console.log(response.data);
