@@ -68,7 +68,7 @@ const navigator = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'ProfilePic',
+    initialRouteName: 'Login',
     // initialRouteName: 'Home',
     // initialRouteName: 'SavedRecipeScreen',
     // initialRouteName: 'RecipeScreen',

@@ -102,6 +102,8 @@ const RecipeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barstyle="light-content" />
+
       <View
         style={{
           position: 'absolute',
