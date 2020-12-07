@@ -15,6 +15,7 @@ import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import axios from 'axios';
 import { addSavedRecipe, removeSavedRecipe } from '../actions/savedRecipes';
 import axiosWithToken from '../api/axiosWithToken';
 
@@ -38,13 +39,27 @@ const RecipeScreen = ({ navigation }) => {
       const response = await axiosInstance.post('./recipeClicked', {
         recipe: id,
       });
-      console.log(response.data.saved);
-      console.log(response.data);
-      // console.log(response.data.Recipe);
       setRecipe(response.data.Recipe);
       setSaved(response.data.saved);
-      // setLoading(false);
+
+      // FIgure this out later
+      // const response2 = await axios
+      //   .create({
+      //     baseURL: 'https://api.spoonacular.com/recipes',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //   })
+      //   .get(`/${response.data.Recipe.id}/information`, {
+      //     params: {
+      //       apiKey: '2b0715ea3ed94024a9bc6afc798e46ba',
+      //     },
+      //   });
+
+      // setRecipe(response2.data);
+      // console.log(response2);
     };
+
     // setValue(val);
     getRecipe();
   }, []);
@@ -90,8 +105,13 @@ const RecipeScreen = ({ navigation }) => {
       <View
         style={{
           position: 'absolute',
-          left: 10,
-          top: 10,
+          top: 5,
+          left: 5,
+          paddingBottom: 10,
+          marginBottom: 20,
+          zIndex: 1,
+          width,
+          backgroundColor: '#FEF4D1',
         }}>
         <AntDesign
           name="back"
@@ -156,10 +176,7 @@ const RecipeScreen = ({ navigation }) => {
                   renderItem={({ item }) => (
                     <View key={item.id} style={{ flexDirection: 'row' }}>
                       <Text>{'\u25AA '}</Text>
-                      <Text>
-                        {item.name}
-                        {'\n'}
-                      </Text>
+                      <Text>{item.name}</Text>
                     </View>
                   )}
                 />
@@ -169,21 +186,23 @@ const RecipeScreen = ({ navigation }) => {
             {/* Area for the instructions */}
             {recipe.analyzedInstructions[0] ? (
               <View style={styles.instructions}>
-                <Text style={styles.header}>Instructions</Text>
-                <FlatList
-                  data={recipe.analyzedInstructions[0].steps}
-                  renderItem={({ item }) => (
-                    <View
-                      key={item.number}
-                      style={{ flexDirection: 'row', paddingRight: width * 0.1 }}>
-                      <Text>{`${item.number}.`}</Text>
-                      <Text>
-                        {item.step}
-                        {'\n'}
-                      </Text>
-                    </View>
-                  )}
-                />
+                <View style={{ marginLeft: '10%' }}>
+                  <Text style={styles.header}>Instructions</Text>
+                  <FlatList
+                    data={recipe.analyzedInstructions[0].steps}
+                    renderItem={({ item }) => (
+                      <View
+                        key={item.number}
+                        style={{ flexDirection: 'row', paddingRight: width * 0.2 }}>
+                        <Text>{`${item.number}. `}</Text>
+                        <Text>
+                          {item.step}
+                          {'\n'}
+                        </Text>
+                      </View>
+                    )}
+                  />
+                </View>
               </View>
             ) : null}
 
@@ -205,11 +224,12 @@ const styles = StyleSheet.create({
     // paddingBottom: height * 0.17,
   },
   scrollView: {
-    marginHorizontal: '5%',
-    marginTop: 15,
+    // marginHorizontal: '5%',
+    // marginTop: 20,
     flexGrow: 1,
     justifyContent: 'center',
     paddingBottom: '20%',
+    paddingTop: 20,
   },
   topBar: {
     // marginTop: height * 0.01,
@@ -234,11 +254,15 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start', // if you want to fill rows left to right
   },
   ingredients: {
-    width: '40%',
-    marginRight: '10%',
+    width: '100%',
+    marginHorizontal: '10%',
     alignItems: 'flex-start',
+    marginBottom: 10,
   },
-  instructions: { flexWrap: 'wrap' },
+  instructions: {
+    flexWrap: 'wrap',
+    width,
+  },
   lineContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -256,7 +280,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: height * 0.02,
   },
-  header: { fontWeight: 'bold', fontSize: 16, marginBottom: 5 },
+  header: { fontWeight: 'bold', fontSize: 16, marginBottom: 0 },
 });
 
 export default RecipeScreen;

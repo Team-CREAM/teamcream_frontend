@@ -24,6 +24,7 @@ const SavedRecipeScreen = ({navigation}) => {
     const [loading, setLoading] = useState(false);
     const [proflileModalVisible, setProfileModalVisible] = useState(false);
     const reducerList = useSelector(state => state.savedRecipeReducer.savedRecipeList);
+    
     useEffect(()=>{
         setLoading(true);
         console.log(reducerList.length);
