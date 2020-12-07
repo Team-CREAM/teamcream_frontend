@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Alert, Modal, Text, TouchableHighlight, Dimensions, StyleSheet } from 'react-native';
-import { Checkbox } from 'react-native-paper';
 import { withNavigation } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';

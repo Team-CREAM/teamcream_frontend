@@ -9,9 +9,11 @@ import {
   TouchableHighlight,
   FlatList,
   Button,
+  ActivityIndicator,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useSetIcon from '../hooks/useSetIcon';
+import axiosWithToken from '../api/axiosWithToken';
 
 const dimensions = Dimensions.get('window');
 const { width } = dimensions;
@@ -22,12 +24,17 @@ const ProfilePicScreen = ({ navigation }) => {
     require('../../images/profilepicicons/bento_box.png'),
   );
   const [index, setIndex] = useState(0);
-  const [storeIcon] = useSetIcon();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getProfileIcon = async () => {
-      const icon = await AsyncStorage.getItem('@icon');
-      setProfilePicture(ICONDATA[icon].name);
+      setLoading(true);
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.post('/icon');
+      console.log(response.data.icon);
+
+      response.data.icon ? setProfilePicture(ICONDATA[response.data.icon].name) : null;
+      setLoading(false);
     };
     getProfileIcon();
   }, []);
@@ -94,8 +101,24 @@ const ProfilePicScreen = ({ navigation }) => {
     );
   };
 
+  const storeIconFunction = async () => {
+    try {
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.post('./icon', {
+        icon: index.toString(),
+      });
+      console.log(response);
+
+      // setLoading(false);
+    } catch (err) {
+      // setErrorMessage('Something went wrong');
+    }
+  };
+
   return (
     <View style={styles.canvas}>
+      {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
+
       {/* Profilepic img */}
       <View style={styles.profilePicContainer}>
         <Image style={styles.profilePic} source={profilePicture} resizeMode="contain" />
@@ -105,7 +128,8 @@ const ProfilePicScreen = ({ navigation }) => {
       <TouchableHighlight style={styles.nextButtonWrapper}>
         <Button
           onPress={async () => {
-            await storeIcon(index.toString());
+            storeIconFunction();
+            // await storeIcon(index.toString());
             navigation.navigate('DietaryRestrictions');
           }}
           title="NEXT"

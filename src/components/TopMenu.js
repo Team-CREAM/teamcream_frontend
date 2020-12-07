@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchBar from './SearchBar';
 import useSetToken from '../hooks/useSetToken';
 import ProfileModal from './ProfileModal';
+import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
@@ -71,11 +72,15 @@ const TopMenu = ({
   const [icon, setIcon] = useState();
 
   useEffect(() => {
-    const getIcon = async () => {
-      const getIcon = await AsyncStorage.getItem('@icon');
-      setIcon(getIcon);
+    const getProfileIcon = async () => {
+      // setLoading(true);
+      const axiosInstance = await axiosWithToken();
+      const response = await axiosInstance.post('/icon');
+      console.log(response.data.icon);
+
+      response.data.icon ? setIcon(response.data.icon) : null;
     };
-    getIcon();
+    getProfileIcon();
   }, []);
 
   return (
