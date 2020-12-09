@@ -11,11 +11,10 @@ import {
   TouchableOpacity,
   Button,
 } from 'react-native';
-import { FontAwesome, AntDesign } from '@expo/vector-icons';
+import { FontAwesome, AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import axios from 'axios';
 import { addSavedRecipe, removeSavedRecipe } from '../actions/savedRecipes';
 import axiosWithToken from '../api/axiosWithToken';
 
@@ -27,6 +26,7 @@ const RecipeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   //   const [results, errorMessage] = retrieveRecipes();
   const { id, previousScreen } = navigation.state.params;
+  console.log(id);
   // const [value, setValue] = useState('');
   const [recipe, setRecipe] = useState('');
   const [saved, setSaved] = useState(false);
@@ -35,10 +35,12 @@ const RecipeScreen = ({ navigation }) => {
   useEffect(() => {
     const getRecipe = async () => {
       // setLoading(true);
+
       const axiosInstance = await axiosWithToken();
-      const response = await axiosInstance.post('./recipeClicked', {
+      const response = await axiosInstance.post('/recipeClicked', {
         recipe: id,
       });
+
       setRecipe(response.data.Recipe);
       setSaved(response.data.saved);
 
@@ -106,19 +108,29 @@ const RecipeScreen = ({ navigation }) => {
 
       <View
         style={{
-          position: 'absolute',
-          top: 5,
-          left: 5,
+          // position: 'absolute',
+          // top: 5,
+          // left: 5,
           paddingBottom: 10,
-          marginBottom: 20,
+          // marginBottom: 20,
           zIndex: 1,
           width,
           backgroundColor: '#FEF4D1',
         }}>
-        <AntDesign
+        {/* <AntDesign
+          style={{ marginLeft: 10 }}
           name="back"
-          size={30}
+          size={40}
           color="black"
+          onPress={() => {
+            goBack();
+          }}
+        /> */}
+        <Ionicons
+          name="md-arrow-round-back"
+          size={35}
+          color="black"
+          style={{ marginLeft: 10, fontWeight: 'bold' }}
           onPress={() => {
             goBack();
           }}
@@ -176,8 +188,17 @@ const RecipeScreen = ({ navigation }) => {
                 <FlatList
                   data={recipe.extendedIngredients}
                   renderItem={({ item }) => (
-                    <View key={item.id} style={{ flexDirection: 'row' }}>
-                      <Text>{'\u25AA '}</Text>
+                    <View
+                      key={item.id}
+                      style={{
+                        flexDirection: 'row',
+                        // backgroundColor: 'red',
+                        // marginBottom: 5,
+                        // alignContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      {/* <Text style={{s}}>{'\u2022'}</Text> */}
+                      <Entypo name="dot-single" size={24} color="black" style={{ marginTop: 1 }} />
                       <Text>{item.name}</Text>
                     </View>
                   )}
