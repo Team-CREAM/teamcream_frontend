@@ -6,7 +6,6 @@ export default () => {
       await AsyncStorage.setItem('@token', value);
     } catch (e) {
       console.log('store data error', e);
-      // saving error
     }
   };
 

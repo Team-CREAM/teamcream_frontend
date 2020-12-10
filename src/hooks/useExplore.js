@@ -10,7 +10,6 @@ export default () => {
     search = '',
     healthy = false,
     popular = false,
-    // sustainable = false,
     inventory = false,
     cheap = false,
   ) => {

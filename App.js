@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import { AppLoading } from 'expo';
@@ -18,7 +18,6 @@ import Inventory from './src/screens/InventoryScreen';
 const navigator = createStackNavigator(
   {
     Home: {
-      // screen: Home,
       screen: Home,
       navigationOptions: {
         headerShown: false,
@@ -69,11 +68,7 @@ const navigator = createStackNavigator(
   },
   {
     initialRouteName: 'Login',
-    // initialRouteName: 'Home',
-    // initialRouteName: 'SavedRecipeScreen',
-    // initialRouteName: 'RecipeScreen',
     defaultNavigationOptions: {
-      // title: 'Cooking with Crumbs',
       headerShown: false,
     },
   },

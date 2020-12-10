@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -13,7 +13,6 @@ import {
   TouchableOpacity,
   StatusBar,
 } from 'react-native';
-import { Checkbox } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import TopMenu from '../components/TopMenu';
@@ -21,7 +20,7 @@ import BottomMenu from '../components/BottomMenu';
 import useExplore from '../hooks/useExplore';
 import ProfileModal from '../components/ProfileModal';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const ExploreScreen = ({ navigation }) => {
   const [term, setTerm] = useState('');
@@ -46,7 +45,6 @@ const ExploreScreen = ({ navigation }) => {
       <StatusBar barstyle="light-content" />
       <View style={styles.container}>
         <TopMenu
-          // title="Home"
           profileIcon
           onProfilePress={setProfileModalVisible}
           searchbar

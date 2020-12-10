@@ -119,8 +119,6 @@ const styles = StyleSheet.create({
   SignUpText: {
     paddingBottom: 10,
     fontFamily: 'roboto-regular',
-    // fontStyle: 'normal',
-    // fontWeight: '500',
     fontSize: 20,
     lineHeight: 20,
     borderBottomWidth: 2,
@@ -199,8 +197,6 @@ const styles = StyleSheet.create({
   goBackToLogin: {
     paddingBottom: 10,
     fontFamily: 'roboto-regular',
-    // ontStyle: 'normal',
-    // fontWeight: '500',
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 20,

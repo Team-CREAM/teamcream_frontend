@@ -19,7 +19,6 @@ const savedRecipeReducer = (state = initialState, action) => {
       }
 
       return state;
-      break;
     case REMOVE_SAVED_RECIPE:
       return {
         ...state,

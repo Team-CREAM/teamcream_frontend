@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  TextInput,
-  Text,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  Platform,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Autocomplete from 'react-native-autocomplete-input';
 
@@ -17,17 +8,11 @@ const { width, height } = Dimensions.get('window');
 const AddIngredientBar = ({ data, addIngredient, save, deleteIngredient, userData }) => {
   const [filteredIngredients, setFilteredIngredients] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
-  const [show, setShow] = useState(false);
 
   const filterIngred = (value) => {
     if (value) {
       const regex = new RegExp(`${value.trim()}`, 'i');
       setFilteredIngredients(data.filter((item) => item.name.search(regex) >= 0));
-      // setFilteredIngredients(
-      //   data.filter((item) => {
-      //     return item.name.toLowerCase().includes(value) || item.name.toLowerCase().includes(value);
-      //   }),
-      // );
     } else {
       setFilteredIngredients([]);
     }
@@ -37,9 +22,6 @@ const AddIngredientBar = ({ data, addIngredient, save, deleteIngredient, userDat
     <View style={styles.backgroundStyle}>
       <Autocomplete
         containerStyle={{
-          // position: 'relative',
-          // top: '20%',
-          // backgroundColor: 'purple',
           flex: 1,
           marginHorizontal: '7%',
         }}
@@ -49,28 +31,20 @@ const AddIngredientBar = ({ data, addIngredient, save, deleteIngredient, userDat
           borderRadius: 3,
         }}
         listStyle={{ maxHeight: height * 0.2, marginHorizontal: width * 0.015, zIndex: 1 }}
-        // listContainerStyle={{ backgroundColor: 'blue' }}
         data={filteredIngredients}
         defaultValue={selectedValue}
         onChangeText={(change) => {
-          // setShow(false);
           setSelectedValue(change);
           filterIngred(change);
         }}
         placeholder="   add your ingredient"
         keyExtractor={(item) => item.name}
         renderItem={({ item }) => {
-          // console.log(save.includes({ name: item.name }));
-          // console.log({ name: item.name } === save[0]);
-          // console.log(save[0]);
-          // console.log(save);
           return (
             <TouchableOpacity
               style={{
                 flexDirection: 'row',
                 borderWidth: 0.4,
-                // backgroundColor: save.includes(item.name) ? 'green' : 'white',
-                // backgroundColor: save.length !== 0 ? 'red' : 'green',
               }}
               onPress={() => {
                 if (save.includes(item.name)) {
@@ -78,7 +52,6 @@ const AddIngredientBar = ({ data, addIngredient, save, deleteIngredient, userDat
                   deleteIngredient(index);
                   setFilteredIngredients([]);
                   setSelectedValue('');
-                  // Alert.alert('Oops!', 'Ingredient Already in Inventory');
                 } else {
                   addIngredient(item.name);
                   setFilteredIngredients([]);
@@ -118,13 +91,10 @@ const AddIngredientBar = ({ data, addIngredient, save, deleteIngredient, userDat
 
 const styles = StyleSheet.create({
   backgroundStyle: {
-    // backgroundColor: 'red',
     flex: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
-    // alignItems: 'center',
-    // margin: height * 0.4,
     zIndex: 1,
   },
 

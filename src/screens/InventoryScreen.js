@@ -3,9 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  FlatList,
-  ListView,
-  FlexBox,
   ScrollView,
   Dimensions,
   StatusBar,
@@ -23,8 +20,6 @@ import ProfileModal from '../components/ProfileModal';
 const { width, height } = Dimensions.get('window');
 
 const Inventory = () => {
-  const [term, setTerm] = useState('');
-  const [onTermChange, setOntermChange] = useState('');
   const [arr, setArr] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [save, setSave] = useState(false);
@@ -32,7 +27,6 @@ const Inventory = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setTerm('hello');
     const getIngred = async () => {
       setLoading(true);
       const axiosInstance = await axiosWithToken();
@@ -106,7 +100,7 @@ const Inventory = () => {
                     style={{ marginVertical: height * 0.01, marginHorizontal: width * 0.07 }}
                     contentContainerStyle={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
                     {arr.map((item, num) => (
-                      <View key={num} style={styles.itemBox}>
+                      <View key={item.name} style={styles.itemBox}>
                         <Feather
                           style={styles.iconStyle}
                           name="minus"
@@ -135,15 +129,12 @@ const styles = StyleSheet.create({
   somecontainer: {
     flex: 1,
     backgroundColor: 'black',
-    // paddingBottom: height * 0.17,
-    // minHeight: Math.round(height),
   },
   box: {
     maxHeight: height * 0.5,
     borderWidth: 2,
     marginHorizontal: width * 0.07,
     borderRadius: 5,
-    // borderColor: '#DADADA',
   },
   pantryText: {
     marginLeft: width * 0.05,
@@ -160,7 +151,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FEF4D1',
     minHeight: Math.round(height),
-    // minHeight: Math.round(height),
   },
   lineLine: {
     flexDirection: 'row',
@@ -181,8 +171,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    // borderWidth: 1,
-    // borderColor: 'black',
     marginHorizontal: 3,
     marginVertical: 5,
   },

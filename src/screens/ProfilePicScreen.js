@@ -11,9 +11,7 @@ import {
   Button,
   ActivityIndicator,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
-import useSetIcon from '../hooks/useSetIcon';
 import axiosWithToken from '../api/axiosWithToken';
 import { setProfilePic } from '../actions/profilePic';
 
@@ -36,10 +34,8 @@ const ProfilePicScreen = ({ navigation }) => {
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('/icon');
 
-      // response.data.icon ? setProfilePicture(ICONDATA[response.data.icon].name) : null;
       if (response.data.icon) {
         dispatch(setProfilePic(response.data.icon));
-        // setProfilePicture(ICONDATA[response.data.icon].name);
       }
       setLoading(false);
     };
@@ -94,7 +90,6 @@ const ProfilePicScreen = ({ navigation }) => {
       name: require('../../images/profilepicicons/taco.png'),
     },
   ];
-  // <Image source={navigation.state.params.profilePicture} />;
   const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -116,10 +111,8 @@ const ProfilePicScreen = ({ navigation }) => {
         icon: index.toString(),
       });
       console.log(response);
-
-      // setLoading(false);
     } catch (err) {
-      // setErrorMessage('Something went wrong');
+      console.log(err);
     }
   };
   console.log(profilePicture);
@@ -137,7 +130,6 @@ const ProfilePicScreen = ({ navigation }) => {
         <Button
           onPress={async () => {
             storeIconFunction();
-            // await storeIcon(index.toString());
             navigation.navigate('DietaryRestrictions');
           }}
           title="NEXT"

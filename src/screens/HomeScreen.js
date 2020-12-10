@@ -16,15 +16,14 @@ import axiosWithToken from '../api/axiosWithToken';
 import ProfileModal from '../components/ProfileModal';
 import { addSavedRecipe } from '../actions/savedRecipes';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
-const HomeScreen = (props) => {
+const HomeScreen = () => {
   const dispatch = useDispatch();
   const [results, setResults] = useState('');
   const [loading, setLoading] = useState(false);
   const [proflileModalVisible, setProfileModalVisible] = useState(false);
   const reducerList = useSelector((state) => state.savedRecipeReducer.savedRecipeList);
-  const [test, setTest] = useState([]);
 
   useEffect(() => {
     const receiveRecipes = async () => {
@@ -98,7 +97,6 @@ const HomeScreen = (props) => {
             {displayList('Popular') ? (
               <RecipeList title="Popular!" results={filterResults('Popular')} />
             ) : null}
-            {/* <RecipeList title="Popular!" results={filterResults('Popular')} /> */}
           </ScrollView>
         </View>
       </View>
@@ -113,7 +111,6 @@ const styles = StyleSheet.create({
   somecontainer: {
     flex: 1,
     backgroundColor: 'black',
-    // paddingBottom: height * 0.17,
   },
   container: {
     flex: 1,

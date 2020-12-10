@@ -2,24 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector } from 'react-redux';
 import SearchBar from './SearchBar';
-import useSetToken from '../hooks/useSetToken';
-import ProfileModal from './ProfileModal';
-import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
 const TopMenu = ({
-  navigation,
   title,
   searchbar,
   term,
   onTermChange,
   onTermSubmit,
   onFilterSubmit,
-  profileIcon,
   onProfilePress,
 }) => {
   const [icon, setIcon] = useState();
@@ -27,16 +21,6 @@ const TopMenu = ({
   const temp = useSelector((state) => state.profilePicReducer.ICONDATA[i].name);
 
   useEffect(() => {
-    // const getProfileIcon = async () => {
-    //   // setLoading(true);
-    //   const axiosInstance = await axiosWithToken();
-    //   const response = await axiosInstance.post('/icon');
-    //   // console.log(response.data.icon);
-    //   // console.log(response);
-    //   response.data.icon ? setIcon(response.data.icon) : null;
-    // };
-    // getProfileIcon();
-    // console.log(useSelector((state) => state.profilePicReducer.ICONDATA[i].name));
     setIcon(temp);
   }, [temp]);
 
@@ -49,13 +33,10 @@ const TopMenu = ({
             onProfilePress(true);
           }}>
           <View style={styles.profilePicContainer}>
-            {/* <Image style={styles.profilePic} source={ICONDATA[icon].name} /> */}
             <Image style={styles.profilePic} source={icon} />
           </View>
         </TouchableOpacity>
       ) : null}
-      {/* {profileIcon ? <MaterialIcons name="face" size={24} color="black" /> : null} */}
-
       {title ? (
         <View style={styles.title}>
           <Text style={styles.titleText}>{title}</Text>

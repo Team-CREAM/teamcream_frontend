@@ -1,12 +1,12 @@
-// Android Client ID 1082251707964-3q24citcdtoeo8a7l1rapuc5v5ptvggd.apps.googleusercontent.com
-// IOS CLient ID 1082251707964-qu924lu7cj0hcbtu6t7ppq23nb3c9b43.apps.googleusercontent.com
-
 import React from 'react';
-import { StyleSheet, Text, Image, View, Alert, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, Image, View, Dimensions, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import * as Google from 'expo-google-app-auth';
-import * as Facebook from 'expo-facebook';
+import { useDispatch } from 'react-redux';
 import axiosWithoutToken from '../api/axiosWithoutToken';
+import axiosWithToken from '../api/axiosWithToken';
+import { setProfilePic } from '../actions/profilePic';
+
 import useSetToken from '../hooks/useSetToken';
 
 const dimensions = Dimensions.get('window');
@@ -15,6 +15,7 @@ const { height } = dimensions;
 
 const OAuth = ({ navigation }) => {
   const [storeToken] = useSetToken();
+  const dispatch = useDispatch();
 
   const signInGoogle = async () => {
     // Init Google
@@ -37,7 +38,7 @@ const OAuth = ({ navigation }) => {
           .post('/google', {
             email: user.email,
           })
-          .then(function (response) {
+          .then(async (response) => {
             // console.log(response.data);
             if (response.data.token) {
               console.log('Axios google worked', response.data.token);
@@ -45,7 +46,16 @@ const OAuth = ({ navigation }) => {
               storeToken(response.data.token);
 
               console.log('before');
-              response.data.new ? navigation.navigate('ProfilePic') : navigation.navigate('Home');
+              if (response.data.new) {
+                navigation.navigate('ProfilePic');
+              } else {
+                const axiosInstance = await axiosWithToken();
+                const response = await axiosInstance.post('/icon');
+                if (response.data.icon) {
+                  dispatch(setProfilePic(response.data.icon));
+                }
+                navigation.navigate('Home');
+              }
 
               console.log('after');
             }

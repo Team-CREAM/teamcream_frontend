@@ -18,55 +18,27 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { addSavedRecipe, removeSavedRecipe } from '../actions/savedRecipes';
 import axiosWithToken from '../api/axiosWithToken';
 
-// import retrieveRecipes from '../hooks/retrieveRecipes';
-
 const { width, height } = Dimensions.get('window');
 
 const RecipeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  //   const [results, errorMessage] = retrieveRecipes();
   const { id, previousScreen } = navigation.state.params;
-  console.log(id);
-  // const [value, setValue] = useState('');
   const [recipe, setRecipe] = useState('');
   const [saved, setSaved] = useState(false);
 
-  // TODO call axios request
   useEffect(() => {
     const getRecipe = async () => {
-      // setLoading(true);
-
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('/recipeClicked', {
         recipe: id,
       });
-
       setRecipe(response.data.Recipe);
       setSaved(response.data.saved);
-
-      // FIgure this out later
-      // const response2 = await axios
-      //   .create({
-      //     baseURL: 'https://api.spoonacular.com/recipes',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //   })
-      //   .get(`/${response.data.Recipe.id}/information`, {
-      //     params: {
-      //       apiKey: '2b0715ea3ed94024a9bc6afc798e46ba',
-      //     },
-      //   });
-
-      // setRecipe(response2.data);
-      // console.log(response2);
     };
-
-    // setValue(val);
     getRecipe();
   }, []);
 
-  const youClickedMe = async () => {
+  const clickedHeart = async () => {
     if (!saved) {
       setSaved(!saved);
       dispatch(addSavedRecipe(recipe));
@@ -105,27 +77,13 @@ const RecipeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barstyle="light-content" />
-
       <View
         style={{
-          // position: 'absolute',
-          // top: 5,
-          // left: 5,
           paddingBottom: 10,
-          // marginBottom: 20,
           zIndex: 1,
           width,
           backgroundColor: '#FEF4D1',
         }}>
-        {/* <AntDesign
-          style={{ marginLeft: 10 }}
-          name="back"
-          size={40}
-          color="black"
-          onPress={() => {
-            goBack();
-          }}
-        /> */}
         <Ionicons
           name="md-arrow-round-back"
           size={35}
@@ -140,20 +98,17 @@ const RecipeScreen = ({ navigation }) => {
       <StatusBar barstyle="light-content" />
       {recipe ? (
         <ScrollView contentContainerStyle={styles.scrollView}>
-          {/* Area for title */}
           <View style={styles.topBar}>
-            {/* Title Goes Here */}
             <Text style={styles.title}> {recipe.title} </Text>
             {saved ? (
-              <TouchableOpacity onPress={() => youClickedMe()}>
+              <TouchableOpacity onPress={() => clickedHeart()}>
                 <AntDesign name="heart" size={24} color="red" />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={() => youClickedMe()}>
+              <TouchableOpacity onPress={() => clickedHeart()}>
                 <AntDesign name="hearto" size={24} color="black" />
               </TouchableOpacity>
             )}
-            {/* Prep Time, Servings, and Likes Go Here */}
             <View style={styles.titleDescription}>
               <Text>Prep Time: </Text>
               <Text>{recipe.readyinMinutes}</Text>
@@ -165,13 +120,11 @@ const RecipeScreen = ({ navigation }) => {
               <Text> Likes: </Text>
               <Text>{recipe.aggregateLikes}</Text>
             </View>
-            {/* Dividing Line Goes Here */}
             <View style={styles.lineContainer}>
               <View style={styles.lineStyle} />
             </View>
           </View>
 
-          {/* The recipe image */}
           <View style={{ alignItems: 'center' }}>
             <Image style={styles.image} source={{ uri: recipe.image }} />
           </View>
@@ -180,7 +133,6 @@ const RecipeScreen = ({ navigation }) => {
               <View style={styles.lineStyle} />
             </View>
           </View>
-          {/* Area for the ingredients */}
           <View style={styles.parentInstructions}>
             {recipe.extendedIngredients ? (
               <View style={styles.ingredients}>
@@ -192,12 +144,8 @@ const RecipeScreen = ({ navigation }) => {
                       key={item.id}
                       style={{
                         flexDirection: 'row',
-                        // backgroundColor: 'red',
-                        // marginBottom: 5,
-                        // alignContent: 'center',
                         alignItems: 'center',
                       }}>
-                      {/* <Text style={{s}}>{'\u2022'}</Text> */}
                       <Entypo name="dot-single" size={24} color="black" style={{ marginTop: 1 }} />
                       <Text>{item.name}</Text>
                     </View>
@@ -206,7 +154,6 @@ const RecipeScreen = ({ navigation }) => {
               </View>
             ) : null}
 
-            {/* Area for the instructions */}
             {recipe.analyzedInstructions[0] ? (
               <View style={styles.instructions}>
                 <View style={{ marginLeft: '10%' }}>
@@ -228,8 +175,6 @@ const RecipeScreen = ({ navigation }) => {
                 </View>
               </View>
             ) : null}
-
-            {/* <HTML html={recipe.instructions} imagesMaxWidth={Dimensions.get('window').width} /> */}
           </View>
         </ScrollView>
       ) : null}
@@ -241,21 +186,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
-    // justifyContent: 'center',
     alignItems: 'center',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    // paddingBottom: height * 0.17,
   },
   scrollView: {
-    // marginHorizontal: '5%',
-    // marginTop: 20,
     flexGrow: 1,
     justifyContent: 'center',
     paddingBottom: '20%',
     paddingTop: 20,
   },
   topBar: {
-    // marginTop: height * 0.01,
     alignItems: 'center',
   },
   title: {
@@ -274,7 +214,7 @@ const styles = StyleSheet.create({
   },
   parentInstructions: {
     flex: 1,
-    alignItems: 'flex-start', // if you want to fill rows left to right
+    alignItems: 'flex-start',
   },
   ingredients: {
     width: '100%',

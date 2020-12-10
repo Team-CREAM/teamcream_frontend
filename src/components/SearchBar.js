@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TextInput, StyleSheet, Dimensions } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const SearchBar = ({ term, onTermChange, onTermSubmit }) => {
   return (

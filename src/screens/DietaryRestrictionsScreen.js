@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Button } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import axiosWithoutToken from '../api/axiosWithoutToken';
 import axiosWithToken from '../api/axiosWithToken';
 
 const dimensions = Dimensions.get('window');
@@ -68,12 +67,10 @@ const DietaryRestrictions = ({ navigation, route }) => {
       setError('');
     }, 5000);
   };
+
   const buttonColor = Platform.OS === 'ios' ? '#ffffff' : '#D9B580';
 
   return (
-    // this is how to get profilepic from previous screen
-    //  <Image source={navigation.state.params.profilePicture} />
-    // or <Image source={navigation.getParam('profilePicture')} />
     <View style={styles.canvas}>
       {/* Header: please select all that Apply */}
       <View style={{ top: height * 0.15 }}>
@@ -141,12 +138,7 @@ const DietaryRestrictions = ({ navigation, route }) => {
             shadowOpacity: 0.3,
             shadowOffset: { height: 4 },
           }}>
-          <Button
-            // style={styles.button}
-            title="confirm"
-            color={buttonColor}
-            onPress={() => DietaryRestrictionsAxios()}
-          />
+          <Button title="confirm" color={buttonColor} onPress={() => DietaryRestrictionsAxios()} />
         </TouchableOpacity>
       </View>
     </View>

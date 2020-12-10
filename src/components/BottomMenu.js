@@ -9,13 +9,9 @@ const { width, height } = Dimensions.get('window');
 
 const BottomMenu = ({ navigation, data, save }) => {
   const { routeName } = navigation.state;
-  // console.log(routeName);
 
   const saveInventory = async () => {
-    // console.log(data);
-
     const revisedData = data.map((item) => item.name);
-    // console.log(hello);
     const axiosInstance = await axiosWithToken();
     const response = await axiosInstance
       .post('/inventory', { ingredients: revisedData })
@@ -23,6 +19,7 @@ const BottomMenu = ({ navigation, data, save }) => {
         console.log('inventory updated');
       });
   };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -59,7 +56,7 @@ const BottomMenu = ({ navigation, data, save }) => {
           Home
         </Text>
       </TouchableOpacity>
-      {/* TODO: Change This to Inventory */}
+
       <TouchableOpacity style={styles.menuItem} onPress={() => navigation.replace('Inventory')}>
         <MaterialCommunityIcons
           name="fridge-outline"

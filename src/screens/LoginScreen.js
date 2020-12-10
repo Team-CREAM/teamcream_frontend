@@ -39,10 +39,16 @@ const SignIn = ({ navigation }) => {
         email,
         password,
       })
-      .then(function (response) {
+      .then(async (response) => {
         setLoading(false);
         if (response.data.token) {
           storeToken(response.data.token);
+
+          const axiosInstance = await axiosWithToken();
+          const response2 = await axiosInstance.post('/icon');
+          if (response2.data.icon) {
+            dispatch(setProfilePic(response2.data.icon));
+          }
           navigation.navigate('Home');
         }
 
