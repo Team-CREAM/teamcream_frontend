@@ -1,4 +1,4 @@
-import { SET_PROFILE_PIC } from '../actions/types';
+import { SET_PROFILE_PIC } from '../actions/actionTypes';
 
 const initialState = {
   ICONDATA: [

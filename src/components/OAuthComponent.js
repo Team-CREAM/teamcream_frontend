@@ -5,7 +5,7 @@ import * as Google from 'expo-google-app-auth';
 import { useDispatch } from 'react-redux';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 import axiosWithToken from '../api/axiosWithToken';
-import { setProfilePic } from '../actions/profilePic';
+import { setProfilePic } from '../actions/actionProfilePic';
 
 import useSetToken from '../hooks/useSetToken';
 

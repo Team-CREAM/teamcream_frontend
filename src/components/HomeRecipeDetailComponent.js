@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { View, Image, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import heartIcon from 'react-native-vector-icons/AntDesign';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import axiosWithToken from '../api/axiosWithToken';
-import { addSavedRecipe, removeSavedRecipe } from '../actions/savedRecipes';
+import { addSavedRecipe, removeSavedRecipe } from '../actions/actionSavedRecipes';
 
 const { width, height } = Dimensions.get('window');
 

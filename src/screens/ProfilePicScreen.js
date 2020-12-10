@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import axiosWithToken from '../api/axiosWithToken';
-import { setProfilePic } from '../actions/profilePic';
+import { setProfilePic } from '../actions/actionProfilePic';
 
 const dimensions = Dimensions.get('window');
 const { width } = dimensions;

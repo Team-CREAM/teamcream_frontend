@@ -11,12 +11,12 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import RecipeDetail from '../components/RecipeDetail_R';
-import BottomMenu from '../components/BottomMenu';
-import TopMenu from '../components/TopMenu';
+import RecipeDetail from '../components/SavedRecipeDetailComponent';
+import BottomMenu from '../components/BottomMenuComponent';
+import TopMenu from '../components/TopMenuComponent';
 import axiosWithToken from '../api/axiosWithToken';
-import { addSavedRecipe } from '../actions/savedRecipes';
-import ProfileModal from '../components/ProfileModal';
+import { addSavedRecipe } from '../actions/actionSavedRecipes';
+import ProfileModal from '../components/ProfileComponent';
 
 const { height } = Dimensions.get('window');
 

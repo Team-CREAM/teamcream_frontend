@@ -15,7 +15,7 @@ import { FontAwesome, AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { addSavedRecipe, removeSavedRecipe } from '../actions/savedRecipes';
+import { addSavedRecipe, removeSavedRecipe } from '../actions/actionSavedRecipes';
 import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');

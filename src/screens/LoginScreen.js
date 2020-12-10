@@ -13,9 +13,9 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
-import { setProfilePic } from '../actions/profilePic';
+import { setProfilePic } from '../actions/actionProfilePic';
 import useSetToken from '../hooks/useSetToken';
-import OAuth from '../components/OAuth';
+import OAuth from '../components/OAuthComponent';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 import axiosWithToken from '../api/axiosWithToken';
 import useValidation from '../hooks/useValidation';

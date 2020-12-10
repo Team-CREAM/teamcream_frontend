@@ -10,7 +10,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import OAuth from '../components/OAuth';
+import OAuth from '../components/OAuthComponent';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 import useValidation from '../hooks/useValidation';
 import useSetToken from '../hooks/useSetToken';

@@ -3,7 +3,7 @@ import { View, Image, Text, StyleSheet, Dimensions, TouchableOpacity } from 'rea
 import { AntDesign } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import axiosWithToken from '../api/axiosWithToken';
-import { removeSavedRecipe } from '../actions/savedRecipes';
+import { removeSavedRecipe } from '../actions/actionSavedRecipes';
 
 const { width, height } = Dimensions.get('window');
 

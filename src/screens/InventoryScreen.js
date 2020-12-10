@@ -11,11 +11,11 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import TopMenu from '../components/TopMenu';
-import AddIngredientBar from '../components/AddIngredientBar';
-import BottomMenu from '../components/BottomMenu';
+import TopMenu from '../components/TopMenuComponent';
+import AddIngredientBar from '../components/IngredientSearchComponent';
+import BottomMenu from '../components/BottomMenuComponent';
 import axiosWithToken from '../api/axiosWithToken';
-import ProfileModal from '../components/ProfileModal';
+import ProfileModal from '../components/ProfileComponent';
 
 const { width, height } = Dimensions.get('window');
 

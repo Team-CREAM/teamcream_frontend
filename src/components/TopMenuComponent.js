@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'rea
 import { MaterialIcons } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
 import { useSelector } from 'react-redux';
-import SearchBar from './SearchBar';
+import SearchBar from './SearchBarComponent';
 
 const { width, height } = Dimensions.get('window');
 

@@ -1,4 +1,4 @@
-import { SET_PROFILE_PIC } from './types';
+import { SET_PROFILE_PIC } from './actionTypes';
 
 export const setProfilePic = (image) => ({
   type: SET_PROFILE_PIC,

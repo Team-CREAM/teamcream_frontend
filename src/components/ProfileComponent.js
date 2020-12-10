@@ -4,8 +4,8 @@ import { withNavigation } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import useSetToken from '../hooks/useSetToken';
-import { clearSavedRecipes } from '../actions/savedRecipes';
-import { setProfilePic } from '../actions/profilePic';
+import { clearSavedRecipes } from '../actions/actionSavedRecipes';
+import { setProfilePic } from '../actions/actionProfilePic';
 
 const { height } = Dimensions.get('window');
 

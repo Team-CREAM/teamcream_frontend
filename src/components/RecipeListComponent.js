@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import RecipeDetail from './RecipeDetail_home';
+import RecipeDetail from './HomeRecipeDetailComponent';
 
 const RecipeList = ({ title, results, navigation }) => {
   if (!results) {

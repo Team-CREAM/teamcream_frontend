@@ -15,10 +15,10 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
-import TopMenu from '../components/TopMenu';
-import BottomMenu from '../components/BottomMenu';
+import TopMenu from '../components/TopMenuComponent';
+import BottomMenu from '../components/BottomMenuComponent';
 import useExplore from '../hooks/useExplore';
-import ProfileModal from '../components/ProfileModal';
+import ProfileModal from '../components/ProfileComponent';
 
 const { width } = Dimensions.get('window');
 
