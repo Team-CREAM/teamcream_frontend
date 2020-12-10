@@ -11,48 +11,41 @@ import {
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
 import TopMenu from '../components/TopMenuComponent';
 import AddIngredientBar from '../components/IngredientSearchComponent';
 import BottomMenu from '../components/BottomMenuComponent';
 import axiosWithToken from '../api/axiosWithToken';
 import ProfileModal from '../components/ProfileComponent';
+import { storeIngredients, addPantryItem, removePantryItem } from '../actions/actionInventory';
 
 const { width, height } = Dimensions.get('window');
 
 const Inventory = () => {
-  const [arr, setArr] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
   const [save, setSave] = useState(false);
   const [proflileModalVisible, setProfileModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const ingredientsRedux = useSelector((state) => state.inventoryReducer.ingredients);
+  const pantryRedux = useSelector((state) => state.inventoryReducer.pantry);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getIngred = async () => {
       setLoading(true);
       const axiosInstance = await axiosWithToken();
-      const responseIngredients = await axiosInstance.get('/allIngredients');
-      const responseInventory = await axiosInstance.get('/inventory');
-      const newInventory = responseInventory.data.map((item) => ({ name: item.name }));
-      setIngredients(responseIngredients.data);
-      setArr(newInventory);
+      if (ingredientsRedux.length === 0) {
+        const responseIngredients = await axiosInstance.get('/allIngredients');
+        dispatch(storeIngredients(responseIngredients.data));
+      }
+      if (pantryRedux.length === 0) {
+        const responseInventory = await axiosInstance.get('/inventory');
+        responseInventory.data.map((item) => dispatch(addPantryItem({ name: item.name })));
+      }
       setLoading(false);
     };
     getIngred();
     return;
   }, []);
-
-  const deleteElement = (key) => {
-    const arr2 = [...arr];
-    arr2.splice(key, 1);
-    setArr(arr2);
-    setSave(true);
-  };
-  const addIngredient = (name) => {
-    const arr2 = [...arr];
-    arr2.push({ name });
-    setArr(arr2);
-    setSave(true);
-  };
 
   return (
     <SafeAreaView style={styles.somecontainer}>
@@ -66,13 +59,7 @@ const Inventory = () => {
         {loading ? null : (
           <View>
             <View style={{ zIndex: 1, marginTop: '10%', marginBottom: '7%' }}>
-              <AddIngredientBar
-                data={ingredients}
-                addIngredient={addIngredient}
-                save={arr.map((i) => i.name)}
-                deleteIngredient={deleteElement}
-                userData={arr}
-              />
+              <AddIngredientBar save={pantryRedux.map((i) => i.name)} setRefresh={setSave} />
             </View>
 
             <View style={styles.box}>
@@ -82,13 +69,13 @@ const Inventory = () => {
               <Text style={styles.pantryText}>Your Pantry</Text>
               <Text style={styles.numIngred}>
                 {/* need to change this to the array length that gets from axios request8 */}
-                {arr.length} ingredients
+                {pantryRedux.length} ingredients
               </Text>
               <View style={styles.lineLine}>
                 <View style={styles.line} />
               </View>
 
-              {arr.length === 0 ? (
+              {pantryRedux.length === 0 ? (
                 <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
                   Your Ingredients will be here
                 </Text>
@@ -99,13 +86,13 @@ const Inventory = () => {
                     bounces={false}
                     style={{ marginVertical: height * 0.01, marginHorizontal: width * 0.07 }}
                     contentContainerStyle={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-                    {arr.map((item, num) => (
+                    {pantryRedux.map((item, num) => (
                       <View key={item.name} style={styles.itemBox}>
                         <Feather
                           style={styles.iconStyle}
                           name="minus"
                           onPress={() => {
-                            deleteElement(num);
+                            dispatch(removePantryItem(pantryRedux[num]));
                           }}
                         />
                         <Text>{item.name}</Text>
@@ -119,7 +106,7 @@ const Inventory = () => {
         )}
       </View>
       <KeyboardAvoidingView style={styles.bottomMenu}>
-        <BottomMenu data={arr} save={save} />
+        <BottomMenu save={save} />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
