@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
-import { addSavedRecipe } from '../actions/savedRecipes';
+import { setProfilePic } from '../actions/profilePic';
 import useSetToken from '../hooks/useSetToken';
 import OAuth from '../components/OAuth';
 import axiosWithoutToken from '../api/axiosWithoutToken';
@@ -30,6 +30,7 @@ const SignIn = ({ navigation }) => {
   const [focus2, setFocus2] = useState(false);
   const [validateInputs] = useValidation();
   const [storeToken] = useSetToken();
+  const dispatch = useDispatch();
 
   const SignInAxios = async () => {
     setLoading(true);
@@ -78,7 +79,15 @@ const SignIn = ({ navigation }) => {
     const alreadySignedIn = async () => {
       setLoading(true);
       const token = await AsyncStorage.getItem('@token');
-      token ? navigation.navigate('Home') : null;
+      // token ? navigation.navigate('Home') : null;
+      if (token) {
+        const axiosInstance = await axiosWithToken();
+        const response = await axiosInstance.post('/icon');
+        if (response.data.icon) {
+          dispatch(setProfilePic(response.data.icon));
+        }
+        navigation.navigate('Home');
+      }
       setLoading(false);
     };
 

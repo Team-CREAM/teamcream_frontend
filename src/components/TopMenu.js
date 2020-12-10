@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'rea
 import { MaterialIcons } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 import SearchBar from './SearchBar';
 import useSetToken from '../hooks/useSetToken';
 import ProfileModal from './ProfileModal';
@@ -21,68 +22,23 @@ const TopMenu = ({
   profileIcon,
   onProfilePress,
 }) => {
-  const [storeToken] = useSetToken();
-  const ICONDATA = [
-    {
-      name: require('../../images/profilepicicons/bento_box.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/burger.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/chef_hat.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/chips.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/coffee.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/donut.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/food_truck.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/fork.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/hotdog.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/icecream.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/ketchup.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/popcorn.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/rice.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/soda.png'),
-    },
-    {
-      name: require('../../images/profilepicicons/taco.png'),
-    },
-  ];
-  const [icon, setIcon] = useState('0');
+  const [icon, setIcon] = useState();
+  const i = useSelector((state) => state.profilePicReducer.profileImage);
+  const temp = useSelector((state) => state.profilePicReducer.ICONDATA[i].name);
 
   useEffect(() => {
-    const getProfileIcon = async () => {
-      // setLoading(true);
-      const axiosInstance = await axiosWithToken();
-      const response = await axiosInstance.post('/icon');
-      // console.log(response.data.icon);
-      // console.log(response);
-
-      response.data.icon ? setIcon(response.data.icon) : null;
-    };
-    getProfileIcon();
-  }, []);
+    // const getProfileIcon = async () => {
+    //   // setLoading(true);
+    //   const axiosInstance = await axiosWithToken();
+    //   const response = await axiosInstance.post('/icon');
+    //   // console.log(response.data.icon);
+    //   // console.log(response);
+    //   response.data.icon ? setIcon(response.data.icon) : null;
+    // };
+    // getProfileIcon();
+    // console.log(useSelector((state) => state.profilePicReducer.ICONDATA[i].name));
+    setIcon(temp);
+  }, [temp]);
 
   return (
     <View style={styles.container}>
@@ -93,7 +49,8 @@ const TopMenu = ({
             onProfilePress(true);
           }}>
           <View style={styles.profilePicContainer}>
-            <Image style={styles.profilePic} source={ICONDATA[icon].name} />
+            {/* <Image style={styles.profilePic} source={ICONDATA[icon].name} /> */}
+            <Image style={styles.profilePic} source={icon} />
           </View>
         </TouchableOpacity>
       ) : null}
