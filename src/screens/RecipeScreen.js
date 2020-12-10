@@ -139,9 +139,9 @@ const RecipeScreen = ({ navigation }) => {
                 <Text style={styles.header}>Ingredients</Text>
                 <FlatList
                   data={recipe.extendedIngredients}
+                  keyExtractor={(item) => item.id}
                   renderItem={({ item }) => (
                     <View
-                      key={item.id}
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -160,10 +160,9 @@ const RecipeScreen = ({ navigation }) => {
                   <Text style={styles.header}>Instructions</Text>
                   <FlatList
                     data={recipe.analyzedInstructions[0].steps}
+                    keyExtractor={(item) => item.number}
                     renderItem={({ item }) => (
-                      <View
-                        key={item.number}
-                        style={{ flexDirection: 'row', paddingRight: width * 0.2 }}>
+                      <View style={{ flexDirection: 'row', paddingRight: width * 0.2 }}>
                         <Text>{`${item.number}. `}</Text>
                         <Text>
                           {item.step}

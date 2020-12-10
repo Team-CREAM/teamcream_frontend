@@ -128,7 +128,7 @@ const ExploreScreen = ({ navigation }) => {
           </View>
           {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
           {searchResults < 1 && !loading ? (
-            <Text style={{ fontSize: 32 }}>Add ingredients to inventory...</Text>
+            <Text style={{ fontSize: 16, textAlign: 'center' }}>No results found..</Text>
           ) : null}
           <FlatList
             columnWrapperStyle={{ flexWrap: 'wrap', flex: 1, marginTop: 2, marginLeft: 4 }}

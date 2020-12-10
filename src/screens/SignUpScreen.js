@@ -29,6 +29,7 @@ const SignUp = ({ navigation }) => {
   const [validateInputs] = useValidation();
   const [storeToken] = useSetToken();
 
+  // On Click event helper function
   const SignUpAxios = async () => {
     setLoading(true);
     await axiosWithoutToken
@@ -53,6 +54,7 @@ const SignUp = ({ navigation }) => {
       });
   };
 
+  // Validate inputs helper function
   const validateSubmit = () => {
     const [isValidated, error] = validateInputs('Signup', email, password, conPassword);
     if (isValidated) {
@@ -62,6 +64,7 @@ const SignUp = ({ navigation }) => {
     }
   };
 
+  // Handle Error helper function
   const errorHandle = (err) => {
     setError(err);
     setEmail('');
