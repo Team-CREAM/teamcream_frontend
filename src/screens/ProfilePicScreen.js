@@ -12,16 +12,20 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
 import useSetIcon from '../hooks/useSetIcon';
 import axiosWithToken from '../api/axiosWithToken';
+import { setProfilePic } from '../actions/profilePic';
 
 const dimensions = Dimensions.get('window');
 const { width } = dimensions;
 const { height } = dimensions;
 
 const ProfilePicScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const i = useSelector((state) => state.profilePicReducer.profileImage);
   const [profilePicture, setProfilePicture] = useState(
-    require('../../images/profilepicicons/bento_box.png'),
+    useSelector((state) => state.profilePicReducer.ICONDATA[i].name),
   );
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -31,9 +35,12 @@ const ProfilePicScreen = ({ navigation }) => {
       setLoading(true);
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('/icon');
-      console.log(response.data.icon);
 
-      response.data.icon ? setProfilePicture(ICONDATA[response.data.icon].name) : null;
+      // response.data.icon ? setProfilePicture(ICONDATA[response.data.icon].name) : null;
+      if (response.data.icon) {
+        dispatch(setProfilePic(response.data.icon));
+        // setProfilePicture(ICONDATA[response.data.icon].name);
+      }
       setLoading(false);
     };
     getProfileIcon();
@@ -102,6 +109,7 @@ const ProfilePicScreen = ({ navigation }) => {
   };
 
   const storeIconFunction = async () => {
+    dispatch(setProfilePic(index));
     try {
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./icon', {
@@ -114,7 +122,7 @@ const ProfilePicScreen = ({ navigation }) => {
       // setErrorMessage('Something went wrong');
     }
   };
-
+  console.log(profilePicture);
   return (
     <View style={styles.canvas}>
       {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
