@@ -3,15 +3,17 @@ import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-nati
 import { Entypo, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useSelector } from 'react-redux';
 import axiosWithToken from '../api/axiosWithToken';
 
 const { width, height } = Dimensions.get('window');
 
 const BottomMenu = ({ navigation, data, save }) => {
   const { routeName } = navigation.state;
+  const pantryRedux = useSelector((state) => state.inventoryReducer.pantry);
 
   const saveInventory = async () => {
-    const revisedData = data.map((item) => item.name);
+    const revisedData = pantryRedux.map((item) => item.name);
     const axiosInstance = await axiosWithToken();
     const response = await axiosInstance
       .post('/inventory', { ingredients: revisedData })

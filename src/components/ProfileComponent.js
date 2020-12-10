@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import useSetToken from '../hooks/useSetToken';
 import { clearSavedRecipes } from '../actions/actionSavedRecipes';
 import { setProfilePic } from '../actions/actionProfilePic';
+import { clearPantry } from '../actions/actionInventory';
 
 const { height } = Dimensions.get('window');
 
@@ -38,6 +39,7 @@ const ProfileModal = ({ navigation, isVisible }) => {
               dispatch(setProfilePic(0));
               isVisible(false);
               storeToken('');
+              dispatch(clearPantry());
               dispatch(clearSavedRecipes());
               navigation.replace('Login');
             }}>

@@ -2,22 +2,42 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Autocomplete from 'react-native-autocomplete-input';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPantryItem, removePantryItem } from '../actions/actionInventory';
 
 const { width, height } = Dimensions.get('window');
 
-const AddIngredientBar = ({ data, addIngredient, save, deleteIngredient, userData }) => {
+// const AddIngredientBar = ({ ingredientRedux, addIngredient, save, deleteIngredient }) => {
+const AddIngredientBar = ({ save, setRefresh }) => {
   const [filteredIngredients, setFilteredIngredients] = useState([]);
   const [selectedValue, setSelectedValue] = useState('');
+  const ingredientsRedux = useSelector((state) => state.inventoryReducer.ingredients);
+  const pantryRedux = useSelector((state) => state.inventoryReducer.pantry);
+  const dispatch = useDispatch();
 
   const filterIngred = (value) => {
     if (value) {
       const regex = new RegExp(`${value.trim()}`, 'i');
-      setFilteredIngredients(data.filter((item) => item.name.search(regex) >= 0));
+      setFilteredIngredients(ingredientsRedux.filter((item) => item.name.search(regex) >= 0));
     } else {
       setFilteredIngredients([]);
     }
   };
-
+  const deleteIngredient = (key) => {
+    // const arr2 = [...arr];
+    // arr2.splice(key, 1);
+    // setArr(arr2);
+    console.log(pantryRedux[key]);
+    dispatch(removePantryItem(pantryRedux[key]));
+    setRefresh(true);
+  };
+  const addIngredient = (name) => {
+    // const arr2 = [...arr];
+    // arr2.push({ name });
+    // setArr(arr2);
+    dispatch(addPantryItem({ name }));
+    setRefresh(true);
+  };
   return (
     <View style={styles.backgroundStyle}>
       <Autocomplete
@@ -48,7 +68,11 @@ const AddIngredientBar = ({ data, addIngredient, save, deleteIngredient, userDat
               }}
               onPress={() => {
                 if (save.includes(item.name)) {
-                  const index = userData.indexOf({ name: item.name });
+                  console.log('This is pantryRedux ', pantryRedux);
+                  console.log({ name: item.name });
+                  // const index = userData.indexOf({ name: item.name });
+                  const index = pantryRedux.findIndex((p) => p.name === item.name);
+                  console.log('This is index', index);
                   deleteIngredient(index);
                   setFilteredIngredients([]);
                   setSelectedValue('');
