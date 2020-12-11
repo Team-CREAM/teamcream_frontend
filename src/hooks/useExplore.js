@@ -31,7 +31,7 @@ export default () => {
           sustainable: false,
         })
         .then(({ data }) => {
-          console.log(data);
+          // console.log(data);
           setResults(data);
           dispatch(setExploreRecipes(data));
         });
@@ -43,7 +43,7 @@ export default () => {
 
   useEffect(() => {
     if (results.length === 0) {
-      console.log('useffect');
+      // console.log('useffect');
       exploreSearch('', false, false, false, false, false);
     }
   }, []);
