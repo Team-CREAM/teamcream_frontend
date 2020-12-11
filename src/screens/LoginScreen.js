@@ -32,7 +32,7 @@ const SignIn = ({ navigation }) => {
   const [storeToken] = useSetToken();
   const dispatch = useDispatch();
 
-  const SignInAxios = async () => {
+  const LoginAxios = async () => {
     setLoading(true);
     await axiosWithoutToken
       .post('/login', {
@@ -65,7 +65,7 @@ const SignIn = ({ navigation }) => {
   const validateSubmit = () => {
     const [isValidated, error] = validateInputs('Login', email, password, '');
     if (isValidated) {
-      SignInAxios();
+      LoginAxios();
     }
     if (error) {
       errorHandle(error);

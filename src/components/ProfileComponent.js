@@ -7,6 +7,7 @@ import useSetToken from '../hooks/useSetToken';
 import { clearSavedRecipes } from '../actions/actionSavedRecipes';
 import { setProfilePic } from '../actions/actionProfilePic';
 import { clearPantry } from '../actions/actionInventory';
+import { setExploreRecipes } from '../actions/actionExplore';
 
 const { height } = Dimensions.get('window');
 
@@ -41,6 +42,8 @@ const ProfileModal = ({ navigation, isVisible }) => {
               storeToken('');
               dispatch(clearPantry());
               dispatch(clearSavedRecipes());
+              dispatch(setExploreRecipes(''));
+
               navigation.replace('Login');
             }}>
             <Text style={styles.textStyle}>Logout</Text>

@@ -12,8 +12,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import axiosWithToken from '../api/axiosWithToken';
 import { setProfilePic } from '../actions/actionProfilePic';
+import axiosWithToken from '../api/axiosWithToken';
 
 const dimensions = Dimensions.get('window');
 const { width } = dimensions;

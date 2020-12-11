@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axiosWithToken from '../api/axiosWithToken';
+import { setExploreRecipes } from '../actions/actionExplore';
 
 export default () => {
-  const [results, setResults] = useState([]);
+  const dispatch = useDispatch();
+  // const recipes = useSelector((state) => state.exploreReducer.recipes);
+  const [results, setResults] = useState(useSelector((state) => state.exploreReducer.recipes));
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -27,7 +31,9 @@ export default () => {
           sustainable: false,
         })
         .then(({ data }) => {
+          console.log(data);
           setResults(data);
+          dispatch(setExploreRecipes(data));
         });
       setLoading(false);
     } catch (err) {
@@ -36,7 +42,10 @@ export default () => {
   };
 
   useEffect(() => {
-    exploreSearch('', false, false, false, false, false);
+    if (results.length === 0) {
+      console.log('useffect');
+      exploreSearch('', false, false, false, false, false);
+    }
   }, []);
 
   return [exploreSearch, results, errorMessage, loading];
