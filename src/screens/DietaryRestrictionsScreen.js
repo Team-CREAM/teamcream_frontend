@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Button } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+  Button,
+  StatusBar,
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import axiosWithToken from '../api/axiosWithToken';
 
 const dimensions = Dimensions.get('window');
@@ -71,81 +80,92 @@ const DietaryRestrictions = ({ navigation, route }) => {
   const buttonColor = Platform.OS === 'ios' ? '#ffffff' : '#D9B580';
 
   return (
-    <View style={styles.canvas}>
-      {/* Header: please select all that Apply */}
-      <View style={{ top: height * 0.15 }}>
-        <Text style={styles.title}> Please Select All That Apply:</Text>
+    <SafeAreaView style={styles.somecontainer}>
+      <StatusBar barstyle="light-content" />
+      <View style={styles.canvas}>
+        {/* Header: please select all that Apply */}
+        <View style={{ top: height * 0.15 }}>
+          <Text style={styles.title}> Please Select All That Apply:</Text>
+        </View>
+
+        {/* Container of all the boxes */}
+        <View style={styles.container}>
+          {/* Header of the container "Dietary Restriction" */}
+          <Text style={styles.header}>Dietary Restrictions</Text>
+
+          {/* vegetarian box */}
+          <TouchableOpacity style={styles.boxes} onPress={() => setIsVegetarian(!vegetarian)}>
+            <Text style={styles.text}>Vegetarian?</Text>
+            <View style={styles.buttonBox}>
+              <MaterialIcons
+                name={vegetarian ? 'check-box' : 'check-box-outline-blank'}
+                size={24}
+                color="black"
+              />
+            </View>
+          </TouchableOpacity>
+
+          {/* dairy-free box */}
+          <TouchableOpacity style={styles.boxes} onPress={() => setIsDairyfree(!dairyFree)}>
+            <Text style={styles.text}>Dairy-free?</Text>
+            <View style={styles.buttonBox}>
+              <MaterialIcons
+                name={dairyFree ? 'check-box' : 'check-box-outline-blank'}
+                size={24}
+                color="black"
+              />
+            </View>
+          </TouchableOpacity>
+
+          {/* vegan box */}
+          <TouchableOpacity style={styles.boxes} onPress={() => setIsVegan(!vegan)}>
+            <Text style={styles.text}>Vegan?</Text>
+            <View style={styles.buttonBox}>
+              <MaterialIcons
+                name={vegan ? 'check-box' : 'check-box-outline-blank'}
+                size={24}
+                color="black"
+              />
+            </View>
+          </TouchableOpacity>
+
+          {/* gluten-free box */}
+          <TouchableOpacity style={styles.boxes} onPress={() => setIsGlutenfree(!glutenFree)}>
+            <Text style={styles.text}>Gluten-free?</Text>
+            <View style={styles.buttonBox}>
+              <MaterialIcons
+                name={glutenFree ? 'check-box' : 'check-box-outline-blank'}
+                size={24}
+                color="black"
+              />
+            </View>
+          </TouchableOpacity>
+          {/* Confirm Button */}
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#D9B580',
+              shadowRadius: 2,
+              shadowColor: 'black',
+              shadowOpacity: 0.3,
+              shadowOffset: { height: 4 },
+            }}>
+            <Button
+              title="confirm"
+              color={buttonColor}
+              onPress={() => DietaryRestrictionsAxios()}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-
-      {/* Container of all the boxes */}
-      <View style={styles.container}>
-        {/* Header of the container "Dietary Restriction" */}
-        <Text style={styles.header}>Dietary Restrictions</Text>
-
-        {/* vegetarian box */}
-        <TouchableOpacity style={styles.boxes} onPress={() => setIsVegetarian(!vegetarian)}>
-          <Text style={styles.text}>Vegetarian?</Text>
-          <View style={styles.buttonBox}>
-            <MaterialIcons
-              name={vegetarian ? 'check-box' : 'check-box-outline-blank'}
-              size={24}
-              color="black"
-            />
-          </View>
-        </TouchableOpacity>
-
-        {/* dairy-free box */}
-        <TouchableOpacity style={styles.boxes} onPress={() => setIsDairyfree(!dairyFree)}>
-          <Text style={styles.text}>Dairy-free?</Text>
-          <View style={styles.buttonBox}>
-            <MaterialIcons
-              name={dairyFree ? 'check-box' : 'check-box-outline-blank'}
-              size={24}
-              color="black"
-            />
-          </View>
-        </TouchableOpacity>
-
-        {/* vegan box */}
-        <TouchableOpacity style={styles.boxes} onPress={() => setIsVegan(!vegan)}>
-          <Text style={styles.text}>Vegan?</Text>
-          <View style={styles.buttonBox}>
-            <MaterialIcons
-              name={vegan ? 'check-box' : 'check-box-outline-blank'}
-              size={24}
-              color="black"
-            />
-          </View>
-        </TouchableOpacity>
-
-        {/* gluten-free box */}
-        <TouchableOpacity style={styles.boxes} onPress={() => setIsGlutenfree(!glutenFree)}>
-          <Text style={styles.text}>Gluten-free?</Text>
-          <View style={styles.buttonBox}>
-            <MaterialIcons
-              name={glutenFree ? 'check-box' : 'check-box-outline-blank'}
-              size={24}
-              color="black"
-            />
-          </View>
-        </TouchableOpacity>
-        {/* Confirm Button */}
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#D9B580',
-            shadowRadius: 2,
-            shadowColor: 'black',
-            shadowOpacity: 0.3,
-            shadowOffset: { height: 4 },
-          }}>
-          <Button title="confirm" color={buttonColor} onPress={() => DietaryRestrictionsAxios()} />
-        </TouchableOpacity>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  somecontainer: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
   canvas: {
     flex: 1,
     backgroundColor: '#fef4d1',

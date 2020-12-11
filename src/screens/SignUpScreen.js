@@ -9,7 +9,9 @@ import {
   Button,
   Dimensions,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import OAuth from '../components/OAuthComponent';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 import useValidation from '../hooks/useValidation';
@@ -77,80 +79,87 @@ const SignUp = ({ navigation }) => {
   const buttonColor = Platform.OS === 'ios' ? '#ffffff' : '#D9B580';
 
   return (
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image
-          resizeMode="contain"
-          style={styles.logoStyle}
-          source={require('../../images/crumbs_logo2.png')}
+    <SafeAreaView style={styles.somecontainer}>
+      <StatusBar barstyle="light-content" />
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Image
+            resizeMode="contain"
+            style={styles.logoStyle}
+            source={require('../../images/crumbs_logo2.png')}
+          />
+        </View>
+        <Text style={styles.SignUpText}>Email Sign-Up</Text>
+        {Platform.OS === 'ios' ? <View style={styles.line} /> : null}
+        <TextInput
+          returnKeyType="next"
+          keyboardType="email-address"
+          style={styles.textInputStyle}
+          placeholder=" Enter email or username"
+          value={email}
+          onChangeText={(newTerm) => {
+            setEmail(newTerm);
+          }}
+          onSubmitEditing={() => setFocus2(true)}
         />
-      </View>
-      <Text style={styles.SignUpText}>Email Sign-Up</Text>
-      {Platform.OS === 'ios' ? <View style={styles.line} /> : null}
-      <TextInput
-        returnKeyType="next"
-        keyboardType="email-address"
-        style={styles.textInputStyle}
-        placeholder=" Enter email or username"
-        value={email}
-        onChangeText={(newTerm) => {
-          setEmail(newTerm);
-        }}
-        onSubmitEditing={() => setFocus2(true)}
-      />
-      <TextInput
-        focus={focus2}
-        returnKeyType="next"
-        style={styles.textInputStyle}
-        placeholder=" Enter password"
-        secureTextEntry
-        value={password}
-        onChangeText={(newTerm) => setPassword(newTerm)}
-        onSubmitEditing={() => setFocus3(true)}
-      />
-      <TextInput
-        focus={focus3}
-        returnKeyType="done"
-        style={styles.textInputStyle}
-        placeholder=" Confirm password"
-        secureTextEntry
-        value={conPassword}
-        onChangeText={(newTerm) => setConPassword(newTerm)}
-        onSubmitEditing={() => validateSubmit()}
-      />
+        <TextInput
+          focus={focus2}
+          returnKeyType="next"
+          style={styles.textInputStyle}
+          placeholder=" Enter password"
+          secureTextEntry
+          value={password}
+          onChangeText={(newTerm) => setPassword(newTerm)}
+          onSubmitEditing={() => setFocus3(true)}
+        />
+        <TextInput
+          focus={focus3}
+          returnKeyType="done"
+          style={styles.textInputStyle}
+          placeholder=" Confirm password"
+          secureTextEntry
+          value={conPassword}
+          onChangeText={(newTerm) => setConPassword(newTerm)}
+          onSubmitEditing={() => validateSubmit()}
+        />
 
-      <TouchableHighlight style={styles.loginButtonWrapper}>
-        <Button onPress={() => validateSubmit()} title="Create Account" color={buttonColor} />
-      </TouchableHighlight>
-      {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
-      {error ? (
-        <View style={styles.error}>
-          <Text style={styles.errorText}>{error}</Text>
+        <TouchableHighlight style={styles.loginButtonWrapper}>
+          <Button onPress={() => validateSubmit()} title="Create Account" color={buttonColor} />
+        </TouchableHighlight>
+        {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
+        {error ? (
+          <View style={styles.error}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        ) : null}
+        {/* LINE OR LINE */}
+        <View style={styles.lineOrLine}>
+          <View style={styles.leftLine} />
+          <View>
+            <Text style={styles.or}>OR</Text>
+          </View>
+          <View style={styles.rightLine} />
         </View>
-      ) : null}
-      {/* LINE OR LINE */}
-      <View style={styles.lineOrLine}>
-        <View style={styles.leftLine} />
-        <View>
-          <Text style={styles.or}>OR</Text>
+
+        {/* Facebook and google OAuth */}
+        <OAuth />
+
+        <View style={styles.noAccount}>
+          <Text style={{ fontFamily: 'roboto-regular' }}>Already have an account? </Text>
+          <Text style={styles.textWeight} onPress={() => navigation.navigate('Login')}>
+            Login
+          </Text>
         </View>
-        <View style={styles.rightLine} />
       </View>
-
-      {/* Facebook and google OAuth */}
-      <OAuth />
-
-      <View style={styles.noAccount}>
-        <Text style={{ fontFamily: 'roboto-regular' }}>Already have an account? </Text>
-        <Text style={styles.textWeight} onPress={() => navigation.navigate('Login')}>
-          Login
-        </Text>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  somecontainer: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
   line: {
     height: 2,
     backgroundColor: 'black',

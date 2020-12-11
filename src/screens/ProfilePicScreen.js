@@ -10,8 +10,10 @@ import {
   FlatList,
   Button,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { setProfilePic } from '../actions/actionProfilePic';
 import axiosWithToken from '../api/axiosWithToken';
 
@@ -117,41 +119,48 @@ const ProfilePicScreen = ({ navigation }) => {
   };
   console.log(profilePicture);
   return (
-    <View style={styles.canvas}>
-      {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
+    <SafeAreaView style={styles.somecontainer}>
+      <StatusBar barstyle="light-content" />
+      <View style={styles.canvas}>
+        {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
 
-      {/* Profilepic img */}
-      <View style={styles.profilePicContainer}>
-        <Image style={styles.profilePic} source={profilePicture} resizeMode="contain" />
-      </View>
+        {/* Profilepic img */}
+        <View style={styles.profilePicContainer}>
+          <Image style={styles.profilePic} source={profilePicture} resizeMode="contain" />
+        </View>
 
-      {/* Next Button */}
-      <TouchableHighlight style={styles.nextButtonWrapper}>
-        <Button
-          onPress={async () => {
-            storeIconFunction();
-            navigation.navigate('DietaryRestrictions');
-          }}
-          title="NEXT"
-          color={buttonColor}
-        />
-      </TouchableHighlight>
-      {/* Choose an Icon */}
-      <Text style={styles.anish}>Choose an Icon</Text>
-      {/* Gridview of Icons */}
-      <View style={styles.container}>
-        <FlatList
-          data={ICONDATA}
-          numColumns={3}
-          renderItem={renderItem}
-          keyExtractor={(key, index) => `${key}${index}`}
-        />
+        {/* Next Button */}
+        <TouchableHighlight style={styles.nextButtonWrapper}>
+          <Button
+            onPress={async () => {
+              storeIconFunction();
+              navigation.navigate('DietaryRestrictions');
+            }}
+            title="NEXT"
+            color={buttonColor}
+          />
+        </TouchableHighlight>
+        {/* Choose an Icon */}
+        <Text style={styles.anish}>Choose an Icon</Text>
+        {/* Gridview of Icons */}
+        <View style={styles.container}>
+          <FlatList
+            data={ICONDATA}
+            numColumns={3}
+            renderItem={renderItem}
+            keyExtractor={(key, index) => `${key}${index}`}
+          />
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  somecontainer: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
   canvas: {
     flex: 1,
     backgroundColor: '#fef4d1',
