@@ -6,10 +6,9 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
-  Platform,
   StatusBar,
   TouchableOpacity,
-  Button,
+  ActivityIndicator,
 } from 'react-native';
 import { FontAwesome, AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
@@ -25,15 +24,18 @@ const RecipeScreen = ({ navigation }) => {
   const { id, previousScreen } = navigation.state.params;
   const [recipe, setRecipe] = useState('');
   const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getRecipe = async () => {
+      setLoading(true);
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('/recipeClicked', {
         recipe: id,
       });
       setRecipe(response.data.Recipe);
       setSaved(response.data.saved);
+      setLoading(false);
     };
     getRecipe();
   }, []);
@@ -75,124 +77,136 @@ const RecipeScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.somecontainer}>
       <StatusBar barstyle="light-content" />
-      <View
-        style={{
-          paddingBottom: 10,
-          zIndex: 1,
-          width,
-          backgroundColor: '#FEF4D1',
-        }}>
-        <Ionicons
-          name="md-arrow-round-back"
-          size={35}
-          color="black"
-          style={{ marginLeft: 10, fontWeight: 'bold' }}
-          onPress={() => {
-            goBack();
-          }}
-        />
-      </View>
+      <View style={styles.container}>
+        <View
+          style={{
+            paddingBottom: 10,
+            zIndex: 1,
+            width,
+            backgroundColor: '#FEF4D1',
+          }}>
+          <Ionicons
+            name="md-arrow-round-back"
+            size={35}
+            color="black"
+            style={{ marginLeft: 10, fontWeight: 'bold' }}
+            onPress={() => {
+              goBack();
+            }}
+          />
+        </View>
 
-      <StatusBar barstyle="light-content" />
-      {recipe ? (
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          <View style={styles.topBar}>
-            <Text style={styles.title}> {recipe.title} </Text>
-            {saved ? (
-              <TouchableOpacity onPress={() => clickedHeart()}>
-                <AntDesign name="heart" size={24} color="red" />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => clickedHeart()}>
-                <AntDesign name="hearto" size={24} color="black" />
-              </TouchableOpacity>
-            )}
-            <View style={styles.titleDescription}>
-              <Text>Prep Time: </Text>
-              <Text>{recipe.readyinMinutes}</Text>
-              <Text> Minutes </Text>
-              <FontAwesome name="circle" size={10} color="black" />
-              <Text> Servings: </Text>
-              <Text>{recipe.servings} </Text>
-              <FontAwesome name="circle" size={10} color="black" />
-              <Text> Likes: </Text>
-              <Text>{recipe.aggregateLikes}</Text>
-            </View>
-            <View style={styles.lineContainer}>
-              <View style={styles.lineStyle} />
-            </View>
-          </View>
+        {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
 
-          <View style={{ alignItems: 'center' }}>
-            <Image style={styles.image} source={{ uri: recipe.image }} />
-          </View>
-          <View style={{ alignItems: 'center' }}>
-            <View style={styles.lineContainer}>
-              <View style={styles.lineStyle} />
-            </View>
-          </View>
-          <View style={styles.parentInstructions}>
-            {recipe.extendedIngredients ? (
-              <View style={styles.ingredients}>
-                <Text style={styles.header}>Ingredients</Text>
-                <FlatList
-                  data={recipe.extendedIngredients}
-                  keyExtractor={(item) => item.id}
-                  renderItem={({ item }) => (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}>
-                      <Entypo name="dot-single" size={24} color="black" style={{ marginTop: 1 }} />
-                      <Text>{item.name}</Text>
-                    </View>
-                  )}
-                />
+        {recipe ? (
+          <ScrollView contentContainerStyle={styles.scrollView}>
+            <View style={styles.topBar}>
+              <Text style={styles.title}> {recipe.title} </Text>
+              {saved ? (
+                <TouchableOpacity onPress={() => clickedHeart()}>
+                  <AntDesign name="heart" size={24} color="red" />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity onPress={() => clickedHeart()}>
+                  <AntDesign name="hearto" size={24} color="black" />
+                </TouchableOpacity>
+              )}
+              <View style={styles.titleDescription}>
+                <Text>Prep Time: </Text>
+                <Text>{recipe.readyinMinutes}</Text>
+                <Text> Minutes </Text>
+                <FontAwesome name="circle" size={10} color="black" />
+                <Text> Servings: </Text>
+                <Text>{recipe.servings} </Text>
+                <FontAwesome name="circle" size={10} color="black" />
+                <Text> Likes: </Text>
+                <Text>{recipe.aggregateLikes}</Text>
               </View>
-            ) : null}
+              <View style={styles.lineContainer}>
+                <View style={styles.lineStyle} />
+              </View>
+            </View>
 
-            {recipe.analyzedInstructions[0] ? (
-              <View style={styles.instructions}>
-                <View style={{ marginLeft: '10%' }}>
-                  <Text style={styles.header}>Instructions</Text>
+            <View style={{ alignItems: 'center' }}>
+              <Image style={styles.image} source={{ uri: recipe.image }} />
+            </View>
+            <View style={{ alignItems: 'center' }}>
+              <View style={styles.lineContainer}>
+                <View style={styles.lineStyle} />
+              </View>
+            </View>
+            <View style={styles.parentInstructions}>
+              {recipe.extendedIngredients ? (
+                <View style={styles.ingredients}>
+                  <Text style={styles.header}>Ingredients</Text>
                   <FlatList
-                    data={recipe.analyzedInstructions[0].steps}
-                    keyExtractor={(item) => item.number}
+                    data={recipe.extendedIngredients}
+                    keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                      <View style={{ flexDirection: 'row', paddingRight: width * 0.2 }}>
-                        <Text>{`${item.number}. `}</Text>
-                        <Text>
-                          {item.step}
-                          {'\n'}
-                        </Text>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        <Entypo
+                          name="dot-single"
+                          size={24}
+                          color="black"
+                          style={{ marginTop: 1 }}
+                        />
+                        <Text>{item.name}</Text>
                       </View>
                     )}
                   />
                 </View>
-              </View>
-            ) : null}
-          </View>
-        </ScrollView>
-      ) : null}
+              ) : null}
+
+              {recipe.analyzedInstructions[0] ? (
+                <View style={styles.instructions}>
+                  <View style={{ marginLeft: '10%' }}>
+                    <Text style={styles.header}>Instructions</Text>
+                    <FlatList
+                      data={recipe.analyzedInstructions[0].steps}
+                      keyExtractor={(item) => item.number}
+                      renderItem={({ item }) => (
+                        <View style={{ flexDirection: 'row', paddingRight: width * 0.2 }}>
+                          <Text>{`${item.number}. `}</Text>
+                          <Text>
+                            {item.step}
+                            {'\n'}
+                          </Text>
+                        </View>
+                      )}
+                    />
+                  </View>
+                </View>
+              ) : null}
+            </View>
+          </ScrollView>
+        ) : null}
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  somecontainer: {
+    flex: 1,
+    backgroundColor: 'black',
+    // paddingBottom: height * 0.17,
+  },
   container: {
     flex: 1,
     backgroundColor: '#FEF4D1',
-    alignItems: 'center',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   scrollView: {
     flexGrow: 1,
     justifyContent: 'center',
     paddingBottom: '20%',
     paddingTop: 20,
+    backgroundColor: '#FEF4D1',
   },
   topBar: {
     alignItems: 'center',
