@@ -45,7 +45,7 @@ const RecipeScreen = ({ navigation }) => {
       setSaved(!saved);
       dispatch(addSavedRecipe(recipe));
       const axiosInstance = await axiosWithToken();
-      const response = await axiosInstance.post('./savedRecipes', {
+      const response = await axiosInstance.post('/savedRecipes', {
         recipe: recipe._id,
         add: true,
       });
@@ -54,7 +54,7 @@ const RecipeScreen = ({ navigation }) => {
       setSaved(!saved);
       dispatch(removeSavedRecipe(recipe._id));
       const axiosInstance = await axiosWithToken();
-      const response = await axiosInstance.post('./savedRecipes', {
+      const response = await axiosInstance.post('/savedRecipes', {
         recipe: recipe._id,
         add: false,
       });
