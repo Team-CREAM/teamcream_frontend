@@ -38,24 +38,25 @@ const RecipeDetail = ({ result }) => {
   // Sends a post request to save/remove recipe when user toggles the heart
   // also changes the heart color by updating 'heart' prop
   const youClickedMe = async () => {
+    // console.log(result.recipe.title);
     if (!saved) {
       setSaved(!saved);
       dispatch(addSavedRecipe(result.recipe));
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
-        recipe: result.recipe,
+        recipe: result.recipe._id,
         add: true,
       });
-      console.log(response.data.message);
+      console.log(response.data.message, result.recipe.title);
     } else {
       setSaved(!saved);
       dispatch(removeSavedRecipe(result.recipe._id));
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
-        recipe: result.recipe,
+        recipe: result.recipe._id,
         add: false,
       });
-      console.log(response.data.message);
+      console.log(response.data.message, result.recipe.title);
     }
     // setSaved(!saved);
   };

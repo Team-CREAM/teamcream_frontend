@@ -46,7 +46,7 @@ const RecipeScreen = ({ navigation }) => {
       dispatch(addSavedRecipe(recipe));
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
-        recipe,
+        recipe: recipe._id,
         add: true,
       });
       console.log(response.data.message);
@@ -55,7 +55,7 @@ const RecipeScreen = ({ navigation }) => {
       dispatch(removeSavedRecipe(recipe._id));
       const axiosInstance = await axiosWithToken();
       const response = await axiosInstance.post('./savedRecipes', {
-        recipe,
+        recipe: recipe._id,
         add: false,
       });
       console.log(response.data.message);
@@ -113,7 +113,7 @@ const RecipeScreen = ({ navigation }) => {
                   <AntDesign name="hearto" size={24} color="black" />
                 </TouchableOpacity>
               )}
-              <View style={styles.titleDescription}>
+              {/* <View style={styles.titleDescription}>
                 <Text>Prep Time: </Text>
                 <Text>{recipe.readyinMinutes}</Text>
                 <Text> Minutes </Text>
@@ -123,7 +123,7 @@ const RecipeScreen = ({ navigation }) => {
                 <FontAwesome name="circle" size={10} color="black" />
                 <Text> Likes: </Text>
                 <Text>{recipe.aggregateLikes}</Text>
-              </View>
+              </View> */}
               <View style={styles.lineContainer}>
                 <View style={styles.lineStyle} />
               </View>
