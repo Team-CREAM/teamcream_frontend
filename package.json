@@ -29,6 +29,7 @@
     "react-native-animatable": "^1.3.3",
     "react-native-autocomplete-input": "^4.2.0",
     "react-native-gesture-handler": "~1.7.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-keyboard-aware-scrollview": "^2.1.0",
     "react-native-paper": "^4.4.1",
     "react-native-reanimated": "~1.13.0",

@@ -13,6 +13,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import OAuth from '../components/OAuthComponent';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 import useValidation from '../hooks/useValidation';
@@ -85,10 +86,11 @@ const SignUp = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.somecontainer}>
       <StatusBar barstyle="light-content" />
-      <ScrollView
+      <KeyboardAwareScrollView style={styles.container}>
+        {/* <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         style={styles.container}
-        keyboardShouldPersistTaps="handled">
+        keyboardShouldPersistTaps="handled"> */}
         <View style={styles.imageContainer}>
           <Image
             resizeMode="contain"
@@ -157,7 +159,7 @@ const SignUp = ({ navigation }) => {
             Login
           </Text>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

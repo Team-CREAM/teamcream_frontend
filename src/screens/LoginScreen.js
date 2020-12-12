@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import {
   StyleSheet,
   Text,
@@ -111,10 +113,11 @@ const SignIn = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.somecontainer}>
       <StatusBar barstyle="light-content" />
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        style={styles.container}
-        keyboardShouldPersistTaps="handled">
+      <KeyboardAwareScrollView style={styles.container}>
+        {/* <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          style={styles.container}
+          keyboardShouldPersistTaps="handled"> */}
         <View style={styles.imageContainer}>
           <Image
             resizeMode="contain"
@@ -179,7 +182,8 @@ const SignIn = ({ navigation }) => {
             Forgot Password?
           </Text>
         </View>
-      </ScrollView>
+        {/* </ScrollView> */}
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
