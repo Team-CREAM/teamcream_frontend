@@ -16,7 +16,7 @@ const RecipeList = ({ title, results, navigation }) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={results}
-        // keyExtractor={(result) => result.recipe._id} // CHANGE TO RESULT.RECIPE.ID
+        keyExtractor={(result) => result.recipe._id} // CHANGE TO RESULT.RECIPE.ID
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
