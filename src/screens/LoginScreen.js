@@ -11,6 +11,8 @@ import {
   ActivityIndicator,
   Platform,
   StatusBar,
+  ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
@@ -68,6 +70,8 @@ const SignIn = ({ navigation }) => {
     const [isValidated, error] = validateInputs('Login', email, password, '');
     if (isValidated) {
       LoginAxios();
+      setEmail('');
+      setPassword('');
     }
     if (error) {
       errorHandle(error);
@@ -107,7 +111,10 @@ const SignIn = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.somecontainer}>
       <StatusBar barstyle="light-content" />
-      <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        style={styles.container}
+        keyboardShouldPersistTaps="handled">
         <View style={styles.imageContainer}>
           <Image
             resizeMode="contain"
@@ -172,7 +179,7 @@ const SignIn = ({ navigation }) => {
             Forgot Password?
           </Text>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

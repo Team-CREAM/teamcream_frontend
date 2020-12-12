@@ -10,6 +10,7 @@ import {
   Dimensions,
   ActivityIndicator,
   StatusBar,
+  ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import OAuth from '../components/OAuthComponent';
@@ -61,6 +62,9 @@ const SignUp = ({ navigation }) => {
     const [isValidated, error] = validateInputs('Signup', email, password, conPassword);
     if (isValidated) {
       SignUpAxios();
+      setEmail('');
+      setPassword('');
+      setConPassword('');
     } else {
       errorHandle(error);
     }
@@ -81,7 +85,10 @@ const SignUp = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.somecontainer}>
       <StatusBar barstyle="light-content" />
-      <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        style={styles.container}
+        keyboardShouldPersistTaps="handled">
         <View style={styles.imageContainer}>
           <Image
             resizeMode="contain"
@@ -150,7 +157,7 @@ const SignUp = ({ navigation }) => {
             Login
           </Text>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
