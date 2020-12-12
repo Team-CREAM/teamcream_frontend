@@ -12,7 +12,7 @@ const EmailSent = ({ navigation }) => {
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={{ fontfamily: 'Robot' }}> Go back to </Text>
 
-        <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={{ fontfamily: 'roboto', fontWeight: 'bold' }}>login</Text>
         </TouchableOpacity>
 

@@ -36,7 +36,7 @@ const SignUp = ({ navigation }) => {
     setLoading(true);
     await axiosWithoutToken
       .post('/signup', {
-        email,
+        email: email.toLowerCase(),
         password,
       })
       .then((response) => {
