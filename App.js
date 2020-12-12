@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import { AppLoading } from 'expo';
 import { useFonts } from 'expo-font';
+import { LogBox } from 'react-native';
 import Login from './src/screens/LoginScreen';
 import SignUp from './src/screens/SignUpScreen';
 import ForgotPassword from './src/screens/ForgotPasswordScreen';
@@ -14,6 +15,8 @@ import DietaryRestrictions from './src/screens/DietaryRestrictionsScreen';
 import EmailSent from './src/screens/EmailSentScreen';
 import ProfilePic from './src/screens/ProfilePicScreen';
 import Inventory from './src/screens/InventoryScreen';
+
+LogBox.ignoreAllLogs();
 
 const navigator = createStackNavigator(
   {
