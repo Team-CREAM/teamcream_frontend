@@ -69,7 +69,7 @@ const ResetPw = ({ navigation }) => {
         />
 
         <TouchableHighlight style={styles.loginButtonWrapper}>
-          <Button onPress={() => ResetPwAxios()} title="Send Link" color={buttonColor} />
+          <Button onPress={() => ResetPwAxios()} title="SEND LINK" color={buttonColor} />
         </TouchableHighlight>
 
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}

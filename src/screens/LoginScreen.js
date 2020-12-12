@@ -141,7 +141,7 @@ const SignIn = ({ navigation }) => {
           onSubmitEditing={() => validateSubmit()}
         />
         <TouchableHighlight style={styles.loginButtonWrapper}>
-          <Button onPress={() => validateSubmit()} title="Login" color={buttonColor} />
+          <Button onPress={() => validateSubmit()} title="LOGIN" color={buttonColor} />
         </TouchableHighlight>
 
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}

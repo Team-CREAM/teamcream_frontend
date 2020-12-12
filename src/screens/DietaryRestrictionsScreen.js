@@ -150,7 +150,7 @@ const DietaryRestrictions = ({ navigation, route }) => {
               shadowOffset: { height: 4 },
             }}>
             <Button
-              title="confirm"
+              title="CONFIRM"
               color={buttonColor}
               onPress={() => DietaryRestrictionsAxios()}
             />

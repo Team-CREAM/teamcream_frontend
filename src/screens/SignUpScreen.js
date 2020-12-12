@@ -130,7 +130,7 @@ const SignUp = ({ navigation }) => {
         />
 
         <TouchableHighlight style={styles.loginButtonWrapper}>
-          <Button onPress={() => validateSubmit()} title="Create Account" color={buttonColor} />
+          <Button onPress={() => validateSubmit()} title="CREATE ACCOUNT" color={buttonColor} />
         </TouchableHighlight>
         {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
         {error ? (
