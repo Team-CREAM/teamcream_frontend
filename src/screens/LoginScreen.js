@@ -38,7 +38,7 @@ const SignIn = ({ navigation }) => {
     setLoading(true);
     await axiosWithoutToken
       .post('/login', {
-        email,
+        email: email.toLowerCase(),
         password,
       })
       .then(async (response) => {

@@ -22,7 +22,7 @@ const ResetPw = ({ navigation }) => {
     setLoading(true);
     await axiosWithoutToken
       .put('/forgotpassword', {
-        email,
+        email: email.toLowerCase(),
       })
       .then(function (response) {
         setLoading(false);
