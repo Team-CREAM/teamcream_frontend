@@ -13,7 +13,7 @@ const RecipeDetail = ({ result }) => {
   const clickedHeart = async () => {
     dispatch(removeSavedRecipe(result.id));
     const axiosInstance = await axiosWithToken();
-    const response = await axiosInstance.post('./savedRecipes', {
+    const response = await axiosInstance.post('/savedRecipes', {
       recipe: result.id,
       add: false,
     });

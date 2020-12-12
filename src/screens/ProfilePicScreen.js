@@ -109,7 +109,7 @@ const ProfilePicScreen = ({ navigation }) => {
     dispatch(setProfilePic(index));
     try {
       const axiosInstance = await axiosWithToken();
-      const response = await axiosInstance.post('./icon', {
+      const response = await axiosInstance.post('/icon', {
         icon: index.toString(),
       });
       console.log(response);
