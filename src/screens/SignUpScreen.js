@@ -45,7 +45,7 @@ const SignUp = ({ navigation }) => {
         setLoading(false);
         if (response.data.token) {
           storeToken(response.data.token);
-          navigation.navigate('ProfilePic');
+          navigation.replace('ProfilePic');
         }
 
         if (response.data.error) {
@@ -63,9 +63,6 @@ const SignUp = ({ navigation }) => {
     const [isValidated, error] = validateInputs('Signup', email, password, conPassword);
     if (isValidated) {
       SignUpAxios();
-      setEmail('');
-      setPassword('');
-      setConPassword('');
     } else {
       errorHandle(error);
     }
@@ -155,7 +152,7 @@ const SignUp = ({ navigation }) => {
 
         <View style={styles.noAccount}>
           <Text style={{ fontFamily: 'roboto-regular' }}>Already have an account? </Text>
-          <Text style={styles.textWeight} onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.textWeight} onPress={() => navigation.replace('Login')}>
             Login
           </Text>
         </View>
@@ -262,10 +259,8 @@ const styles = StyleSheet.create({
   },
   noAccount: {
     flexDirection: 'row',
-    marginBottom: height * 0.05,
     justifyContent: 'center',
-    // backgroundColor: 'blue',
-    // top: '15%',
+    marginTop: height * 0.06,
   },
   textWeight: { fontFamily: 'roboto-bold' },
 });

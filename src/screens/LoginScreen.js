@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
 import {
   StyleSheet,
   Text,
@@ -13,8 +12,6 @@ import {
   ActivityIndicator,
   Platform,
   StatusBar,
-  ScrollView,
-  KeyboardAvoidingView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
@@ -55,7 +52,7 @@ const SignIn = ({ navigation }) => {
           if (response2.data.icon) {
             dispatch(setProfilePic(response2.data.icon));
           }
-          navigation.navigate('Home');
+          navigation.replace('Home');
         }
 
         if (response.data.error) {
@@ -72,8 +69,6 @@ const SignIn = ({ navigation }) => {
     const [isValidated, error] = validateInputs('Login', email, password, '');
     if (isValidated) {
       LoginAxios();
-      setEmail('');
-      setPassword('');
     }
     if (error) {
       errorHandle(error);
@@ -93,14 +88,13 @@ const SignIn = ({ navigation }) => {
     const alreadySignedIn = async () => {
       setLoading(true);
       const token = await AsyncStorage.getItem('@token');
-      // token ? navigation.navigate('Home') : null;
       if (token) {
         const axiosInstance = await axiosWithToken();
         const response = await axiosInstance.post('/icon');
         if (response.data.icon) {
           dispatch(setProfilePic(response.data.icon));
         }
-        navigation.navigate('Home');
+        navigation.replace('Home');
       }
       setLoading(false);
     };
@@ -173,12 +167,12 @@ const SignIn = ({ navigation }) => {
         <View style={styles.accountWrapper}>
           <View style={styles.noAccount}>
             <Text style={{ fontFamily: 'roboto-regular' }}>No Account? </Text>
-            <Text style={styles.textWeight} onPress={() => navigation.navigate('SignUp')}>
+            <Text style={styles.textWeight} onPress={() => navigation.replace('SignUp')}>
               Sign up
             </Text>
           </View>
           {/* Forgot Password */}
-          <Text style={styles.textWeight} onPress={() => navigation.navigate('ForgotPassword')}>
+          <Text style={styles.textWeight} onPress={() => navigation.replace('ForgotPassword')}>
             Forgot Password?
           </Text>
         </View>
@@ -268,6 +262,7 @@ const styles = StyleSheet.create({
   noAccount: {
     flexDirection: 'row',
     marginBottom: height * 0.01,
+    marginTop: height * 0.06,
   },
   textWeight: { fontFamily: 'roboto-bold' },
 });
