@@ -8,7 +8,9 @@ import {
   Button,
   Dimensions,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import axiosWithoutToken from '../api/axiosWithoutToken';
 
 const { width, height } = Dimensions.get('window');
@@ -28,7 +30,7 @@ const ResetPw = ({ navigation }) => {
         setLoading(false);
         console.log('response');
         if (response.data.success) {
-          navigation.navigate('EmailSent');
+          navigation.replace('EmailSent');
         }
 
         if (response.data.error) {
@@ -51,48 +53,55 @@ const ResetPw = ({ navigation }) => {
 
   const buttonColor = Platform.OS === 'ios' ? '#ffffff' : '#D9B580';
   return (
-    <View style={styles.container}>
-      <Text style={styles.SignUpText}>Send Reset Password Link</Text>
-      {Platform.OS === 'ios' ? <View style={styles.lineline} /> : null}
-      <TextInput
-        returnKeyType="done"
-        keyboardType="email-address"
-        style={styles.textInputStyle}
-        placeholder=" Enter Email"
-        value={email}
-        onChangeText={(newTerm) => setEmail(newTerm)}
-        onSubmitEditing={() => ResetPwAxios()}
-      />
+    <SafeAreaView style={styles.somecontainer}>
+      <StatusBar barstyle="light-content" />
+      <View style={styles.container}>
+        <Text style={styles.SignUpText}>Send Reset Password Link</Text>
+        {Platform.OS === 'ios' ? <View style={styles.lineline} /> : null}
+        <TextInput
+          returnKeyType="done"
+          keyboardType="email-address"
+          style={styles.textInputStyle}
+          placeholder=" Enter Email"
+          value={email}
+          onChangeText={(newTerm) => setEmail(newTerm)}
+          onSubmitEditing={() => ResetPwAxios()}
+        />
 
-      <TouchableHighlight style={styles.loginButtonWrapper}>
-        <Button onPress={() => ResetPwAxios()} title="Send Link" color={buttonColor} />
-      </TouchableHighlight>
+        <TouchableHighlight style={styles.loginButtonWrapper}>
+          <Button onPress={() => ResetPwAxios()} title="Send Link" color={buttonColor} />
+        </TouchableHighlight>
 
-      {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
-      {error ? (
-        <View style={styles.error}>
-          <Text style={styles.errorText}>{error}</Text>
+        {loading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
+        {error ? (
+          <View style={styles.error}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        ) : null}
+
+        {/* LINE OR LINE */}
+        <View style={styles.lineOrLine}>
+          <View style={styles.line} />
         </View>
-      ) : null}
 
-      {/* LINE OR LINE */}
-      <View style={styles.lineOrLine}>
-        <View style={styles.line} />
+        <View style={styles.loginWrapper}>
+          <Text style={styles.goBackToLogin}>Already have an account? </Text>
+
+          <Text style={{ fontFamily: 'roboto-bold' }} onPress={() => navigation.replace('Login')}>
+            {' '}
+            Login
+          </Text>
+        </View>
       </View>
-
-      <View style={styles.loginWrapper}>
-        <Text style={styles.goBackToLogin}>Already have an account? </Text>
-
-        <Text style={{ fontFamily: 'roboto-bold' }} onPress={() => navigation.navigate('Login')}>
-          {' '}
-          Login
-        </Text>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  somecontainer: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
   lineline: {
     height: height * 0.003,
     backgroundColor: 'black',

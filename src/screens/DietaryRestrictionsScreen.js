@@ -59,7 +59,7 @@ const DietaryRestrictions = ({ navigation, route }) => {
         })
         .then((response) => {
           console.log(response.data);
-          navigation.navigate('Home');
+          navigation.replace('Home');
         });
     } catch (err) {
       setError('Something went wrong');

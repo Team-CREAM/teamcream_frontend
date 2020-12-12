@@ -47,14 +47,14 @@ const OAuth = ({ navigation }) => {
 
               console.log('before');
               if (response.data.new) {
-                navigation.navigate('ProfilePic');
+                navigation.replace('ProfilePic');
               } else {
                 const axiosInstance = await axiosWithToken();
                 const response = await axiosInstance.post('/icon');
                 if (response.data.icon) {
                   dispatch(setProfilePic(response.data.icon));
                 }
-                navigation.navigate('Home');
+                navigation.replace('Home');
               }
 
               console.log('after');

@@ -134,7 +134,7 @@ const ProfilePicScreen = ({ navigation }) => {
           <Button
             onPress={async () => {
               storeIconFunction();
-              navigation.navigate('DietaryRestrictions');
+              navigation.replace('DietaryRestrictions');
             }}
             title="NEXT"
             color={buttonColor}
