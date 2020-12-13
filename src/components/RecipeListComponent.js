@@ -4,9 +4,16 @@ import { withNavigation } from 'react-navigation';
 import RecipeDetail from './HomeRecipeDetailComponent';
 
 const RecipeList = ({ title, results, navigation }) => {
-  if (!results) {
-    console.log(results);
-    return null;
+  if (results) {
+    for (let i = 0; i < results.length; ++i) {
+      try {
+        const temp = results[i].recipe._id;
+      } catch {
+        console.log('Found a bug! ', results.length);
+        results.splice(i, 1);
+      }
+    }
+    // return null;
   }
 
   return (
