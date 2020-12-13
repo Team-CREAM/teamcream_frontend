@@ -9,6 +9,7 @@ const RecipeList = ({ title, results, navigation }) => {
       try {
         const temp = results[i].recipe._id;
       } catch {
+        console.log('Found a bug! ', results.length);
         results.splice(i, 1);
       }
     }
